@@ -1,0 +1,39 @@
+# ===== Sistema operativo =====
+Thumbs.db
+desktop.ini
+.DS_Store
+$RECYCLE.BIN/
+
+# ===== Editores =====
+.vscode/
+.idea/
+*.swp
+*.code-workspace
+
+# ===== Python (generador) =====
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ===== Node (por si algún día usas herramientas) =====
+node_modules/
+npm-debug.log*
+
+# ===== Secretos / credenciales =====
+.env
+.env.*
+php/config.php
+php/*.local.php
+
+# ===== Archivos temporales, logs y respaldos =====
+*.log
+*.tmp
+*.bak
+*.zip
+*.rar
+~$*
+
+# ===== Material de trabajo que no es parte del sitio =====
+_diseno/
+_originales/

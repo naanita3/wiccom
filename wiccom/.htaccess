@@ -1,0 +1,41 @@
+# ===== Wiccom · Apache =====
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+# Forzar HTTPS y dominio sin www
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://wiccom.com.mx%{REQUEST_URI} [L,R=301]
+
+# /pagina.html  ->  /pagina   (URL limpia)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+RewriteRule ^index$ / [R=301,L]
+# /pagina  ->  sirve pagina.html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/json application/xml text/plain
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+</IfModule>
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# No publicar el generador ni la documentación interna
+RewriteRule ^(_generador|README\.md|IMAGENES\.md) - [F,L]
