@@ -772,39 +772,6 @@ a.channel:hover{background:var(--bg-2)}
    AJUSTES OCT-2026 · CTA principal, Soluciones vs Servicios,
    plantilla de marca y CAPTCHA
    ========================================================= */
-/* Soluciones (el qué) + Servicios (el cómo) */
-.svs{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch}
-.svs__col{position:relative;display:flex;flex-direction:column;gap:10px;padding:26px 26px 22px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-sm)}
-.svs__col h3{font-size:1.2rem;margin:0}
-.svs__col>p{margin:0;color:var(--muted);font-size:.93rem}
-.svs__tag{align-self:flex-start;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:999px;background:var(--bg-2);color:var(--blue)}
-.svs__col--srv .svs__tag{background:var(--navy);color:#fff}
-.svs__col--active{border-color:var(--blue);box-shadow:0 0 0 3px rgba(31,111,235,.12),var(--sh-sm)}
-.svs__list{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:6px 0 4px}
-.svs__list a{display:flex;align-items:center;gap:9px;padding:7px 0;font-size:.9rem;font-weight:500;color:var(--title);transition:color .2s}
-.svs__list a:hover{color:var(--blue)}
-.svs__list .ico{width:20px;height:20px;color:var(--blue);stroke-width:1.6;flex:none}
-.svs__col .link-more{margin-top:auto}
-.svs__plus{align-self:center;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;box-shadow:0 10px 20px -8px rgba(31,111,235,.8)}
-.svs__plus .ico{width:24px;height:24px;stroke-width:2.4}
-.svs__result{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin:20px 0 0;padding:16px 20px;border-radius:var(--r);background:var(--bg-2);font-size:.95rem;color:var(--title)}
-.svs__result>.ico{width:24px;height:24px;color:var(--blue);stroke-width:2.4;flex:none}
-.svs__result span{flex:1 1 260px}
-@media (max-width:860px){
-  .svs{grid-template-columns:1fr}
-  .svs__plus{justify-self:center;margin:-6px 0}
-}
-@media (max-width:420px){ .svs__list{grid-template-columns:1fr} }
-
-/* Servicios dentro de una solución */
-.srvsteps{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.srvstep{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:20px 10px 18px;background:#fff;border:1px solid var(--line);border-radius:var(--r);font-size:.88rem;color:var(--title);transition:.25s var(--ease)}
-.srvstep:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:var(--sh-sm);color:var(--blue)}
-.srvstep .ico{width:30px;height:30px;color:var(--blue);stroke-width:1.5}
-.srvstep__n{position:absolute;top:8px;left:10px;font:800 .75rem var(--ff-h);color:#9fb3d1}
-@media (max-width:1024px){ .srvsteps{grid-template-columns:repeat(3,1fr)} }
-@media (max-width:520px){ .srvsteps{grid-template-columns:repeat(2,1fr)} }
-
 /* Plantilla de marca */
 .mhero__cats{margin:0 0 6px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
 .mhero__h1{font-size:clamp(1.5rem,2.6vw,2.1rem);margin:0 0 .5em}

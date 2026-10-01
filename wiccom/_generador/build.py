@@ -7,6 +7,13 @@ CHECK = "check"
 from base import *
 from data import *
 
+def LOGO_BRANDS(prefer=(), exclude=None):
+    """Marcas para carruseles: solo las que tienen logo. Primero las relacionadas (prefer),
+    luego el resto de MARQUEE, sin repetir."""
+    out = [b for b in prefer if brand_logo(b) and b["slug"] != exclude]
+    out += [BRAND[k] for k in MARQUEE if k in BRAND and k != exclude and BRAND[k] not in out and brand_logo(BRAND[k])]
+    return out
+
 def FEATURED():
     """Marcas del carrusel de Inicio: exactamente las de MARQUEE (data.py), en ese orden."""
     return [BRAND[k] for k in MARQUEE if k in BRAND] or BRANDS[:14]
@@ -73,35 +80,6 @@ def btn_advisor(ctx="", cls="btn btn--ghost"):
     return f'<button class="{cls}" type="button" data-modal="asesor" data-context="{ctx}">Hablar con un asesor</button>'
 
 # ================================================================== INICIO
-# ================================================================== SOLUCIONES vs SERVICIOS
-def sol_vs_srv(active=None):
-    """Explica la diferencia: Soluciones = QUÉ tecnología; Servicios = CÓMO te acompañamos."""
-    sl = "".join(f'<li><a href="{u("soluciones/" + o["slug"] + ".html")}">{ic(o["icon"])}{o["name"]}</a></li>' for o in SOLUTIONS)
-    sv = "".join(f'<li><a href="{u("servicios/" + o["slug"] + ".html")}">{ic(o["icon"])}{o["name"]}</a></li>' for o in SERVICES)
-    def col(kind, tag, title, text, items, href, cta):
-        cur = " svs__col--active" if kind == active else ""
-        link = "" if kind == active else f'<a class="link-more" href="{u(href)}">{cta} {ic("arrow")}</a>'
-        return (f'<div class="svs__col svs__col--{kind}{cur}" data-aos="fade-up"><span class="svs__tag">{tag}</span>'
-                f'<h3>{title}</h3><p>{text}</p><ul class="svs__list">{items}</ul>{link}</div>')
-    return f'''<section class="section section--tight svs-wrap" aria-labelledby="h-svs"><div class="container">
-  {sec_head("Soluciones y servicios: cómo trabajamos contigo", "Dos partes de un mismo proyecto: la tecnología correcta y el acompañamiento para que funcione.", hid="h-svs")}
-  <div class="svs">
-    {col("sol", "Soluciones · El qué", "La tecnología que tu empresa necesita", "Áreas de tecnología que diseñamos e integramos con marcas líderes: equipos, infraestructura y sistemas.", sl, "soluciones.html", "Ver soluciones")}
-    <div class="svs__plus" aria-hidden="true">{ic("plus")}</div>
-    {col("srv", "Servicios · El cómo", "Cómo te acompañamos en cada etapa", "Lo que hacemos para que esa tecnología funcione: asesoría, instalación, configuración, soporte y mantenimiento.", sv, "servicios.html", "Ver servicios")}
-  </div>
-  <p class="svs__result" data-aos="fade-up">{ic("check")}<span><strong>Resultado:</strong> un proyecto llave en mano, desde la propuesta hasta la operación diaria.</span><a class="btn btn--primary btn--sm" href="{u("cotizacion.html")}">Solicitar cotización {ic("arrow")}</a></p>
-</div></section>'''
-
-def srv_for_solution(s):
-    """Servicios que acompañan a una solución (enlaces a cada servicio)."""
-    items = "".join(f'<a class="srvstep" href="{u("servicios/" + o["slug"] + ".html")}" data-aos="fade-up" data-aos-delay="{i*60}"><span class="srvstep__n">{i+1}</span>{ic(o["icon"])}<strong>{o["name"]}</strong></a>' for i, o in enumerate(SERVICES))
-    return f'''<section class="section section--tight" aria-labelledby="h-sfs"><div class="container">
-  {sec_head("Servicios que acompañan esta solución", f"No solo suministramos los equipos de {s['name'].lower()}: te acompañamos en cada etapa.", ("Conocer los servicios", "servicios.html"), "h-sfs")}
-  <div class="srvsteps">{items}</div>
-</div></section>'''
-
-# ================================================================== INICIO
 def p_home():
     strip = '<section class="strip" aria-label="Por qué Wiccom"><ul class="container strip__list">' + "".join(
         f'<li class="strip__item" data-aos="fade-up" data-aos-delay="{i*80}">{ic(icn)}<span>{t}</span></li>' for i, (icn, t) in enumerate([
@@ -127,14 +105,13 @@ def p_home():
       script=("Soluciones hoy", "para un mejor mañana"))}
 {strip}
 <section class="section" aria-labelledby="h-sol"><div class="container">
-  {sec_head("Nuestras soluciones", "Qué tecnología integramos: equipos, infraestructura y sistemas para cada necesidad de tu empresa.", ("Ver todas las soluciones", "soluciones.html"), "h-sol")}
+  {sec_head("Nuestras soluciones", "Tecnología, infraestructura y soporte para cada necesidad de tu empresa.", ("Ver todas las soluciones", "soluciones.html"), "h-sol")}
   {sols}
 </div></section>
 <section class="section section--tight section--alt" aria-labelledby="h-srv"><div class="container">
-  {sec_head("Servicios que complementan cada solución", "Cómo te acompañamos: no solo suministramos equipos, los instalamos, configuramos y mantenemos.", ("Conocer nuestros servicios", "servicios.html"), "h-srv")}
+  {sec_head("Servicios que complementan cada solución", "No solo suministramos equipos: los instalamos, configuramos y mantenemos.", ("Conocer nuestros servicios", "servicios.html"), "h-srv")}
   {srv}
 </div></section>
-{sol_vs_srv()}
 <section class="section section--tight" aria-labelledby="h-brands"><div class="container">
   {sec_head("Marcas que impulsan tus proyectos", "Trabajamos con fabricantes líderes a nivel mundial.", ("Ver todas las marcas", "marcas.html"), "h-brands")}
 </div>{marquee(FEATURED(), speed=45, plain=True)}</section>
@@ -156,12 +133,11 @@ def p_solutions():
       features=[("shield", "Más seguridad"), ("users", "Mayor productividad"), ("zap", "Operación sin interrupciones"), ("chart", "Crecimiento sostenible")],
       script=("Tecnología para", "un mejor mañana"))}
 {intro([("Inicio", "index.html"), ("Soluciones", "soluciones.html")], "Tu aliado en soluciones tecnológicas",
-       "Nuestras <strong>soluciones</strong> son las áreas de tecnología que diseñamos e integramos para tu empresa: videovigilancia, redes, energía, control de acceso y cómputo, con el respaldo de las mejores marcas. Cada solución se complementa con nuestros <a class='hl-blue' href='" + u("servicios.html") + "'>servicios</a> de instalación, configuración, soporte y mantenimiento.")}
+       "En <strong>Wiccom</strong> integramos soluciones de tecnología para empresas y proyectos, combinando infraestructura, seguridad, conectividad, energía y cómputo, con el respaldo de las mejores marcas y un equipo que te acompaña en todo el proceso.")}
 <section class="section" aria-labelledby="h-nsol"><div class="container">
   {sec_head("Nuestras soluciones", "Tecnología, infraestructura y soporte para cada necesidad de tu empresa.", hid="h-nsol")}
   {carousel([sol_card(s, i) for i, s in enumerate(SOLUTIONS)], per=5, label="Soluciones")}
 </div></section>
-{sol_vs_srv("sol")}
 <section class="section section--tight section--alt"><div class="container">
   <div class="feats-wrap"><div class="feats-wrap__title" data-aos="fade-right"><h2>¿Qué tipo de solución necesitas?</h2><p>Te ayudamos a encontrar la mejor opción para tu empresa.</p></div>
   <div class="feats feats--3">{"".join(f'<div class="feat" data-aos="fade-up" data-aos-delay="{i*90}">{ic(a)}<div><h3>{b}</h3><p>{c}</p></div></div>' for i, (a, b, c) in enumerate([
@@ -188,10 +164,9 @@ def p_solution(s):
 <section class="section section--tight" aria-labelledby="h-apps"><div class="container">
   <div class="feats-wrap" style="align-items:start"><div class="feats-wrap__title" data-aos="fade-right"><h2 id="h-apps">Aplicaciones</h2><p>Nuestras soluciones de {s["name"].lower()} se adaptan a distintos entornos y sectores.</p></div>{apps}</div>
 </div></section>
-{srv_for_solution(s)}
-<section class="section section--tight section--alt" aria-labelledby="h-mb"><div class="container">
+<section class="section section--tight" aria-labelledby="h-mb"><div class="container">
   {sec_head("Trabajamos con las mejores marcas", "Tecnología confiable, alto desempeño y soporte especializado.", ("Ver todas las marcas", "marcas.html"), "h-mb")}
-</div>{marquee(brands + brands if len(brands) < 7 else brands, speed=32)}</section>
+</div>{marquee(LOGO_BRANDS(brands), speed=45, plain=True)}</section>
 <section class="section section--tight" aria-labelledby="h-os"><div class="container">
   {sec_head("Otras soluciones", "Integramos varias tecnologías en un mismo proyecto.", ("Ver todas", "soluciones.html"), "h-os")}
   <div class="grid-4">{"".join(f'<a class="pill-link" href="{u("soluciones/" + o["slug"] + ".html")}" data-aos="fade-up" data-aos-delay="{i*60}">{ic(o["icon"])}{o["name"]}</a>' for i, o in enumerate(others))}</div>
@@ -213,12 +188,11 @@ def p_services():
       actions=btn_quote() + btn_advisor(), features=[("headset", "Atención especializada"), ("gear", "Implementación confiable"), ("users", "Acompañamiento técnico"), ("sliders", "Soluciones a la medida")],
       script=("Tu proyecto", "en manos expertas"))}
 {intro([("Inicio", "index.html"), ("Servicios", "servicios.html")], "Servicios pensados para cada etapa del proyecto",
-       "Nuestros <strong>servicios</strong> son el trabajo profesional con el que te acompañamos en todo el ciclo de vida del proyecto: asesorar, instalar, configurar, dar soporte, mantener y capacitar. Aplican sobre cualquiera de nuestras <a class='hl-blue' href='" + u("soluciones.html") + "'>soluciones</a>, incluso si ya cuentas con los equipos.")}
+       "En <strong>Wiccom</strong> te acompañamos durante todo el ciclo de vida de tu proyecto, con servicios profesionales que garantizan una implementación exitosa, operación confiable y el máximo aprovechamiento de la tecnología.")}
 <section class="section" aria-labelledby="h-ns"><div class="container">
   {sec_head("Nuestros servicios", "Soluciones expertas para que tu empresa nunca se detenga.", hid="h-ns")}
   {carousel([srv_card(s, i) for i, s in enumerate(SERVICES)], per=6, label="Servicios")}
 </div></section>
-{sol_vs_srv("srv")}
 <section class="section section--tight section--tint"><div class="container">{steps(HOW, "¿Cómo trabajamos?", "Un proceso simple y efectivo para lograr grandes resultados.")}</div></section>
 <section class="section section--tight"><div class="container">{feats_row([
     ("gear", "Experiencia técnica", "Un equipo de especialistas con amplio conocimiento."),
@@ -266,14 +240,13 @@ def p_brands():
   <div class="mhero__img" data-aos="zoom-in">{ph("marcas/hero-alianzas.jpg", "Apretón de manos frente a edificios corporativos", "1200x900", dark=True, eager=True)}<p>Alianzas que impulsan<br>tus proyectos</p></div>
 </div>
 <div class="container"><h2 class="sr-only">Por qué comprar con Wiccom</h2><div class="grid-4" style="padding-bottom:28px">{feats}</div></div></section>
-<section class="section" id="directorio" aria-labelledby="h-dir"><div class="container" data-filter-group data-page-size="20">
+<section class="section" id="directorio" aria-labelledby="h-dir"><div class="container" data-filter-group>
   {sec_head("Directorio de marcas", "Filtra por categoría o busca por nombre.", hid="h-dir")}
   <div class="toolbar"><div class="searchbox">{ic("search")}<label class="sr-only" for="brand-q">Buscar una marca</label><input class="input" id="brand-q" type="search" placeholder="Buscar una marca…" data-filter-search></div>
     <label class="sr-only" for="brand-cat">Categoría</label><select class="input" id="brand-cat" style="max-width:260px" data-filter-select>{sel}</select></div>
   <div class="chips" style="margin-bottom:24px" role="group" aria-label="Filtrar por categoría">{chips}</div>
   <div class="brand-grid" data-filter-items>{tiles}</div>
   <p class="empty-state">No encontramos esa marca en el directorio. <button class="hl-blue" type="button" data-modal="cotizacion" style="font-weight:600">Pídenos que la cotizemos</button>.</p>
-  <div class="load-more"><button class="btn btn--outline" type="button" data-load-more>Cargar más marcas {ic("plus")}</button></div>
 </div></section>
 <section class="section section--tight" style="padding-top:0"><div class="container" style="display:grid;gap:18px">
   <div class="store-invite" data-aos="fade-up">{ic("cart", "ico ico-lg")}<div><h2>¿Buscas otra marca?</h2><p>En nuestra tienda encontrarás un catálogo más amplio de fabricantes y productos.</p></div><a class="btn btn--dark" href="{SITE["store"]}" target="_blank" rel="noopener">Visitar tienda {ic("arrow")}</a></div>
@@ -305,7 +278,7 @@ def p_brand(b):
     sols = [SOL[s] for s in b["sols"]]
     cards = [f'''<article class="scard" data-aos="fade-up" data-aos-delay="{i*80}"><div class="scard__media">{ph("soluciones/" + s["slug"] + ".jpg", s["name"], "800x500")}<span class="scard__icon">{ic(s["icon"])}</span></div>
       <div class="scard__body"><h3><a class="card-link" href="{u("soluciones/" + s["slug"] + ".html")}">{s["name"]}</a></h3><p>{s["short"]}</p><span class="link-more">Ver solución {ic("arrow")}</span></div></article>''' for i, s in enumerate(sols)]
-    others = [x for x in BRANDS if x["slug"] != b["slug"] and set(x["cats"].split()) & set(b["cats"].split())][:10] or BRANDS[:10]
+    others = [x for x in BRANDS if x["slug"] != b["slug"] and set(x["cats"].split()) & set(b["cats"].split())]
     cats = " · ".join(n for k, n in CATS if k in b["cats"].split())
     lines = "".join(f'<div class="bline" data-aos="fade-up" data-aos-delay="{i*70}">{ic(icn)}<h3>{t}</h3></div>' for i, (icn, t) in enumerate(brand_lines(b)))
     apps = "".join(f'<li data-aos="fade-up" data-aos-delay="{i*60}">{ic("check")}<span>{t}</span></li>' for i, t in enumerate(brand_apps(b)))
@@ -333,7 +306,7 @@ def p_brand(b):
 <section class="section section--tight"><div class="container">
   <div class="store-invite store-invite--plain" data-aos="fade-up">{ic("msg", "ico ico-lg")}<div><h2>¿Te interesa implementar {b["name"]} en tu proyecto?</h2><p>Te asesoramos para elegir el modelo adecuado y lo cotizamos con instalación, configuración y soporte.</p></div><div class="store-invite__actions"><a class="btn btn--primary" href="{u(q)}">Solicitar cotización {ic("arrow")}</a>{btn_advisor(b["name"], "btn btn--outline")}</div></div>
 </div></section>
-<section class="section section--tight section--alt" aria-labelledby="h-ob"><div class="container">{sec_head("Otras marcas relacionadas", "", ("Ver todas las marcas", "marcas.html"), "h-ob")}</div>{marquee(others + others if len(others) < 6 else others, speed=34)}</section>
+<section class="section section--tight" aria-labelledby="h-ob"><div class="container">{sec_head("Otras marcas relacionadas", "", ("Ver todas las marcas", "marcas.html"), "h-ob")}</div>{marquee(LOGO_BRANDS(others, b["slug"]), speed=45, plain=True)}</section>
 {ctaband("¿Tienes un proyecto?<br>Hablemos.", f"Te ayudamos a elegir el modelo {b['name']} adecuado para tu necesidad.", ("Solicitar cotización", q), b["name"])}'''
 
 # ================================================================== NOSOTROS
@@ -385,7 +358,7 @@ def p_about():
 </div></section>
 <section class="section section--tight" aria-labelledby="h-mq"><div class="container">
   {sec_head("Marcas que nos respaldan", "Trabajamos con fabricantes líderes a nivel global.", ("Ver todas las marcas", "marcas.html"), "h-mq")}
-</div>{marquee(FEATURED(), speed=40, board=True)}</section>
+</div>{marquee(FEATURED(), speed=45, plain=True)}</section>
 {ctabig("Hagamos tu próximo proyecto realidad", "Cuéntanos qué necesitas. Nuestro equipo te asesorará para encontrar la mejor solución en tecnología.",
         f'<a class="btn btn--white" href="{u("contacto.html")}">Contáctanos {ic("arrow")}</a><a class="btn btn--ghost" href="{SITE["store"]}" target="_blank" rel="noopener">Visitar tienda</a>',
         tiles=[("file", "Solicita una cotización", "cotizacion.html"), ("msg", "Habla con un asesor", "contacto.html"), ("cart", "Explora nuestra tienda", SITE["store"])])}'''
@@ -411,13 +384,12 @@ def p_resources():
   {sec_head("Explora por categoría", "Encuentra fácilmente el contenido que más te interesa.", hid="h-cat")}
   <div class="grid-6">{cats}</div>
 </div></section>
-<section class="section" id="articulos" aria-labelledby="h-art"><div class="container" data-filter-group data-page-size="6">
+<section class="section" id="articulos" aria-labelledby="h-art"><div class="container" data-filter-group>
   {sec_head("Artículos recientes", "Contenido nuevo y actualizado para mantenerte siempre informado.", hid="h-art")}
   <div class="toolbar"><div class="searchbox">{ic("search")}<label class="sr-only" for="art-q">Buscar artículos</label><input class="input" id="art-q" type="search" placeholder="Buscar recursos, temas o palabras clave…" data-filter-search></div>
     <div class="chips chips--blue" role="group" aria-label="Filtrar por categoría">{chips}</div></div>
   <div class="grid-3" data-filter-items>{allcards}</div>
   <p class="empty-state">No hay artículos con ese criterio. Prueba otra palabra o <a class="hl-blue" href="{u("contacto.html")}">pregúntale a un asesor</a>.</p>
-  <div class="load-more"><button class="btn btn--outline" type="button" data-load-more>Cargar más artículos {ic("plus")}</button></div>
 </div></section>
 <section class="section section--tight" style="padding-top:0"><div class="container duo">
   <div class="duo__card" data-aos="fade-up">{ic("users", "ico ico-lg")}<div style="flex:1"><h2>¿Buscas orientación para tu proyecto?</h2><p>Nuestro equipo de especialistas puede ayudarte a encontrar la mejor solución para tus necesidades.</p>

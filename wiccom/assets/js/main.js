@@ -29,7 +29,10 @@
   /* ---------- AOS ---------- */
   if (window.AOS) {
     AOS.init({ duration: 750, easing: 'ease-out-cubic', once: true, offset: 60, disable: reduceMotion });
+    // Recalcula posiciones cuando la página cambia de alto (imágenes cargadas, filtros, etc.)
+    addEventListener('load', () => AOS.refresh());
   }
+  const refreshAOS = () => { if (window.AOS) requestAnimationFrame(() => AOS.refresh()); };
 
   /* ---------- Header ---------- */
   const header = $('.site-header');
@@ -177,6 +180,7 @@
       empty?.classList.toggle('is-visible', matches.length === 0);
       chips.forEach(c => c.setAttribute('aria-pressed', c.dataset.filter === cat ? 'true' : 'false'));
       if (select) select.value = cat;
+      refreshAOS();
     };
     const setCat = c => { cat = c; limit = pageSize; apply(); };
     chips.forEach(c => c.addEventListener('click', () => setCat(c.dataset.filter)));
