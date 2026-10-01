@@ -4,10 +4,10 @@ DirectoryIndex index.html
 ErrorDocument 404 /404.html
 
 RewriteEngine On
-# Forzar HTTPS y dominio sin www
+# Forzar HTTPS y dominio con www (igual que el canonical y el sitemap)
 RewriteCond %{HTTPS} off [OR]
-RewriteCond %{HTTP_HOST} ^www\. [NC]
-RewriteRule ^ https://wiccom.com.mx%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^ https://www.wiccom.com.mx%{REQUEST_URI} [L,R=301]
 
 # /pagina.html  ->  /pagina   (URL limpia)
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]

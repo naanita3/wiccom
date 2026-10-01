@@ -4,7 +4,7 @@
 CATS = [  # categorías de marcas
     ("videovigilancia", "Videovigilancia"), ("redes", "Redes"), ("computo", "Cómputo"),
     ("energia", "Energía"), ("acceso", "Control de acceso"), ("audio-video", "Audio y video"),
-    ("almacenamiento", "Almacenamiento"), ("ciberseguridad", "Ciberseguridad"),
+    ("almacenamiento", "Almacenamiento"), ("ciberseguridad", "Ciberseguridad"), ("software", "Software"),
 ]
 
 BRANDS = [
@@ -36,8 +36,48 @@ BRANDS = [
  dict(name="MikroTik", slug="mikrotik", cats="redes", desc="Routers, switches y enlaces inalámbricos con gran flexibilidad de configuración.", lead="Routing y enlaces inalámbricos flexibles.", sols=["redes-y-cableado"]),
  dict(name="Ajax", slug="ajax", cats="acceso videovigilancia", desc="Sistemas de alarma inalámbricos con detección de intrusión y administración desde app.", lead="Alarmas inalámbricas profesionales.", sols=["control-de-acceso", "videovigilancia"]),
  dict(name="CDP", slug="cdp", cats="energia", desc="UPS, reguladores y protección eléctrica para hogares, oficinas y empresas.", lead="Reguladores y UPS para oficinas.", sols=["energia-y-respaldo"]),
+
+ # --- Marcas con logo en assets/img/marcas/ (agregadas desde la carpeta de logos)
+ dict(name="ACTi", slug="acti", cats="videovigilancia", desc="Fabricante de cámaras IP, grabadores y software de gestión de video para proyectos de videovigilancia profesional.", lead="Videovigilancia IP profesional para empresas e instituciones.", sols=["videovigilancia"]),
+ dict(name="Epcom", slug="epcom", cats="videovigilancia redes energia", desc="Marca con amplio portafolio para integradores: cámaras, fuentes de poder, cableado, accesorios y soluciones de energía.", lead="Accesorios, energía y conectividad para proyectos de seguridad.", sols=["videovigilancia", "redes-y-cableado", "energia-y-respaldo"]),
+ dict(name="ALFA Network", slug="alfa-network", cats="redes", desc="Adaptadores Wi-Fi, antenas y equipos inalámbricos de largo alcance para conectividad en interiores y exteriores.", lead="Conectividad inalámbrica de largo alcance.", sols=["redes-y-cableado"]),
+ dict(name="Alvarion", slug="alvarion", cats="redes", desc="Soluciones de conectividad inalámbrica y Wi-Fi para operadores, ciudades, campus y espacios de alta densidad.", lead="Redes inalámbricas para espacios de alta densidad.", sols=["redes-y-cableado"]),
+ dict(name="AMP NetConnect", slug="amp-netconnect", cats="redes", desc="Cableado estructurado de cobre y fibra óptica, conectividad y accesorios para redes empresariales y centros de datos.", lead="Cableado estructurado confiable para tu red.", sols=["redes-y-cableado"]),
+ dict(name="Cooler Master", slug="cooler-master", cats="computo", desc="Gabinetes, fuentes de poder, enfriamiento y periféricos para equipos de cómputo de alto desempeño.", lead="Componentes para equipos de alto desempeño.", sols=["computo-y-equipamiento"]),
+ dict(name="Oracle", slug="oracle", cats="software computo", desc="Bases de datos, software empresarial, servidores e infraestructura para la operación de organizaciones de todos los tamaños.", lead="Software e infraestructura para la operación empresarial.", sols=["computo-y-equipamiento"]),
+ dict(name="Autodesk", slug="autodesk", cats="software", desc="Software de diseño, ingeniería y construcción, como AutoCAD y Revit, para arquitectura, ingeniería y manufactura.", lead="Software de diseño e ingeniería.", sols=["computo-y-equipamiento"]),
+ dict(name="Aspel", slug="aspel", cats="software", desc="Software administrativo y contable para empresas en México: facturación, nómina, contabilidad e inventarios.", lead="Facturación, nómina y contabilidad en un solo lugar.", sols=["computo-y-equipamiento"]),
 ]
 BRAND = {b["slug"]: b for b in BRANDS}
+
+# Marcas que aparecen en el carrusel (en este orden). Deben tener logo en assets/img/marcas/.
+MARQUEE = ["hikvision", "dell", "acti", "ubiquiti", "epcom", "alfa-network", "alvarion",
+           "amp-netconnect", "cooler-master", "oracle", "autodesk", "aspel"]
+
+# Líneas de producto y aplicaciones por categoría.
+# Para una marca en particular puedes escribir lines=[...] y apps=[...] dentro de su dict.
+LINES_BY_CAT = {
+    "videovigilancia": [("cctv", "Cámaras IP y analógicas"), ("server", "Grabadores NVR / DVR"), ("monitor", "Software de gestión de video")],
+    "redes": [("network", "Switches y routers"), ("wifi", "Wi-Fi y enlaces inalámbricos"), ("link", "Cableado y conectividad")],
+    "computo": [("monitor", "Equipos de cómputo"), ("server", "Servidores y estaciones"), ("box", "Componentes y periféricos")],
+    "energia": [("battery", "UPS y respaldo"), ("zap", "Regulación y protección"), ("rack", "PDU y distribución")],
+    "acceso": [("lock", "Control de acceso"), ("users", "Asistencia y torniquetes"), ("shield", "Alarmas e intrusión")],
+    "audio-video": [("monitor", "Pantallas y proyección"), ("msg", "Videoconferencia"), ("sound", "Audio profesional")],
+    "almacenamiento": [("hdd", "Discos para videovigilancia"), ("box", "Almacenamiento NAS"), ("monitor", "SSD y memorias")],
+    "ciberseguridad": [("shield", "Firewalls"), ("lock", "Acceso seguro"), ("network", "Redes protegidas")],
+    "software": [("monitor", "Licenciamiento"), ("gear", "Implementación"), ("headset", "Soporte y actualizaciones")],
+}
+APPS_BY_CAT = {
+    "videovigilancia": ["Oficinas y corporativos", "Comercios y plazas", "Industria y almacenes", "Escuelas"],
+    "redes": ["Oficinas", "Naves industriales", "Campus y escuelas", "Hoteles y hospitales"],
+    "computo": ["Puestos de trabajo", "Áreas de diseño e ingeniería", "Centros de datos", "Punto de venta"],
+    "energia": ["Sites y centros de datos", "Videovigilancia", "Oficinas", "Industria"],
+    "acceso": ["Accesos de personal", "Fraccionamientos", "Estacionamientos", "Industria"],
+    "audio-video": ["Salas de juntas", "Capacitación", "Recepciones", "Señalización digital"],
+    "almacenamiento": ["Grabación continua", "Respaldos", "Servidores", "Equipos de oficina"],
+    "ciberseguridad": ["Oficinas", "Sucursales", "Acceso remoto", "Centros de datos"],
+    "software": ["Administración y contabilidad", "Diseño e ingeniería", "Bases de datos", "Operación empresarial"],
+}
 
 SOLUTIONS = [
  dict(slug="videovigilancia", name="Videovigilancia", icon="cctv", short="Soluciones de seguridad que te dan tranquilidad en todo momento.",

@@ -7,6 +7,9 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const CFG = window.WICCOM || {};
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Modo demo: en tu computadora o en la vista previa de Vercel los formularios simulan el envío.
+  const DEMO_FILE = location.protocol === 'file:';
+  const DEMO = DEMO_FILE || ['localhost', '127.0.0.1'].includes(location.hostname) || location.hostname.endsWith('vercel.app');
 
   /* ---------- Placeholders: marca imágenes cargadas / faltantes ---------- */
   const handleImg = img => {
@@ -212,9 +215,11 @@
   });
 
   /* ---------- Formularios ---------- */
-  const toast = (msg, ms = 4200) => {
+  const toast = (msg, ms = 4200, type = 'ok') => {
     const t = $('#toast'); if (!t) return;
-    $('span', t).textContent = msg; t.classList.add('is-visible');
+    ($('.toast__msg', t) || $('span', t)).textContent = msg;
+    t.classList.toggle('is-error', type === 'error');
+    t.classList.add('is-visible');
     clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('is-visible'), ms);
   };
   const MAX = 10 * 1024 * 1024;
@@ -289,7 +294,16 @@
       e.preventDefault();
       const fields = $$('input:not([type=hidden]):not(.hp input), select, textarea', form).filter(f => !f.closest('.hp') && f.type !== 'file');
       const bad = fields.filter(f => !check(f));
-      if (bad.length) { bad[0].focus(); toast('Revisa los campos marcados.'); return; }
+      if (bad.length) { bad[0].focus(); toast('Revisa los campos marcados.', 4200, 'error'); return; }
+      // CAPTCHA (Cloudflare Turnstile)
+      const cap = $('.captcha', form);
+      const token = $('[name="cf-turnstile-response"]', form)?.value;
+      if (cap && !DEMO_FILE && !token) {
+        cap.classList.add('is-invalid');
+        $('.field__error', cap).textContent = window.turnstile ? 'Completa la verificación de seguridad.' : 'No se pudo cargar la verificación de seguridad. Recarga la página.';
+        toast('Completa la verificación de seguridad.', 4200, 'error'); return;
+      }
+      cap?.classList.remove('is-invalid');
       if ($('.hp input', form)?.value) return; // bot
       const btn = $('[type=submit]', form);
       btn.classList.add('is-loading');
@@ -297,7 +311,7 @@
       files.forEach(f => data.append('archivos[]', f));
       const wrap = form.parentElement;
       try {
-        if (location.protocol === 'file:') await new Promise(r => setTimeout(r, 900)); // modo demo local
+        if (DEMO) await new Promise(r => setTimeout(r, 900)); // modo demo (local o vista previa): no envía
         else {
           const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
           const json = await res.json().catch(() => ({}));
@@ -307,8 +321,11 @@
         form.reset(); files = []; $$('.files', wrap).forEach(l => l.innerHTML = '');
         wrap.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
       } catch (err) {
-        toast('No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.', 6000);
-      } finally { btn.classList.remove('is-loading'); }
+        toast(err.message && err.message !== 'Error' ? err.message : 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.', 6000, 'error');
+      } finally {
+        btn.classList.remove('is-loading');
+        const w = $('.cf-turnstile', form); if (w && window.turnstile) try { window.turnstile.reset(w); } catch (_) {}
+      }
     });
   });
   $$('[data-reset-form]').forEach(b => b.addEventListener('click', () => b.closest('.is-sent')?.classList.remove('is-sent')));
@@ -317,7 +334,7 @@
   $$('form[data-newsletter]').forEach(f => f.addEventListener('submit', e => {
     e.preventDefault();
     const inp = $('input[type=email]', f);
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(inp.value.trim())) { toast('Escribe un correo válido para suscribirte.'); inp.focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(inp.value.trim())) { toast('Escribe un correo válido para suscribirte.', 4200, 'error'); inp.focus(); return; }
     toast('¡Listo! Te suscribiste a las novedades de Wiccom.'); f.reset();
   }));
 

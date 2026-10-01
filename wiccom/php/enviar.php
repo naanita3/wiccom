@@ -17,6 +17,9 @@ const MAX_BYTES    = 10 * 1024 * 1024;            // 10 MB por archivo
 const MAX_ARCHIVOS = 5;
 const MIN_SEGUNDOS = 3;                           // tiempo mínimo para llenar (anti-bots)
 const EXT_OK = ['pdf','doc','docx','xls','xlsx','jpg','jpeg','png','dwg'];
+// Cloudflare Turnstile (CAPTCHA): pega aquí la "Secret Key" de tu sitio en dash.cloudflare.com → Turnstile.
+// La de abajo es la clave de PRUEBA de Cloudflare (siempre aprueba): cámbiala antes de publicar.
+const TURNSTILE_SECRET = '1x0000000000000000000000000000000AA';
 // =================================================
 
 function responder(bool $ok, string $msg, int $code = 200): never {
@@ -37,7 +40,26 @@ if (!empty($_POST['website'])) responder(true, 'Gracias.');
 $ts = (int)($_POST['_ts'] ?? 0);
 if ($ts > 0 && (time() * 1000 - $ts) < MIN_SEGUNDOS * 1000) responder(false, 'Envío demasiado rápido, intenta de nuevo.', 429);
 
-$form      = limpio('form', 40) ?: 'contacto';
+// Verificación CAPTCHA (obligatoria en todos los formularios)
+function captcha_ok(string $token): bool {
+  if ($token === '' || TURNSTILE_SECRET === '') return false;
+  $payload = http_build_query(['secret' => TURNSTILE_SECRET, 'response' => $token, 'remoteip' => $_SERVER['REMOTE_ADDR'] ?? '']);
+  $url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+  if (function_exists('curl_init')) {
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $payload, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10]);
+    $raw = curl_exec($ch); curl_close($ch);
+  } else {
+    $raw = @file_get_contents($url, false, stream_context_create(['http' => ['method' => 'POST', 'header' => "Content-Type: application/x-www-form-urlencoded\r\n", 'content' => $payload, 'timeout' => 10]]));
+  }
+  $res = json_decode((string)$raw, true);
+  return is_array($res) && !empty($res['success']);
+}
+if (!captcha_ok((string)($_POST['cf-turnstile-response'] ?? ''))) {
+  responder(false, 'No pudimos verificar que no eres un robot. Completa la verificación e intenta de nuevo.', 400);
+}
+
+$form      = limpio('tipo', 60) ?: limpio('form', 40) ?: 'contacto';
 $nombre    = limpio('nombre', 120);
 $empresa   = limpio('empresa', 120);
 $correo    = filter_var(limpio('correo', 160), FILTER_VALIDATE_EMAIL) ?: '';
@@ -51,7 +73,7 @@ $contexto  = limpio('contexto', 200);
 $mensaje   = mb_substr(strip_tags(trim((string)($_POST['mensaje'] ?? ''))), 0, 2000);
 
 if ($nombre === '' || ($correo === '' && $telefono === '')) responder(false, 'Faltan datos obligatorios.', 422);
-if (isset($_POST['privacidad']) === false && $form !== 'asesor') responder(false, 'Debes aceptar el Aviso de Privacidad.', 422);
+if (!isset($_POST['privacidad'])) responder(false, 'Debes aceptar el Aviso de Privacidad.', 422);
 
 // Cuerpo del correo
 $filas = [

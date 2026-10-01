@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Componentes compartidos del sitio Wiccom (header, footer, SEO, modales, íconos)."""
-import json, re, html
+import json, re, html, os
 
 # ------------------------------------------------------------------
 # CONFIGURACIÓN GENERAL — cambia aquí y se actualiza en todo el sitio
@@ -28,7 +28,14 @@ SITE = {
         "youtube": "https://www.youtube.com/@wiccom",
     },
     "og_default": "assets/img/og/wiccom-og.jpg",
+    # Cloudflare Turnstile (CAPTCHA). Crea un sitio en dash.cloudflare.com → Turnstile y pega aquí la
+    # "Site Key". La "Secret Key" va en php/enviar.php. La clave de abajo es la de PRUEBA de Cloudflare
+    # (siempre aprueba): cámbiala antes de publicar.
+    "turnstile_sitekey": "1x00000000000000000000AA",
 }
+
+CUR = ' aria-current="page"'
+NOTAB = 'tabindex="-1"'
 
 NAV = [
     ("Inicio", "index.html", "inicio"),
@@ -141,13 +148,41 @@ class Ctx:
     images = {}     # ruta -> (descripción, tamaño sugerido, páginas)
     page = ""
 
+IMG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets", "img"))
+EXTS = (".webp", ".jpg", ".jpeg", ".png", ".svg")
+
+def find_img(path, fallback=True):
+    """Busca la imagen con cualquier extensión (webp, jpg, png, svg).
+    Si no existe y fallback=True, usa la imagen genérica de la carpeta (default.* o 1.*)."""
+    stem = os.path.splitext(path)[0]
+    for e in EXTS:
+        if os.path.isfile(os.path.join(IMG_DIR, stem + e)):
+            return stem + e
+    if fallback:
+        folder = os.path.dirname(path)
+        for name in ("default", "1"):
+            for e in EXTS:
+                cand = (folder + "/" if folder else "") + name + e
+                if os.path.isfile(os.path.join(IMG_DIR, cand)):
+                    return cand
+    return None
+
 def ph(path, alt, size="1200x800", dark=False, eager=False, cls=""):
-    """Espacio para imagen: si el archivo no existe se ve un placeholder con la ruta."""
+    """Espacio para imagen. Pon el archivo en assets/img/<ruta> (webp, jpg o png);
+    si no existe se muestra un recuadro con la ruta y el tamaño sugerido."""
     w, h = size.split("x")
-    Ctx.images.setdefault(path, [alt, size, set()])[2].add(Ctx.page)
+    real = find_img(path)
+    Ctx.images.setdefault(path, [alt, size, set(), real == find_img(path, False) and real is not None])[2].add(Ctx.page)
+    src = real or path
     load = 'fetchpriority="high"' if eager else 'loading="lazy"'
     return (f'<figure class="ph{" ph--dark" if dark else ""} {cls}" data-ph="assets/img/{path} · {size}">'
-            f'<img src="{Ctx.r}assets/img/{path}" alt="{html.escape(alt)}" width="{w}" height="{h}" {load} decoding="async"></figure>')
+            f'<img src="{Ctx.r}assets/img/{src}" alt="{html.escape(alt)}" width="{w}" height="{h}" {load} decoding="async"></figure>')
+
+def clean(path):
+    """URL pública limpia (sin .html): servicios/instalacion.html -> servicios/instalacion"""
+    if path in ("index.html", ""):
+        return ""
+    return path[:-5] if path.endswith(".html") else path
 
 def u(href):
     """Enlace interno relativo."""
@@ -159,11 +194,20 @@ def wa_url(msg="¡Hola! Me gustaría hablar con un asesor de Wiccom."):
     from urllib.parse import quote
     return f"https://wa.me/{SITE['whatsapp']}?text={quote(msg)}"
 
+def brand_logo(b):
+    """Ruta del logo de la marca: assets/img/marcas/<slug>.(svg|png|webp|jpg) o el campo 'logo' de data.py."""
+    if b.get("logo"):
+        return find_img("marcas/" + b["logo"], False)
+    return find_img("marcas/" + b["slug"], False)
+
 def brand_tile(b, tag="a", extra=""):
-    """Logo de marca: coloca el archivo en assets/img/marcas/<slug>.svg (o .png)."""
-    Ctx.images.setdefault(f"marcas/{b['slug']}.svg", [f"Logotipo {b['name']} (SVG o PNG fondo transparente)", "400x200", set()])[2].add(Ctx.page)
-    inner = (f'<span class="brand__name">{b["name"]}</span>'
-             f'<img src="{Ctx.r}assets/img/marcas/{b["slug"]}.svg" alt="{b["name"]}" width="400" height="200" loading="lazy" decoding="async">')
+    """Logo de marca. Si no hay archivo de logo, muestra el nombre como respaldo."""
+    lg = brand_logo(b)
+    Ctx.images.setdefault(f"marcas/{b['slug']}.png", [f"Logotipo {b['name']} (PNG o SVG, fondo blanco o transparente)", "400x200", set(), bool(lg)])[2].add(Ctx.page)
+    if lg:
+        inner = f'<img src="{Ctx.r}assets/img/{lg}" alt="{b["name"]}" width="400" height="200" loading="lazy" decoding="async">'
+    else:
+        inner = f'<span class="brand__name">{b["name"]}</span>'
     if tag == "a":
         return f'<a class="brand" href="{u("marcas/" + b["slug"] + ".html")}" aria-label="Marca {b["name"]}" {extra}>{inner}</a>'
     return f'<div class="brand" {extra}>{inner}</div>'
@@ -172,20 +216,24 @@ def brand_tile(b, tag="a", extra=""):
 # BLOQUES DE LAYOUT
 # ------------------------------------------------------------------
 def logo(light=False):
-    Ctx.images.setdefault("logo-wiccom.svg", ["Logotipo Wiccom (versión a color)", "320x80", set()])[2].add(Ctx.page)
-    Ctx.images.setdefault("logo-wiccom-blanco.svg", ["Logotipo Wiccom (versión blanca para footer)", "320x80", set()])[2].add(Ctx.page)
-    src = "logo-wiccom-blanco.svg" if light else "logo-wiccom.svg"
-    return (f'<a class="logo{" logo--light" if light else ""}" href="{u("index.html")}" aria-label="Wiccom, ir al inicio">'
-            f'<img class="logo__img" src="{Ctx.r}assets/img/{src}" alt="Wiccom · Tecnología que te conecta" width="200" height="50">'
+    """Logo de Wiccom: assets/img/logo-wiccom.(svg|png) a color y logo-wiccom-blanco.(svg|png) para fondos oscuros."""
+    color = find_img("logo-wiccom", False) or find_img("logo", False)
+    white = find_img("logo-wiccom-blanco", False)
+    src = (white or color) if light else color
+    inv = " logo__img--invert" if light and not white else ""
+    img = f'<img class="logo__img{inv}" src="{Ctx.r}assets/img/{src}" alt="Wiccom · Tecnología que te conecta" width="200" height="56">' if src else ""
+    return (f'<a class="logo{" logo--light" if light else ""}" href="{u("index.html")}" aria-label="Wiccom, ir al inicio">{img}'
             f'<span class="logo__fallback"><span class="logo__mark" aria-hidden="true">W</span>'
             f'<span class="logo__text"><span class="logo__name">wiccom</span><span class="logo__tag">Tecnología que te conecta</span></span></span></a>')
 
 def header(active):
     links = "".join(
-        f'<li><a class="nav__link" href="{u(h)}"{" aria-current=\"page\"" if k == active else ""}>{t}</a></li>'
-        for t, h, k in NAV)
+        f'<li><a class="nav__link" href="{u(h)}"{CUR if k == active else ""}>{t}</a></li>'
+        for t, h, k in NAV) + (
+        f'<li class="store"><a class="nav__link nav__store" href="{SITE["store"]}" target="_blank" rel="noopener" aria-describedby="store-tip">{ic("cart")}Tienda</a>'
+        f'<span class="store__tip" id="store-tip" role="tooltip">Conoce nuestro catálogo de productos en wiccom.mx</span></li>')
     mlinks = "".join(
-        f'<li><a href="{u(h)}"{" aria-current=\"page\"" if k == active else ""}>{t}{ic("chev-r")}</a></li>'
+        f'<li><a href="{u(h)}"{CUR if k == active else ""}>{t}{ic("chev-r")}</a></li>'
         for t, h, k in NAV)
     hours = " · ".join(f"{d}: {h}" for d, h in SITE["hours"])
     return f'''
@@ -196,10 +244,7 @@ def header(active):
     <nav class="nav" aria-label="Navegación principal"><ul class="nav__list">{links}</ul></nav>
     <div class="header__actions">
       <button class="icon-btn search-trigger" type="button" data-open-search aria-label="Buscar en el sitio (Ctrl + K)">{ic("search")}</button>
-      <div class="store">
-        <a class="store__btn" href="{SITE["store"]}" target="_blank" rel="noopener" aria-describedby="store-tip">{ic("cart")} Tienda</a>
-        <span class="store__tip" id="store-tip" role="tooltip">Conoce nuestro catálogo de productos en wiccom.mx</span>
-      </div>
+      <a class="btn btn--primary header__cta" href="{u("cotizacion.html")}"><span class="cta-long">Solicitar cotización</span><span class="cta-short">Cotizar</span><span class="header__cta-ico">{ic("arrow")}</span></a>
       <button class="icon-btn burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mnav">{ic("menu")}</button>
     </div>
   </div>
@@ -208,11 +253,11 @@ def header(active):
   <div class="mnav__overlay" data-close-nav></div>
   <div class="mnav__panel" role="dialog" aria-modal="true" aria-label="Menú">
     <div class="mnav__head">{logo()}<button class="icon-btn" type="button" data-close-nav aria-label="Cerrar menú">{ic("x")}</button></div>
-    <nav aria-label="Navegación móvil"><ul class="mnav__list">{mlinks}</ul></nav>
+    <nav aria-label="Navegación móvil"><ul class="mnav__list">{mlinks}<li><a href="{SITE["store"]}" target="_blank" rel="noopener">Tienda{ic("cart")}</a></li></ul></nav>
     <div class="mnav__cta">
+      <a class="btn btn--primary" href="{u("cotizacion.html")}">Solicitar cotización {ic("arrow")}</a>
+      <a class="btn btn--outline" href="{SITE["store"]}" target="_blank" rel="noopener">{ic("cart")} Tienda en línea</a>
       <button class="btn btn--outline" type="button" data-open-search>{ic("search")} Buscar en el sitio</button>
-      <a class="btn btn--primary" href="{SITE["store"]}" target="_blank" rel="noopener">{ic("cart")} Visitar tienda</a>
-      <a class="btn btn--dark" href="{u("cotizacion.html")}">Solicitar cotización {ic("arrow")}</a>
     </div>
     <div class="mnav__contact">
       <a href="tel:{SITE["phone_tel"]}">{ic("phone")} {SITE["phone_display"]}</a>
@@ -296,6 +341,7 @@ def modals(solutions, services, brands):
           {field("correo", "Correo electrónico", "email", True, "nombre@empresa.com", "email", idp="qa")}
           {field("mensaje", "Mensaje", "textarea", False, "¿En qué te podemos ayudar?", idp="qa", full=True, opt=True)}
           <div class="field field--full">{privacy("qa")}</div>
+          {captcha("qa")}
         </div>
         <div class="form-actions" style="margin-top:16px"><button class="btn btn--primary" type="submit">Enviar solicitud {ic("send")}</button></div>
       </form>
@@ -321,6 +367,7 @@ def modals(solutions, services, brands):
           {field("mensaje", "Detalles de tu requerimiento", "textarea", True, "Cantidades, ubicación, fechas, etc.", idp="mc", full=True)}
           {dropzone("mc")}
           <div class="field field--full">{privacy("mc")}</div>
+          {captcha("mc")}
         </div>
         <div class="form-actions" style="margin-top:16px"><button class="btn btn--primary" type="submit">Enviar solicitud {ic("send")}</button><span class="secure">{ic("lock")} Tus datos están protegidos.</span></div>
       </form>
@@ -362,6 +409,12 @@ def dropzone(idp):
 def privacy(idp):
     return (f'<label class="check"><input type="checkbox" name="privacidad" value="acepto" required> <span>Acepto el <a href="{u("aviso-de-privacidad.html")}" target="_blank">Aviso de Privacidad</a> de Wiccom y autorizo el tratamiento de mis datos para atender mi solicitud. <span class="req" style="color:var(--blue)">*</span></span></label>'
             f'<span class="field__error" aria-live="polite"></span>')
+
+def captcha(idp):
+    """Verificación anti-robots (Cloudflare Turnstile), antes del botón de envío."""
+    return (f'<div class="field field--full captcha"><span class="sr-only" id="{idp}-cap-l">Verificación de seguridad</span>'
+            f'<div class="cf-turnstile" data-sitekey="{SITE["turnstile_sitekey"]}" data-language="es" data-theme="light" data-size="flexible" aria-labelledby="{idp}-cap-l"></div>'
+            f'<span class="field__error" aria-live="polite"></span></div>')
 
 def success(msg="Recibimos tu solicitud. Un asesor te contactará en menos de 24 horas hábiles."):
     return f'''<div class="form-success" role="status">{ic("check")}<h3>¡Gracias por escribirnos!</h3><p class="muted">{msg}</p>
@@ -427,7 +480,7 @@ def carousel(slides, per=4, autoplay=0, label="Carrusel", cls=""):
 
 def marquee(brands, speed=40, board=False, reverse=False, label="Marcas con las que trabajamos"):
     a = "".join(f"<li>{brand_tile(b)}</li>" for b in brands)
-    b2 = "".join(f'<li aria-hidden="true">{brand_tile(b, extra="tabindex=\"-1\"")}</li>' for b in brands)
+    b2 = "".join(f'<li aria-hidden="true">{brand_tile(b, extra=NOTAB)}</li>' for b in brands)
     cls = "marquee" + (" marquee--board" if board else "") + (" marquee--reverse" if reverse else "")
     return f'<div class="{cls}" style="--speed:{speed}s" aria-label="{label}"><ul class="marquee__track">{a}{b2}</ul></div>'
 
@@ -485,7 +538,7 @@ def org_schema():
     return {
         "@context": "https://schema.org", "@type": "LocalBusiness", "@id": SITE["domain"] + "/#org",
         "name": "Wiccom", "slogan": SITE["tagline"], "url": SITE["domain"] + "/",
-        "logo": SITE["domain"] + "/assets/img/logo-wiccom.svg", "image": SITE["domain"] + "/" + SITE["og_default"],
+        "logo": SITE["domain"] + "/assets/img/" + (find_img("logo-wiccom", False) or "logo.png"), "image": SITE["domain"] + "/" + SITE["og_default"],
         "telephone": SITE["phone_tel"], "email": SITE["email"], "priceRange": "$$",
         "address": {"@type": "PostalAddress", "streetAddress": SITE["street"], "addressLocality": SITE["city"],
                     "addressRegion": SITE["region"], "postalCode": SITE["zip"], "addressCountry": "MX"},
@@ -498,12 +551,14 @@ def org_schema():
 
 def crumb_schema(items):
     return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE["domain"] + "/" + (h if h != "index.html" else "")}
+        {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE["domain"] + "/" + clean(h)}
         for i, (n, h) in enumerate(items)]}
 
 def document(path, title, desc, body, active, solutions, services, brands, schemas=(), og_img=None, og_type="website", extra_head="", keywords="", noindex=False, article=False):
     depth = path.count("/")
-    canonical = SITE["domain"] + "/" + ("" if path == "index.html" else path)
+    if len(desc) > 160:  # Google muestra ~155-160 caracteres
+        desc = desc[:157].rsplit(" ", 1)[0].rstrip(",.;:") + "…"
+    canonical = SITE["domain"] + "/" + clean(path)
     og = SITE["domain"] + "/" + (og_img or SITE["og_default"])
     full_title = title if "Wiccom" in title else f"{title} | Wiccom"
     ld = [org_schema()] + list(schemas)
@@ -526,7 +581,7 @@ def document(path, title, desc, body, active, solutions, services, brands, schem
 <meta property="og:title" content="{full_title}"><meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canonical}"><meta property="og:image" content="{og}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{full_title}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{og}">
-<link rel="icon" href="{r}assets/img/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="{r}assets/img/apple-touch-icon.png">
+<link rel="icon" href="{r}assets/img/favicon.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="{r}assets/img/apple-touch-icon.png">
 <link rel="manifest" href="{r}site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -543,12 +598,13 @@ def document(path, title, desc, body, active, solutions, services, brands, schem
 {modals(solutions, services, brands)}
 <a class="fab-wa" href="{wa_url()}" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">{ic("wa")}</a>
 <button class="to-top" type="button" aria-label="Volver arriba">{ic("up")}</button>
-<div class="toast" id="toast" role="status" aria-live="polite">{ic("check")}<span></span></div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="toast__ok">{ic("check")}</span><span class="toast__err">{ic("x")}</span><span class="toast__msg"></span></div>
 {'<div class="progress" aria-hidden="true"></div>' if article else ""}
 <script>window.WICCOM={{root:"{r}",whatsapp:"{SITE["whatsapp"]}"}};</script>
 <script src="{r}assets/js/search-index.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
 <script src="{r}assets/js/main.js" defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>
 </html>'''
     used = set(re.findall(r'#i-([a-z0-9-]+)"', page))

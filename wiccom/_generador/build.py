@@ -3,8 +3,16 @@
 Uso:  python3 build.py
 """
 import os, json
+CHECK = "check"
 from base import *
 from data import *
+
+def FEATURED():
+    """Marcas del carrusel: las de MARQUEE (data.py); si faltan, completa con las que tengan logo."""
+    out = [BRAND[k] for k in MARQUEE if k in BRAND]
+    out += [b for b in BRANDS if b not in out and brand_logo(b)]
+    return out or BRANDS[:14]
+
 
 OUT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 PAGES = []   # para sitemap y buscador
@@ -67,6 +75,35 @@ def btn_advisor(ctx="", cls="btn btn--ghost"):
     return f'<button class="{cls}" type="button" data-modal="asesor" data-context="{ctx}">Hablar con un asesor</button>'
 
 # ================================================================== INICIO
+# ================================================================== SOLUCIONES vs SERVICIOS
+def sol_vs_srv(active=None):
+    """Explica la diferencia: Soluciones = QUÉ tecnología; Servicios = CÓMO te acompañamos."""
+    sl = "".join(f'<li><a href="{u("soluciones/" + o["slug"] + ".html")}">{ic(o["icon"])}{o["name"]}</a></li>' for o in SOLUTIONS)
+    sv = "".join(f'<li><a href="{u("servicios/" + o["slug"] + ".html")}">{ic(o["icon"])}{o["name"]}</a></li>' for o in SERVICES)
+    def col(kind, tag, title, text, items, href, cta):
+        cur = " svs__col--active" if kind == active else ""
+        link = "" if kind == active else f'<a class="link-more" href="{u(href)}">{cta} {ic("arrow")}</a>'
+        return (f'<div class="svs__col svs__col--{kind}{cur}" data-aos="fade-up"><span class="svs__tag">{tag}</span>'
+                f'<h3>{title}</h3><p>{text}</p><ul class="svs__list">{items}</ul>{link}</div>')
+    return f'''<section class="section section--tight svs-wrap" aria-labelledby="h-svs"><div class="container">
+  {sec_head("Soluciones y servicios: cómo trabajamos contigo", "Dos partes de un mismo proyecto: la tecnología correcta y el acompañamiento para que funcione.", hid="h-svs")}
+  <div class="svs">
+    {col("sol", "Soluciones · El qué", "La tecnología que tu empresa necesita", "Áreas de tecnología que diseñamos e integramos con marcas líderes: equipos, infraestructura y sistemas.", sl, "soluciones.html", "Ver soluciones")}
+    <div class="svs__plus" aria-hidden="true">{ic("plus")}</div>
+    {col("srv", "Servicios · El cómo", "Cómo te acompañamos en cada etapa", "Lo que hacemos para que esa tecnología funcione: asesoría, instalación, configuración, soporte y mantenimiento.", sv, "servicios.html", "Ver servicios")}
+  </div>
+  <p class="svs__result" data-aos="fade-up">{ic("check")}<span><strong>Resultado:</strong> un proyecto llave en mano, desde la propuesta hasta la operación diaria.</span><a class="btn btn--primary btn--sm" href="{u("cotizacion.html")}">Solicitar cotización {ic("arrow")}</a></p>
+</div></section>'''
+
+def srv_for_solution(s):
+    """Servicios que acompañan a una solución (enlaces a cada servicio)."""
+    items = "".join(f'<a class="srvstep" href="{u("servicios/" + o["slug"] + ".html")}" data-aos="fade-up" data-aos-delay="{i*60}"><span class="srvstep__n">{i+1}</span>{ic(o["icon"])}<strong>{o["name"]}</strong></a>' for i, o in enumerate(SERVICES))
+    return f'''<section class="section section--tight" aria-labelledby="h-sfs"><div class="container">
+  {sec_head("Servicios que acompañan esta solución", f"No solo suministramos los equipos de {s['name'].lower()}: te acompañamos en cada etapa.", ("Conocer los servicios", "servicios.html"), "h-sfs")}
+  <div class="srvsteps">{items}</div>
+</div></section>'''
+
+# ================================================================== INICIO
 def p_home():
     strip = '<section class="strip" aria-label="Por qué Wiccom"><ul class="container strip__list">' + "".join(
         f'<li class="strip__item" data-aos="fade-up" data-aos-delay="{i*80}">{ic(icn)}<span>{t}</span></li>' for i, (icn, t) in enumerate([
@@ -92,16 +129,17 @@ def p_home():
       script=("Soluciones hoy", "para un mejor mañana"))}
 {strip}
 <section class="section" aria-labelledby="h-sol"><div class="container">
-  {sec_head("Nuestras soluciones", "Tecnología, infraestructura y soporte para cada necesidad de tu empresa.", ("Ver todas las soluciones", "soluciones.html"), "h-sol")}
+  {sec_head("Nuestras soluciones", "Qué tecnología integramos: equipos, infraestructura y sistemas para cada necesidad de tu empresa.", ("Ver todas las soluciones", "soluciones.html"), "h-sol")}
   {sols}
 </div></section>
 <section class="section section--tight section--alt" aria-labelledby="h-srv"><div class="container">
-  {sec_head("Servicios que complementan cada solución", "No solo suministramos equipos: los instalamos, configuramos y mantenemos.", ("Conocer nuestros servicios", "servicios.html"), "h-srv")}
+  {sec_head("Servicios que complementan cada solución", "Cómo te acompañamos: no solo suministramos equipos, los instalamos, configuramos y mantenemos.", ("Conocer nuestros servicios", "servicios.html"), "h-srv")}
   {srv}
 </div></section>
-<section class="section section--tight" aria-labelledby="h-brands"><div class="container">
+{sol_vs_srv()}
+<section class="section section--tight section--alt" aria-labelledby="h-brands"><div class="container">
   {sec_head("Marcas que impulsan tus proyectos", "Trabajamos con fabricantes líderes a nivel mundial.", ("Ver todas las marcas", "marcas.html"), "h-brands")}
-</div>{marquee(BRANDS[:14], speed=45)}</section>
+</div>{marquee(FEATURED(), speed=45)}</section>
 {stats}
 <section class="section" aria-labelledby="h-res"><div class="container">
   {sec_head("Recursos para tu crecimiento", "Guías, consejos y novedades del mundo tecnológico.", ("Ver todos los artículos", "recursos.html"), "h-res")}
@@ -120,11 +158,12 @@ def p_solutions():
       features=[("shield", "Más seguridad"), ("users", "Mayor productividad"), ("zap", "Operación sin interrupciones"), ("chart", "Crecimiento sostenible")],
       script=("Tecnología para", "un mejor mañana"))}
 {intro([("Inicio", "index.html"), ("Soluciones", "soluciones.html")], "Tu aliado en soluciones tecnológicas",
-       "En <strong>Wiccom</strong> integramos soluciones de tecnología para empresas y proyectos, combinando infraestructura, seguridad, conectividad, energía y cómputo, con el respaldo de las mejores marcas y un equipo que te acompaña en todo el proceso.")}
+       "Nuestras <strong>soluciones</strong> son las áreas de tecnología que diseñamos e integramos para tu empresa: videovigilancia, redes, energía, control de acceso y cómputo, con el respaldo de las mejores marcas. Cada solución se complementa con nuestros <a class='hl-blue' href='" + u("servicios.html") + "'>servicios</a> de instalación, configuración, soporte y mantenimiento.")}
 <section class="section" aria-labelledby="h-nsol"><div class="container">
   {sec_head("Nuestras soluciones", "Tecnología, infraestructura y soporte para cada necesidad de tu empresa.", hid="h-nsol")}
   {carousel([sol_card(s, i) for i, s in enumerate(SOLUTIONS)], per=5, label="Soluciones")}
 </div></section>
+{sol_vs_srv("sol")}
 <section class="section section--tight section--alt"><div class="container">
   <div class="feats-wrap"><div class="feats-wrap__title" data-aos="fade-right"><h2>¿Qué tipo de solución necesitas?</h2><p>Te ayudamos a encontrar la mejor opción para tu empresa.</p></div>
   <div class="feats feats--3">{"".join(f'<div class="feat" data-aos="fade-up" data-aos-delay="{i*90}">{ic(a)}<div><h3>{b}</h3><p>{c}</p></div></div>' for i, (a, b, c) in enumerate([
@@ -135,8 +174,9 @@ def p_solutions():
 {ctaband("¿Tienes un proyecto?<br>Hablemos.", "Nuestro equipo de expertos te ayudará a encontrar la solución ideal para tu empresa.")}'''
 
 def p_solution(s):
-    brands = [BRAND[b] for b in s["brands"]]
-    apps = carousel([f'<a class="app-tile" href="{u("cotizacion.html?interes=" + s["name"].replace(" ", "%20"))}">{ph(f"soluciones/{s["slug"]}-app-{i+1}.jpg", a, "600x400")}<span>{a}</span></a>' for i, a in enumerate(s["apps"])], per=5, label="Aplicaciones", cls="carousel--2m")
+    brands = [BRAND[b] for b in s["brands"]] + [b for b in BRANDS if s["slug"] in b["sols"] and b["slug"] not in s["brands"]]
+    brands.sort(key=lambda b: not brand_logo(b))
+    apps = carousel([f'<a class="app-tile" href="{u("cotizacion.html?interes=" + s["name"].replace(" ", "%20"))}">{ph("soluciones/" + s["slug"] + f"-app-{i+1}.jpg", a, "600x400")}<span>{a}</span></a>' for i, a in enumerate(s["apps"])], per=5, label="Aplicaciones", cls="carousel--2m")
     others = [o for o in SOLUTIONS if o["slug"] != s["slug"]]
     return f'''
 {hero(*s["h1"], s["lead"] + " Tecnología confiable para mantener tus espacios y tu operación funcionando.", f"hero/sol-{s['slug']}.jpg", s["name"],
@@ -150,6 +190,7 @@ def p_solution(s):
 <section class="section section--tight" aria-labelledby="h-apps"><div class="container">
   <div class="feats-wrap" style="align-items:start"><div class="feats-wrap__title" data-aos="fade-right"><h2 id="h-apps">Aplicaciones</h2><p>Nuestras soluciones de {s["name"].lower()} se adaptan a distintos entornos y sectores.</p></div>{apps}</div>
 </div></section>
+{srv_for_solution(s)}
 <section class="section section--tight section--alt" aria-labelledby="h-mb"><div class="container">
   {sec_head("Trabajamos con las mejores marcas", "Tecnología confiable, alto desempeño y soporte especializado.", ("Ver todas las marcas", "marcas.html"), "h-mb")}
 </div>{marquee(brands + brands if len(brands) < 7 else brands, speed=32)}</section>
@@ -174,11 +215,12 @@ def p_services():
       actions=btn_quote() + btn_advisor(), features=[("headset", "Atención especializada"), ("gear", "Implementación confiable"), ("users", "Acompañamiento técnico"), ("sliders", "Soluciones a la medida")],
       script=("Tu proyecto", "en manos expertas"))}
 {intro([("Inicio", "index.html"), ("Servicios", "servicios.html")], "Servicios pensados para cada etapa del proyecto",
-       "En <strong>Wiccom</strong> te acompañamos durante todo el ciclo de vida de tu proyecto, con servicios profesionales que garantizan una implementación exitosa, operación confiable y el máximo aprovechamiento de la tecnología.")}
+       "Nuestros <strong>servicios</strong> son el trabajo profesional con el que te acompañamos en todo el ciclo de vida del proyecto: asesorar, instalar, configurar, dar soporte, mantener y capacitar. Aplican sobre cualquiera de nuestras <a class='hl-blue' href='" + u("soluciones.html") + "'>soluciones</a>, incluso si ya cuentas con los equipos.")}
 <section class="section" aria-labelledby="h-ns"><div class="container">
   {sec_head("Nuestros servicios", "Soluciones expertas para que tu empresa nunca se detenga.", hid="h-ns")}
   {carousel([srv_card(s, i) for i, s in enumerate(SERVICES)], per=6, label="Servicios")}
 </div></section>
+{sol_vs_srv("srv")}
 <section class="section section--tight section--tint"><div class="container">{steps(HOW, "¿Cómo trabajamos?", "Un proceso simple y efectivo para lograr grandes resultados.")}</div></section>
 <section class="section section--tight"><div class="container">{feats_row([
     ("gear", "Experiencia técnica", "Un equipo de especialistas con amplio conocimiento."),
@@ -225,7 +267,7 @@ def p_brands():
     <div class="hero__actions"><a class="btn btn--primary" href="#directorio">Explorar marcas {ic("arrow")}</a><a class="btn btn--outline" href="{SITE["store"]}" target="_blank" rel="noopener">{ic("cart")} Visitar tienda</a></div></div>
   <div class="mhero__img" data-aos="zoom-in">{ph("marcas/hero-alianzas.jpg", "Apretón de manos frente a edificios corporativos", "1200x900", dark=True, eager=True)}<p>Alianzas que impulsan<br>tus proyectos</p></div>
 </div>
-<div class="container"><div class="grid-4" style="padding-bottom:28px">{feats}</div></div></section>
+<div class="container"><h2 class="sr-only">Por qué comprar con Wiccom</h2><div class="grid-4" style="padding-bottom:28px">{feats}</div></div></section>
 <section class="section" id="directorio" aria-labelledby="h-dir"><div class="container" data-filter-group data-page-size="20">
   {sec_head("Directorio de marcas", "Filtra por categoría o busca por nombre.", hid="h-dir")}
   <div class="toolbar"><div class="searchbox">{ic("search")}<label class="sr-only" for="brand-q">Buscar una marca</label><input class="input" id="brand-q" type="search" placeholder="Buscar una marca…" data-filter-search></div>
@@ -241,32 +283,60 @@ def p_brands():
 </div></section>
 {ctaband("¿Tienes un proyecto?<br>Hablemos.", "Te recomendamos la marca y el modelo adecuados para tu necesidad.")}'''
 
+def brand_lines(b):
+    if b.get("lines"):
+        return b["lines"]
+    out, seen = [], set()
+    for c in b["cats"].split():
+        for icn, t in LINES_BY_CAT.get(c, []):
+            if t not in seen:
+                seen.add(t); out.append((icn, t))
+    return out[:6]
+
+def brand_apps(b):
+    if b.get("apps"):
+        return b["apps"]
+    out = []
+    for c in b["cats"].split():
+        for t in APPS_BY_CAT.get(c, []):
+            if t not in out:
+                out.append(t)
+    return out[:6]
+
 def p_brand(b):
     sols = [SOL[s] for s in b["sols"]]
-    cards = [f'''<article class="scard" data-aos="fade-up" data-aos-delay="{i*80}"><div class="scard__media">{ph(f"soluciones/{s["slug"]}.jpg", s["name"], "800x500")}<span class="scard__icon">{ic(s["icon"])}</span></div>
-      <div class="scard__body"><h3><a class="card-link" href="{u("soluciones/" + s["slug"] + ".html")}">{s["name"]}</a></h3><p>{s["short"]}</p><span class="link-more">Ver más {ic("arrow")}</span></div></article>''' for i, s in enumerate(sols)]
-    cards.append(f'''<article class="scard" data-aos="fade-up" data-aos-delay="{len(sols)*80}"><div class="scard__media">{ph("marcas/proyectos-especiales.jpg", "Centro de monitoreo", "800x500")}<span class="scard__icon">{ic("star")}</span></div>
-      <div class="scard__body"><h3>Proyectos especiales</h3><p>Integraciones a la medida con productos {b["name"]}.</p><button class="link-more card-link" type="button" data-modal="cotizacion" data-context="{b["name"]}" style="text-align:left">Cotizar {ic("arrow")}</button></div></article>''')
+    cards = [f'''<article class="scard" data-aos="fade-up" data-aos-delay="{i*80}"><div class="scard__media">{ph("soluciones/" + s["slug"] + ".jpg", s["name"], "800x500")}<span class="scard__icon">{ic(s["icon"])}</span></div>
+      <div class="scard__body"><h3><a class="card-link" href="{u("soluciones/" + s["slug"] + ".html")}">{s["name"]}</a></h3><p>{s["short"]}</p><span class="link-more">Ver solución {ic("arrow")}</span></div></article>''' for i, s in enumerate(sols)]
     others = [x for x in BRANDS if x["slug"] != b["slug"] and set(x["cats"].split()) & set(b["cats"].split())][:10] or BRANDS[:10]
-    feats = "".join(f'<div class="icard" data-aos="fade-up" data-aos-delay="{i*80}" style="background:transparent;border:0">{ic(a)}<h3>{t}</h3></div>' for i, (a, t) in enumerate([
-        ("shield", "Productos originales"), ("award", "Calidad global"), ("box", "Amplio portafolio de soluciones"), ("headset", "Soporte técnico")]))
+    cats = " · ".join(n for k, n in CATS if k in b["cats"].split())
+    lines = "".join(f'<div class="bline" data-aos="fade-up" data-aos-delay="{i*70}">{ic(icn)}<h3>{t}</h3></div>' for i, (icn, t) in enumerate(brand_lines(b)))
+    apps = "".join(f'<li data-aos="fade-up" data-aos-delay="{i*60}">{ic("check")}<span>{t}</span></li>' for i, t in enumerate(brand_apps(b)))
+    q = "cotizacion.html?interes=" + b["name"].replace(" ", "%20")
     return f'''
-<section class="mhero"><div class="container mhero__grid">
+<section class="mhero mhero--brand"><div class="container mhero__grid">
   <div data-aos="fade-up">{breadcrumb([("Inicio", "index.html"), ("Marcas", "marcas.html"), (b["name"], "marcas/" + b["slug"] + ".html")])}
-    <div class="mhero__logo" style="margin-top:18px">{brand_tile(b, tag="div")}</div>
-    <h1 class="sr-only">{b["name"]} en Wiccom</h1>
-    <p style="font-size:1.1rem;color:var(--title);font-weight:500">{b["lead"]}</p>
+    <div class="mhero__logo">{brand_tile(b, tag="div")}</div>
+    <p class="mhero__cats">{cats}</p>
+    <h1 class="mhero__h1"><span class="sr-only">{b["name"]}: </span>{b["lead"]}</h1>
     <p class="muted">{b["desc"]}</p>
-    <div class="hero__actions"><button class="btn btn--dark" type="button" data-modal="cotizacion" data-context="{b["name"]}">Solicitar cotización {ic("arrow")}</button><a class="btn btn--outline" href="{SITE["store"]}" target="_blank" rel="noopener">Ver productos en tienda {ic("link")}</a></div></div>
+    <div class="hero__actions"><a class="btn btn--primary" href="{u(q)}">Solicitar cotización {ic("arrow")}</a><a class="btn btn--outline" href="{SITE["store"]}" target="_blank" rel="noopener">Ver productos en tienda {ic("link")}</a></div></div>
   <div class="mhero__img" data-aos="zoom-in">{ph(f"marcas/{b['slug']}-hero.jpg", f"Productos {b['name']}", "1200x900", dark=True, eager=True)}<p>Tecnología que<br>respalda tu proyecto</p></div>
-</div><div class="container"><div class="grid-4" style="padding-bottom:28px">{feats}</div></div></section>
+</div></section>
 <section class="section" aria-labelledby="h-bs"><div class="container">
-  {sec_head(f"Soluciones con {b['name']}", f"Conoce en qué soluciones integramos productos {b['name']}.", hid="h-bs")}
-  {carousel(cards, per=4, label=f"Soluciones con {b['name']}")}
-  <div class="store-invite store-invite--plain" style="margin-top:34px" data-aos="fade-up">{ic("msg", "ico ico-lg")}<div><h2>¿Te interesa implementar soluciones {b["name"]} en tu proyecto?</h2><p>Nuestro equipo puede asesorarte y ayudarte a cotizar la mejor solución.</p></div>{btn_advisor(b["name"], "btn btn--dark")}</div>
+  {sec_head(f"Soluciones relacionadas", f"Integramos productos {b['name']} en estas soluciones.", hid="h-bs")}
+  <div class="grid-{min(max(len(cards), 2), 4)}">{"".join(cards)}</div>
+</div></section>
+<section class="section section--alt" aria-labelledby="h-bl"><div class="container brand-info">
+  <div>{sec_head("Líneas de producto", f"Principales líneas de {b['name']} que suministramos e integramos.", hid="h-bl")}
+    <div class="bline-grid">{lines}</div></div>
+  <div>{sec_head("Aplicaciones", "Dónde se utilizan comúnmente.", hid="h-ba")}
+    <ul class="checklist checklist--cards">{apps}</ul></div>
+</div></section>
+<section class="section section--tight"><div class="container">
+  <div class="store-invite store-invite--plain" data-aos="fade-up">{ic("msg", "ico ico-lg")}<div><h2>¿Te interesa implementar {b["name"]} en tu proyecto?</h2><p>Te asesoramos para elegir el modelo adecuado y lo cotizamos con instalación, configuración y soporte.</p></div><div class="store-invite__actions"><a class="btn btn--primary" href="{u(q)}">Solicitar cotización {ic("arrow")}</a>{btn_advisor(b["name"], "btn btn--outline")}</div></div>
 </div></section>
 <section class="section section--tight section--alt" aria-labelledby="h-ob"><div class="container">{sec_head("Otras marcas relacionadas", "", ("Ver todas las marcas", "marcas.html"), "h-ob")}</div>{marquee(others + others if len(others) < 6 else others, speed=34)}</section>
-{ctaband("¿Tienes un proyecto?<br>Hablemos.", f"Te ayudamos a elegir el modelo {b['name']} adecuado para tu necesidad.", ("Solicitar cotización", "cotizacion.html?interes=" + b["name"].replace(" ", "%20")), b["name"])}'''
+{ctaband("¿Tienes un proyecto?<br>Hablemos.", f"Te ayudamos a elegir el modelo {b['name']} adecuado para tu necesidad.", ("Solicitar cotización", q), b["name"])}'''
 
 # ================================================================== NOSOTROS
 def p_about():
@@ -317,7 +387,7 @@ def p_about():
 </div></section>
 <section class="section section--tight" aria-labelledby="h-mq"><div class="container">
   {sec_head("Marcas que nos respaldan", "Trabajamos con fabricantes líderes a nivel global.", ("Ver todas las marcas", "marcas.html"), "h-mq")}
-</div>{marquee(BRANDS[:14], speed=40, board=True)}</section>
+</div>{marquee(FEATURED(), speed=40, board=True)}</section>
 {ctabig("Hagamos tu próximo proyecto realidad", "Cuéntanos qué necesitas. Nuestro equipo te asesorará para encontrar la mejor solución en tecnología.",
         f'<a class="btn btn--white" href="{u("contacto.html")}">Contáctanos {ic("arrow")}</a><a class="btn btn--ghost" href="{SITE["store"]}" target="_blank" rel="noopener">Visitar tienda</a>',
         tiles=[("file", "Solicita una cotización", "cotizacion.html"), ("msg", "Habla con un asesor", "contacto.html"), ("cart", "Explora nuestra tienda", SITE["store"])])}'''
@@ -375,7 +445,7 @@ def article_body_full():
 <p>Elegir una cámara de seguridad no se trata solo de ver el precio o la resolución. Es importante considerar el entorno, el tipo de instalación, las funciones que realmente necesitas y la compatibilidad con tu sistema. En esta guía te explicamos los puntos clave para tomar la mejor decisión.</p>
 <h2 id="lugar">1. Define el lugar de instalación</h2>
 <p class="lead">El entorno donde se instalará la cámara es fundamental para elegir el modelo adecuado.</p>
-<div class="opt-grid opt-grid--2">{"".join(f'<div class="opt"><div class="opt__img">{ph(f"recursos/{s}-{t.lower()}.jpg", f"Cámara de seguridad en {t.lower()}", "800x450")}</div><div class="opt__body"><h3>{t}</h3><ul class="checklist">{"".join(f"<li>{ic(chr(99)+"heck")}{x}</li>" for x in xs)}</ul></div></div>' for t, xs in loc)}</div>
+<div class="opt-grid opt-grid--2">{"".join(f'<div class="opt"><div class="opt__img">{ph(f"recursos/{s}-{t.lower()}.jpg", f"Cámara de seguridad en {t.lower()}", "800x450")}</div><div class="opt__body"><h3>{t}</h3><ul class="checklist">{"".join(f"<li>{ic(CHECK)}{x}</li>" for x in xs)}</ul></div></div>' for t, xs in loc)}</div>
 <h2 id="resolucion">2. Considera la resolución</h2>
 <p class="lead">La resolución determina la calidad de la imagen y el nivel de detalle que podrás ver.</p>
 <div class="opt-grid opt-grid--3">{"".join(f'<div class="opt"><div class="opt__img">{ph(f"recursos/{s}-res-{i+1}.jpg", f"Ejemplo de imagen en {t}", "600x340")}</div><div class="opt__body"><h3>{t}</h3><p>{d}</p></div></div>' for i, (t, d) in enumerate(res))}</div>
@@ -441,6 +511,7 @@ def quote_form(idp="cz", title="Completa el formulario", sub="Nos pondremos en c
       {field("mensaje", "Descripción de tu proyecto o necesidad", "textarea", True, "Cuéntanos más detalles: número de equipos, ubicaciones, fechas, etc.", idp=idp)}
       {dropzone(idp)}
       <div class="field field--full">{privacy(idp)}</div>
+      {captcha(idp)}
     </div>
     <div class="form-actions" style="margin-top:18px"><button class="btn btn--primary" type="submit">Enviar solicitud {ic("send")}</button><span class="secure">{ic("lock")} Tus datos están protegidos. Solo los usamos para atender tu solicitud.</span></div>
   </form>{success()}</div>'''
@@ -499,6 +570,7 @@ def p_contact():
         {field("interes", "¿En qué podemos ayudarte?", "select", True, idp="ct", options=options_html(SOLUTIONS, SERVICES), full=True, from_url=True)}
         {field("mensaje", "Mensaje", "textarea", True, "Cuéntanos los detalles de tu proyecto…", idp="ct")}
         <div class="field field--full">{privacy("ct")}</div>
+      {captcha("ct")}
       </div>
       <div class="form-actions" style="margin-top:18px"><button class="btn btn--primary btn--block" type="submit">Enviar mensaje {ic("arrow")}</button></div>
     </form>{success()}</div>
@@ -553,7 +625,7 @@ def p_404():
 # ================================================================== BUILD
 def build():
     Ctx.images.clear(); PAGES.clear(); SEARCH.clear()
-    write("index.html", "Wiccom | Soluciones en videovigilancia, redes, energía y cómputo en Monterrey",
+    write("index.html", "Wiccom | Videovigilancia, redes, energía y cómputo en Monterrey",
           "Tecnología que conecta, protege y mantiene en operación a tu empresa. Videovigilancia, redes, energía, control de acceso y cómputo con marcas líderes. Envíos a todo México.",
           p_home, "inicio", schemas=[{"@context": "https://schema.org", "@type": "WebSite", "name": "Wiccom", "url": SITE["domain"] + "/"}],
           search=("Inicio", "Tecnología que conecta, protege y mantiene en operación a tu empresa."), keywords="Wiccom, videovigilancia Monterrey, redes, cableado estructurado, UPS, control de acceso, cómputo empresarial")
@@ -587,8 +659,8 @@ def build():
               og_img=f"assets/img/recursos/{a['img']}.jpg",
               crumbs=[("Inicio", "index.html"), ("Recursos", "recursos.html"), (a["title"], f"recursos/{a['slug']}.html")],
               schemas=[{"@context": "https://schema.org", "@type": "Article", "headline": a["title"], "description": a["desc"], "datePublished": a["date"], "dateModified": a["date"],
-                        "image": SITE["domain"] + f"/assets/img/recursos/{a['img']}.jpg", "author": {"@type": "Organization", "name": "Wiccom"}, "publisher": {"@id": SITE["domain"] + "/#org"},
-                        "mainEntityOfPage": SITE["domain"] + f"/recursos/{a['slug']}.html", "inLanguage": "es-MX"}],
+                        "image": SITE["domain"] + "/assets/img/" + (find_img(f"recursos/{a['img']}") or f"recursos/{a['img']}.jpg"), "author": {"@type": "Organization", "name": "Wiccom"}, "publisher": {"@id": SITE["domain"] + "/#org"},
+                        "mainEntityOfPage": SITE["domain"] + f"/recursos/{a['slug']}", "inLanguage": "es-MX"}],
               search=(a["title"], a["desc"], a["catn"]))
     write("cotizacion.html", "Solicita una cotización", "Cuéntanos tu proyecto y recibe una propuesta personalizada en menos de 24 horas hábiles. Adjunta planos o listas de materiales.",
           p_quote, "contacto", crumbs=[("Inicio", "index.html"), ("Contacto", "contacto.html"), ("Solicita una cotización", "cotizacion.html")], search=("Solicitar cotización", "Formulario de cotización con carga de archivos.", "precio presupuesto"))
@@ -596,24 +668,28 @@ def build():
           p_contact, "contacto", crumbs=[("Inicio", "index.html"), ("Contacto", "contacto.html")],
           schemas=[{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": r}} for _, q, r in FAQ]}],
           search=("Contacto", "Teléfono, WhatsApp, correo, dirección y preguntas frecuentes.", "ubicación horario"))
-    write("aviso-de-privacidad.html", "Aviso de privacidad", "Aviso de privacidad de Wiccom.", lambda: p_legal("privacidad"), "", search=("Aviso de privacidad", "Tratamiento de datos personales."))
-    write("terminos.html", "Términos y condiciones", "Términos y condiciones de uso del sitio de Wiccom.", lambda: p_legal("terminos"), "", search=("Términos y condiciones", "Condiciones de uso del sitio."))
-    write("404.html", "Página no encontrada", "La página que buscas no existe.", p_404, "", noindex=True)
+    write("aviso-de-privacidad.html", "Aviso de privacidad", "Conoce cómo Wiccom recaba, usa y protege tus datos personales, y cómo ejercer tus derechos ARCO conforme a la ley mexicana.", lambda: p_legal("privacidad"), "", search=("Aviso de privacidad", "Tratamiento de datos personales."))
+    write("terminos.html", "Términos y condiciones", "Términos y condiciones de uso del sitio web de Wiccom: contenido, cotizaciones, propiedad intelectual y enlaces a la tienda en línea.", lambda: p_legal("terminos"), "", search=("Términos y condiciones", "Condiciones de uso del sitio."))
+    write("404.html", "Página no encontrada", "La página que buscas no existe o cambió de dirección. Explora nuestras soluciones, servicios y marcas desde aquí.", p_404, "", noindex=True)
 
     # --- archivos auxiliares
     js = "window.SEARCH_INDEX=" + json.dumps(SEARCH, ensure_ascii=False) + ";"
     open(os.path.join(OUT, "assets/js/search-index.js"), "w", encoding="utf-8").write(js)
-    urls = "".join(f"<url><loc>{SITE['domain']}/{'' if p == 'index.html' else p}</loc><changefreq>{'weekly' if p.startswith('recursos') else 'monthly'}</changefreq><priority>{'1.0' if p == 'index.html' else '0.8' if p.count('/') == 0 else '0.6'}</priority></url>\n" for p in PAGES)
+    urls = "".join(f"<url><loc>{SITE['domain']}/{clean(p)}</loc><changefreq>{'weekly' if p.startswith('recursos') else 'monthly'}</changefreq><priority>{'1.0' if p == 'index.html' else '0.8' if p.count('/') == 0 else '0.6'}</priority></url>\n" for p in PAGES)
     open(os.path.join(OUT, "sitemap.xml"), "w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /php/\n\nSitemap: {SITE['domain']}/sitemap.xml\n")
     return Ctx.images
 
 if __name__ == "__main__":
     imgs = build()
-    lines = ["# Imágenes que necesita el sitio\n", "Coloca cada archivo en la ruta indicada (relativa a la carpeta del sitio). Mientras no exista, se muestra un recuadro con la ruta y el tamaño sugerido.\n",
-             "Recomendación: exporta en **WebP o JPG optimizado** (< 250 KB para fotos, < 500 KB para héroes). Si usas .webp, cambia la extensión en `gen/build.py` y vuelve a generar.\n",
-             "| Ruta | Qué debe mostrar | Tamaño sugerido |", "|---|---|---|"]
-    for p, (alt, size, pages) in sorted(imgs.items()):
-        lines.append(f"| `assets/img/{p}` | {alt} | {size} |")
+    done = sum(1 for v in imgs.values() if v[3])
+    lines = ["# Imágenes que necesita el sitio\n",
+             f"**{done} de {len(imgs)} listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.\n",
+             "- Puedes usar **.webp, .jpg o .png** con el mismo nombre: el generador detecta la extensión sola (si hay varias, usa primero .webp).",
+             "- Mientras falte una foto se muestra un recuadro con la ruta. Si en la carpeta existe `default.webp` (o `1.png`), se usa como imagen temporal.",
+             "- Peso recomendado: < 250 KB para fotos y < 400 KB para héroes. Convierte a WebP en squoosh.app.\n",
+             "| Estado | Ruta | Qué debe mostrar | Tamaño sugerido |", "|---|---|---|---|"]
+    for p, (alt, size, pages, ok) in sorted(imgs.items(), key=lambda kv: (kv[1][3], kv[0])):
+        lines.append(f"| {'✅' if ok else '⏳'} | `assets/img/{p}` | {alt} | {size} |")
     open(os.path.join(OUT, "IMAGENES.md"), "w", encoding="utf-8").write("\n".join(lines) + "\n")
     print(len(PAGES), "páginas ·", len(imgs), "imágenes")

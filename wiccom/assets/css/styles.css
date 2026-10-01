@@ -86,7 +86,8 @@ ul{margin:0;padding:0;list-style:none}
 .header__inner{display:flex;align-items:center;gap:24px;height:var(--header-h);transition:height .3s}
 .site-header.is-scrolled .header__inner{height:64px}
 .logo{display:flex;align-items:center;gap:10px;flex:none}
-.logo__img{height:44px;width:auto}
+.logo__img{height:46px;width:auto}
+.site-footer .logo__img{height:52px}
 .logo__fallback{display:flex;align-items:center;gap:10px}
 .logo__mark{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(from 200deg,var(--sky),var(--blue),var(--navy),var(--sky));color:#fff;font:800 1.2rem var(--ff-h)}
 .logo__text{display:flex;flex-direction:column;line-height:1}
@@ -262,7 +263,7 @@ ul{margin:0;padding:0;list-style:none}
 /* Logos de marca */
 .brand{position:relative;display:grid;place-items:center;aspect-ratio:16/8;background:#fff;border-radius:var(--r-sm);overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
 .brand__name{font:800 1.08rem var(--ff-h);letter-spacing:.02em;color:#98a2b3;text-transform:uppercase;padding:0 10px;text-align:center}
-.brand img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14% 16%;background:#fff;filter:grayscale(1);opacity:.75;transition:filter .3s,opacity .3s}
+.brand img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10% 12%;background:#fff;filter:grayscale(1);opacity:1;transition:filter .3s}
 a.brand:hover,.brand:hover{transform:translateY(-4px);box-shadow:var(--sh);border-color:#cddcf5}
 .brand:hover img{filter:none;opacity:1}
 .brand:hover .brand__name{color:var(--blue)}
@@ -495,8 +496,8 @@ a.channel:hover{background:var(--bg-2)}
 /* ---------- 13. Marcas / detalle ---------- */
 .mhero{background:linear-gradient(180deg,#f7f9fc,#eef3fa);border-bottom:1px solid var(--line)}
 .mhero__grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:clamp(36px,5vw,60px) 0}
-.mhero__logo{height:70px;display:flex;align-items:center;margin-bottom:16px}
-.mhero__logo .brand{width:240px;border:0;background:transparent;aspect-ratio:auto;height:70px;place-items:start}
+.mhero__logo{height:80px;display:flex;align-items:center;margin:18px 0 10px}
+.mhero__logo .brand{width:260px;border:0;background:transparent;aspect-ratio:auto;height:80px;place-items:start}
 .mhero__logo .brand img{padding:0;object-position:left center;background:transparent;filter:none;opacity:1}
 .mhero__logo .brand__name{font-size:2.4rem;color:var(--title);padding:0}
 .mhero__img{position:relative;aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-lg)}
@@ -663,6 +664,11 @@ a.channel:hover{background:var(--bg-2)}
 .toast{position:fixed;left:50%;bottom:24px;z-index:400;transform:translate(-50%,calc(100% + 40px));opacity:0;visibility:hidden;background:var(--navy);color:#fff;padding:14px 20px;border-radius:12px;box-shadow:var(--sh-lg);font-size:.93rem;display:flex;gap:10px;align-items:center;transition:transform .4s var(--ease),opacity .3s,visibility .3s;max-width:92vw}
 .toast.is-visible{transform:translate(-50%,0);opacity:1;visibility:visible}
 .toast .ico{color:var(--sky)}
+.toast__err{display:none}
+.toast.is-error{background:#B42318}
+.toast.is-error .toast__ok{display:none}
+.toast.is-error .toast__err{display:inline-flex}
+.toast.is-error .ico{color:#fff}
 
 /* ---------- 19. Responsive ---------- */
 @media (max-width:1200px){
@@ -709,7 +715,7 @@ a.channel:hover{background:var(--bg-2)}
 }
 @media (max-width:860px){
   .hero{min-height:0}
-  .hero__media{inset:0;clip-path:none}
+  .hero__media{inset:0;clip-path:none;-webkit-mask-image:none;mask-image:none}
   .hero__media::after{background:linear-gradient(90deg,rgba(8,27,63,.94),rgba(8,27,63,.78))}
   .hero__slash,.hero__script{display:none}
   .intro__grid{grid-template-columns:1fr;gap:10px}
@@ -766,3 +772,92 @@ a.channel:hover{background:var(--bg-2)}
 }
 @media print{.site-header,.site-footer,.fab-wa,.to-top,.ctaband,.ctabig{display:none}}
 .is-hidden{display:none!important}
+
+/* =========================================================
+   AJUSTES OCT-2026 · CTA principal, Soluciones vs Servicios,
+   plantilla de marca y CAPTCHA
+   ========================================================= */
+/* Header: "Solicitar cotización" como botón principal; Tienda como enlace */
+.header__cta{min-height:44px;padding:.6em 1.25em;white-space:nowrap;font-weight:700}
+.nav__store{display:inline-flex;align-items:center;gap:6px}
+.nav__store .ico{width:18px;height:18px}
+.nav .store__tip{right:auto;left:50%;transform:translate(-50%,-6px);text-align:center}
+.nav .store__tip::before{right:auto;left:calc(50% - 6px)}
+.nav .store:hover .store__tip,.nav .store:focus-within .store__tip{transform:translate(-50%,0)}
+.nav__link{white-space:nowrap}
+.header__inner{gap:18px}
+@media (max-width:1440px){ .nav__list{gap:clamp(12px,1.5vw,24px)} .nav__link{font-size:.92rem} }
+/* Por debajo de 1280 px el menú pasa a hamburguesa para que quepa el botón de cotización */
+@media (max-width:1280px){
+  .nav,.header__actions .search-trigger{display:none}
+  .burger{display:grid}
+  .header__actions{margin-left:auto}
+}
+.cta-short{display:none}
+@media (max-width:640px){
+  .header__cta{min-height:40px;padding:.5em 1em;font-size:.88rem}
+  .header__cta-ico{display:none}
+  .cta-long{display:none}
+  .cta-short{display:inline}
+  .site-header .logo__img{height:36px}
+  .header__actions{gap:4px}
+}
+@media (max-width:340px){ .header__cta{display:none!important} }
+
+/* Soluciones (el qué) + Servicios (el cómo) */
+.svs{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch}
+.svs__col{position:relative;display:flex;flex-direction:column;gap:10px;padding:26px 26px 22px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-sm)}
+.svs__col h3{font-size:1.2rem;margin:0}
+.svs__col>p{margin:0;color:var(--muted);font-size:.93rem}
+.svs__tag{align-self:flex-start;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:999px;background:var(--bg-2);color:var(--blue)}
+.svs__col--srv .svs__tag{background:var(--navy);color:#fff}
+.svs__col--active{border-color:var(--blue);box-shadow:0 0 0 3px rgba(31,111,235,.12),var(--sh-sm)}
+.svs__list{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:6px 0 4px}
+.svs__list a{display:flex;align-items:center;gap:9px;padding:7px 0;font-size:.9rem;font-weight:500;color:var(--title);transition:color .2s}
+.svs__list a:hover{color:var(--blue)}
+.svs__list .ico{width:20px;height:20px;color:var(--blue);stroke-width:1.6;flex:none}
+.svs__col .link-more{margin-top:auto}
+.svs__plus{align-self:center;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;box-shadow:0 10px 20px -8px rgba(31,111,235,.8)}
+.svs__plus .ico{width:24px;height:24px;stroke-width:2.4}
+.svs__result{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin:20px 0 0;padding:16px 20px;border-radius:var(--r);background:var(--bg-2);font-size:.95rem;color:var(--title)}
+.svs__result>.ico{width:24px;height:24px;color:var(--blue);stroke-width:2.4;flex:none}
+.svs__result span{flex:1 1 260px}
+@media (max-width:860px){
+  .svs{grid-template-columns:1fr}
+  .svs__plus{justify-self:center;margin:-6px 0}
+}
+@media (max-width:420px){ .svs__list{grid-template-columns:1fr} }
+
+/* Servicios dentro de una solución */
+.srvsteps{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.srvstep{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:20px 10px 18px;background:#fff;border:1px solid var(--line);border-radius:var(--r);font-size:.88rem;color:var(--title);transition:.25s var(--ease)}
+.srvstep:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:var(--sh-sm);color:var(--blue)}
+.srvstep .ico{width:30px;height:30px;color:var(--blue);stroke-width:1.5}
+.srvstep__n{position:absolute;top:8px;left:10px;font:800 .75rem var(--ff-h);color:#9fb3d1}
+@media (max-width:1024px){ .srvsteps{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:520px){ .srvsteps{grid-template-columns:repeat(2,1fr)} }
+
+/* Plantilla de marca */
+.mhero__cats{margin:0 0 6px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.mhero__h1{font-size:clamp(1.5rem,2.6vw,2.1rem);margin:0 0 .5em}
+.brand-info{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(24px,4vw,56px);align-items:start}
+.bline-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.bline{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm)}
+.bline .ico{width:30px;height:30px;color:var(--blue);stroke-width:1.5;flex:none}
+.bline h3{font-size:.95rem;margin:0}
+.checklist--cards li{padding:13px 16px;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm)}
+.store-invite__actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+@media (max-width:860px){
+  .brand-info{grid-template-columns:1fr}
+  .store-invite__actions{justify-content:flex-start}
+}
+
+/* CAPTCHA */
+.captcha{min-height:65px}
+.captcha .cf-turnstile{max-width:340px}
+.captcha.is-invalid .cf-turnstile{outline:2px solid var(--danger);outline-offset:3px;border-radius:6px}
+@media (max-width:520px){
+  .bline-grid{grid-template-columns:1fr 1fr}
+  .bline{flex-direction:column;align-items:flex-start;gap:8px;padding:14px}
+  .bline h3{font-size:.9rem;overflow-wrap:anywhere}
+}
