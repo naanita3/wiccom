@@ -18,7 +18,8 @@ const MAX_ARCHIVOS = 5;
 const MIN_SEGUNDOS = 3;                           // tiempo mínimo para llenar (anti-bots)
 const EXT_OK = ['pdf','doc','docx','xls','xlsx','jpg','jpeg','png','dwg'];
 // Cloudflare Turnstile (CAPTCHA): pega aquí la "Secret Key" de tu sitio en dash.cloudflare.com → Turnstile.
-// La de abajo es la clave de PRUEBA de Cloudflare (siempre aprueba): cámbiala antes de publicar.
+// IMPORTANTE: pégala solo en el archivo del servidor (hosting). No la subas a GitHub.
+// La de abajo es la clave de PRUEBA de Cloudflare (siempre aprueba).
 const TURNSTILE_SECRET = '1x0000000000000000000000000000000AA';
 // =================================================
 

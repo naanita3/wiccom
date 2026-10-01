@@ -29,9 +29,8 @@ SITE = {
     },
     "og_default": "assets/img/og/wiccom-og.jpg",
     # Cloudflare Turnstile (CAPTCHA). Crea un sitio en dash.cloudflare.com → Turnstile y pega aquí la
-    # "Site Key". La "Secret Key" va en php/enviar.php. La clave de abajo es la de PRUEBA de Cloudflare
-    # (siempre aprueba): cámbiala antes de publicar.
-    "turnstile_sitekey": "1x00000000000000000000AA",
+    # "Site Key" (pública). La "Secret Key" va SOLO en php/enviar.php del servidor (no la subas a GitHub).
+    "turnstile_sitekey": "0x4AAAAAAFKzDE8I1iynBPH3",
 }
 
 CUR = ' aria-current="page"'
