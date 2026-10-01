@@ -683,11 +683,6 @@ a.channel:hover{background:var(--bg-2)}
   .mvv__card--values{grid-column:1/-1}
 }
 @media (max-width:1024px){
-  :root{--header-h:68px}
-  .nav,.header__actions .store,.header__actions .search-trigger{display:none}
-  .burger{display:grid}
-  .header__actions{margin-left:auto}
-  .header__actions .store--mobile{display:block}
   .brand-grid{grid-template-columns:repeat(4,1fr)}
   .grid-6{grid-template-columns:repeat(3,1fr)}
   .grid-4{grid-template-columns:repeat(2,1fr)}
@@ -840,11 +835,18 @@ a.channel:hover{background:var(--bg-2)}
 .marquee--plain .brand,.marquee--plain a.brand:hover{background:transparent;border:0;box-shadow:none;transform:none;border-radius:0}
 .marquee--plain .brand img{background:transparent;padding:8% 6%;filter:none}
 
-/* Navbar horizontal en laptops chicas (1025–1200 px): más compacta para que quepa */
-@media (min-width:1025px) and (max-width:1200px){
+/* Navbar: horizontal en PC y laptops; hamburguesa solo en tablets verticales y celulares (≤900 px) */
+@media (min-width:901px) and (max-width:1200px){
   .header__inner{gap:14px}
-  .site-header .logo__img{height:38px}
-  .nav__list{gap:16px}
-  .nav__link{font-size:.88rem}
-  .store__btn{padding:10px 16px;gap:8px}
+  .site-header .logo__img{height:36px}
+  .nav__list{gap:clamp(10px,1.3vw,16px)}
+  .nav__link{font-size:clamp(.8rem,1.15vw,.88rem)}
+  .store__btn{padding:9px 14px;gap:7px}
+  .icon-btn{width:38px;height:38px}
+}
+@media (max-width:900px){
+  :root{--header-h:68px}
+  .nav,.header__actions .store,.header__actions .search-trigger{display:none}
+  .burger{display:grid}
+  .header__actions{margin-left:auto}
 }
