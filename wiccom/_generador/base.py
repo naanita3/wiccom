@@ -229,9 +229,7 @@ def logo(light=False):
 def header(active):
     links = "".join(
         f'<li><a class="nav__link" href="{u(h)}"{CUR if k == active else ""}>{t}</a></li>'
-        for t, h, k in NAV) + (
-        f'<li class="store"><a class="nav__link nav__store" href="{SITE["store"]}" target="_blank" rel="noopener" aria-describedby="store-tip">{ic("cart")}Tienda</a>'
-        f'<span class="store__tip" id="store-tip" role="tooltip">Conoce nuestro catálogo de productos en wiccom.mx</span></li>')
+        for t, h, k in NAV)
     mlinks = "".join(
         f'<li><a href="{u(h)}"{CUR if k == active else ""}>{t}{ic("chev-r")}</a></li>'
         for t, h, k in NAV)
@@ -244,7 +242,10 @@ def header(active):
     <nav class="nav" aria-label="Navegación principal"><ul class="nav__list">{links}</ul></nav>
     <div class="header__actions">
       <button class="icon-btn search-trigger" type="button" data-open-search aria-label="Buscar en el sitio (Ctrl + K)">{ic("search")}</button>
-      <a class="btn btn--primary header__cta" href="{u("cotizacion.html")}"><span class="cta-long">Solicitar cotización</span><span class="cta-short">Cotizar</span><span class="header__cta-ico">{ic("arrow")}</span></a>
+      <div class="store">
+        <a class="store__btn" href="{SITE["store"]}" target="_blank" rel="noopener" aria-describedby="store-tip">{ic("cart")} Tienda</a>
+        <span class="store__tip" id="store-tip" role="tooltip">Conoce nuestro catálogo de productos en wiccom.mx</span>
+      </div>
       <button class="icon-btn burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mnav">{ic("menu")}</button>
     </div>
   </div>
@@ -253,11 +254,11 @@ def header(active):
   <div class="mnav__overlay" data-close-nav></div>
   <div class="mnav__panel" role="dialog" aria-modal="true" aria-label="Menú">
     <div class="mnav__head">{logo()}<button class="icon-btn" type="button" data-close-nav aria-label="Cerrar menú">{ic("x")}</button></div>
-    <nav aria-label="Navegación móvil"><ul class="mnav__list">{mlinks}<li><a href="{SITE["store"]}" target="_blank" rel="noopener">Tienda{ic("cart")}</a></li></ul></nav>
+    <nav aria-label="Navegación móvil"><ul class="mnav__list">{mlinks}</ul></nav>
     <div class="mnav__cta">
-      <a class="btn btn--primary" href="{u("cotizacion.html")}">Solicitar cotización {ic("arrow")}</a>
-      <a class="btn btn--outline" href="{SITE["store"]}" target="_blank" rel="noopener">{ic("cart")} Tienda en línea</a>
       <button class="btn btn--outline" type="button" data-open-search>{ic("search")} Buscar en el sitio</button>
+      <a class="btn btn--primary" href="{SITE["store"]}" target="_blank" rel="noopener">{ic("cart")} Visitar tienda</a>
+      <a class="btn btn--dark" href="{u("cotizacion.html")}">Solicitar cotización {ic("arrow")}</a>
     </div>
     <div class="mnav__contact">
       <a href="tel:{SITE["phone_tel"]}">{ic("phone")} {SITE["phone_display"]}</a>
@@ -478,10 +479,10 @@ def carousel(slides, per=4, autoplay=0, label="Carrusel", cls=""):
   <div class="carousel__ctrl"><div class="carousel__dots"></div><div class="carousel__arrows"><button class="carousel__btn" type="button" data-prev aria-label="Anterior">{ic("chev-l")}</button><button class="carousel__btn" type="button" data-next aria-label="Siguiente">{ic("chev-r")}</button></div></div>
 </div>'''
 
-def marquee(brands, speed=40, board=False, reverse=False, label="Marcas con las que trabajamos"):
+def marquee(brands, speed=40, board=False, reverse=False, label="Marcas con las que trabajamos", plain=False):
     a = "".join(f"<li>{brand_tile(b)}</li>" for b in brands)
     b2 = "".join(f'<li aria-hidden="true">{brand_tile(b, extra=NOTAB)}</li>' for b in brands)
-    cls = "marquee" + (" marquee--board" if board else "") + (" marquee--reverse" if reverse else "")
+    cls = "marquee" + (" marquee--board" if board else "") + (" marquee--reverse" if reverse else "") + (" marquee--plain" if plain else "")
     return f'<div class="{cls}" style="--speed:{speed}s" aria-label="{label}"><ul class="marquee__track">{a}{b2}</ul></div>'
 
 def feats_row(items, title=None, sub=""):

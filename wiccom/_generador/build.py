@@ -8,10 +8,8 @@ from base import *
 from data import *
 
 def FEATURED():
-    """Marcas del carrusel: las de MARQUEE (data.py); si faltan, completa con las que tengan logo."""
-    out = [BRAND[k] for k in MARQUEE if k in BRAND]
-    out += [b for b in BRANDS if b not in out and brand_logo(b)]
-    return out or BRANDS[:14]
+    """Marcas del carrusel de Inicio: exactamente las de MARQUEE (data.py), en ese orden."""
+    return [BRAND[k] for k in MARQUEE if k in BRAND] or BRANDS[:14]
 
 
 OUT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -137,9 +135,9 @@ def p_home():
   {srv}
 </div></section>
 {sol_vs_srv()}
-<section class="section section--tight section--alt" aria-labelledby="h-brands"><div class="container">
+<section class="section section--tight" aria-labelledby="h-brands"><div class="container">
   {sec_head("Marcas que impulsan tus proyectos", "Trabajamos con fabricantes líderes a nivel mundial.", ("Ver todas las marcas", "marcas.html"), "h-brands")}
-</div>{marquee(FEATURED(), speed=45)}</section>
+</div>{marquee(FEATURED(), speed=45, plain=True)}</section>
 {stats}
 <section class="section" aria-labelledby="h-res"><div class="container">
   {sec_head("Recursos para tu crecimiento", "Guías, consejos y novedades del mundo tecnológico.", ("Ver todos los artículos", "recursos.html"), "h-res")}
