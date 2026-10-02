@@ -423,7 +423,7 @@ def success(msg="Recibimos tu solicitud. Un asesor te contactará en menos de 24
 # ------------------------------------------------------------------
 # SECCIONES REUTILIZABLES
 # ------------------------------------------------------------------
-def hero(h1a, h1b, lead, img, img_alt, eyebrow="", actions="", features=None, script=None, badges=None, compact=False, h1_tag="h1"):
+def hero(h1a, h1b, lead, img, img_alt, eyebrow="", actions="", features=None, script=None, badges=None, compact=False, h1_tag="h1", banner=False):
     feats = ""
     if features:
         feats = '<ul class="hero__features" data-aos="fade-left" data-aos-delay="300">' + "".join(f"<li>{ic(i)}<span>{t}</span></li>" for i, t in features) + "</ul>"
@@ -432,10 +432,10 @@ def hero(h1a, h1b, lead, img, img_alt, eyebrow="", actions="", features=None, sc
     if badges:
         bd = '<ul class="hero__badges">' + "".join(f"<li>{ic(i)}<span>{t}</span></li>" for i, t in badges) + "</ul>"
     eb = f'<p class="hero__eyebrow">{eyebrow}</p>' if eyebrow else ""
-    cls = "hero" + ("" if features else " hero--plain") + (" hero--compact" if compact else "")
+    cls = "hero" + ("" if features else " hero--plain") + (" hero--compact" if compact else "") + (" hero--banner" if banner else "")
     return f'''
 <section class="{cls}" aria-labelledby="hero-title">
-  <div class="hero__media">{ph(img, img_alt, "1600x900", dark=True, eager=True)}</div>
+  <div class="hero__media">{ph(img, img_alt, "2000x667" if banner else "1600x900", dark=True, eager=True)}</div>
   <span class="hero__slash" aria-hidden="true"></span>
   <div class="container hero__inner">
     <div class="hero__content">
@@ -482,6 +482,7 @@ def marquee(brands, speed=40, board=False, reverse=False, label="Marcas con las 
     a = "".join(f"<li>{brand_tile(b)}</li>" for b in brands)
     b2 = "".join(f'<li aria-hidden="true">{brand_tile(b, extra=NOTAB)}</li>' for b in brands)
     cls = "marquee" + (" marquee--board" if board else "") + (" marquee--reverse" if reverse else "") + (" marquee--plain" if plain else "")
+    speed = max(speed, round(len(brands) * 3.6))
     return f'<div class="{cls}" style="--speed:{speed}s" aria-label="{label}"><ul class="marquee__track">{a}{b2}</ul></div>'
 
 def feats_row(items, title=None, sub=""):
@@ -503,12 +504,12 @@ def steps(items, title=None, sub="", numbered=False):
         return f'<div class="feats-wrap"><div class="feats-wrap__title" data-aos="fade-right"><h2>{title}</h2><p>{sub}</p></div>{ol}</div>'
     return ol
 
-def ctaband(title, text, btn=("Solicitar asesoría", "cotizacion.html"), ctx=""):
+def ctaband(title, text, btn=("Solicitar asesoría", "cotizacion.html"), ctx="", extra=""):
     return f'''
 <section class="ctaband" aria-label="Contacto rápido"><div class="container ctaband__grid">
   <h2 data-aos="fade-right">{title}</h2>
   <p data-aos="fade-up">{text}</p>
-  <a class="btn btn--primary" href="{u(btn[1])}" data-aos="zoom-in">{btn[0]} {ic("arrow")}</a>
+  <div class="ctaband__btns" data-aos="zoom-in"><a class="btn btn--primary" href="{u(btn[1])}">{btn[0]} {ic("arrow")}</a>{extra}</div>
   <div class="ctaband__quick" data-aos="fade-left">
     <a class="quick" href="tel:{SITE["phone_tel"]}">{ic("phone")}Llámanos</a>
     <a class="quick" href="mailto:{SITE["email"]}">{ic("mail")}Escríbenos</a>

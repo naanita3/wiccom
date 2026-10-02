@@ -124,19 +124,18 @@ def p_home():
 
 # ================================================================== SOLUCIONES
 def p_solutions():
+    """Contenido: 'Página Soluciones — Banner Principal' (Wiccom, oct-2026)."""
     return f'''
 {hero("Soluciones que conectan, protegen y mantienen en operación a", "tu empresa",
-      "Integramos tecnología, marcas líderes y experiencia para diseñar soluciones a la medida, desde proyectos empresariales hasta grandes instalaciones.",
-      "hero/soluciones.jpg", "Cámara, cableado de red, UPS y equipos de cómputo",
+      "Integramos tecnología, conectividad, seguridad e infraestructura para responder a las necesidades de cada proyecto.",
+      "hero/soluciones.jpg", "Oficina corporativa equipada con videovigilancia, red, sala de juntas y control de acceso",
       eyebrow="Infraestructura · Seguridad · Conectividad · Energía · Cómputo",
-      actions=btn_quote() + f'<a class="btn btn--ghost" href="{u("contacto.html")}">Contáctanos</a>',
-      features=[("shield", "Más seguridad"), ("users", "Mayor productividad"), ("zap", "Operación sin interrupciones"), ("chart", "Crecimiento sostenible")],
-      script=("Tecnología para", "un mejor mañana"))}
+      actions=btn_quote() + btn_advisor(), banner=True)}
 {intro([("Inicio", "index.html"), ("Soluciones", "soluciones.html")], "Tu aliado en soluciones tecnológicas",
-       "En <strong>Wiccom</strong> integramos soluciones de tecnología para empresas y proyectos, combinando infraestructura, seguridad, conectividad, energía y cómputo, con el respaldo de las mejores marcas y un equipo que te acompaña en todo el proceso.")}
+       "En <strong>Wiccom</strong> integramos soluciones tecnológicas para empresas y proyectos, combinando infraestructura, seguridad, conectividad, energía y cómputo, con el respaldo de marcas reconocidas y un equipo que te acompaña durante todo el proceso.<br><br>Partimos de las necesidades de cada proyecto para recomendar e integrar la solución más adecuada, considerando la infraestructura existente, la capacidad requerida, la compatibilidad entre tecnologías y el crecimiento futuro.")}
 <section class="section" aria-labelledby="h-nsol"><div class="container">
-  {sec_head("Nuestras soluciones", "Tecnología, infraestructura y soporte para cada necesidad de tu empresa.", hid="h-nsol")}
-  {carousel([sol_card(s, i) for i, s in enumerate(SOLUTIONS)], per=5, label="Soluciones")}
+  {sec_head("Conoce nuestras soluciones", "Selecciona una de nuestras áreas de especialización para conocer sus aplicaciones, beneficios, tecnologías y marcas relacionadas.", hid="h-nsol")}
+  <div class="grid-4 sol-grid">{"".join(sol_card(s, i % 4) for i, s in enumerate(SOLUTIONS))}</div>
 </div></section>
 <section class="section section--tight section--alt"><div class="container">
   <div class="feats-wrap"><div class="feats-wrap__title" data-aos="fade-right"><h2>¿Qué tipo de solución necesitas?</h2><p>Te ayudamos a encontrar la mejor opción para tu empresa.</p></div>
@@ -145,7 +144,7 @@ def p_solutions():
       ("gear", "Tecnología de marcas líderes", "Trabajamos con las mejores marcas del mercado, con calidad y garantía."),
       ("file", "Acompañamiento en tu proyecto", "Te apoyamos desde el diseño hasta la implementación y soporte.")]))}</div></div>
 </div></section>
-{ctaband("¿Tienes un proyecto?<br>Hablemos.", "Nuestro equipo de expertos te ayudará a encontrar la solución ideal para tu empresa.")}'''
+{ctaband("¿Tienes un proyecto<br>en mente?", "Nuestro equipo puede ayudarte a definir la solución adecuada de acuerdo con tus necesidades técnicas, operativas y de crecimiento.", ("Solicitar cotización", "cotizacion.html"), extra=btn_advisor("", "btn btn--ghost"))}'''
 
 def p_solution(s):
     brands = [BRAND[b] for b in s["brands"]] + [b for b in BRANDS if s["slug"] in b["sols"] and b["slug"] not in s["brands"]]
@@ -154,7 +153,7 @@ def p_solution(s):
     others = [o for o in SOLUTIONS if o["slug"] != s["slug"]]
     return f'''
 {hero(*s["h1"], s["lead"] + " Tecnología confiable para mantener tus espacios y tu operación funcionando.", f"hero/sol-{s['slug']}.jpg", s["name"],
-      eyebrow=s["eyebrow"], actions=btn_quote(s["name"]) + btn_advisor(s["name"]), features=s["feats"], script=s["script"])}
+      eyebrow=s["eyebrow"], actions=btn_quote(s["name"]) + btn_advisor(s["name"]), features=s["feats"], script=s["script"], banner=True)}
 {intro([("Inicio", "index.html"), ("Soluciones", "soluciones.html"), (s["name"], "soluciones/" + s["slug"] + ".html")], s["name"], s["intro"])}
 <section class="section" aria-labelledby="h-inc"><div class="container">
   {sec_head("¿Qué incluye esta solución?", "Componentes que integramos según las necesidades de tu proyecto.", hid="h-inc")}
@@ -595,11 +594,18 @@ def p_404():
 # ================================================================== BUILD
 def build():
     Ctx.images.clear(); PAGES.clear(); SEARCH.clear()
+    # borra páginas de detalle anteriores (por si se quitó o renombró una marca/solución)
+    for d in ("soluciones", "servicios", "marcas", "recursos"):
+        folder = os.path.join(OUT, d)
+        if os.path.isdir(folder):
+            for f in os.listdir(folder):
+                if f.endswith(".html"):
+                    os.remove(os.path.join(folder, f))
     write("index.html", "Wiccom | Videovigilancia, redes, energía y cómputo en Monterrey",
           "Tecnología que conecta, protege y mantiene en operación a tu empresa. Videovigilancia, redes, energía, control de acceso y cómputo con marcas líderes. Envíos a todo México.",
           p_home, "inicio", schemas=[{"@context": "https://schema.org", "@type": "WebSite", "name": "Wiccom", "url": SITE["domain"] + "/"}],
           search=("Inicio", "Tecnología que conecta, protege y mantiene en operación a tu empresa."), keywords="Wiccom, videovigilancia Monterrey, redes, cableado estructurado, UPS, control de acceso, cómputo empresarial")
-    write("soluciones.html", "Soluciones tecnológicas para empresas", "Videovigilancia, redes y cableado, energía y respaldo, control de acceso y cómputo. Diseñamos soluciones a la medida con marcas líderes.",
+    write("soluciones.html", "Soluciones tecnológicas para empresas", "Videovigilancia, control de acceso, redes, cableado y fibra, energía, ciberseguridad, cómputo y audio y video. Diseñamos soluciones a la medida con marcas líderes.",
           p_solutions, "soluciones", crumbs=[("Inicio", "index.html"), ("Soluciones", "soluciones.html")],
           search=("Soluciones", "Todas las soluciones tecnológicas de Wiccom."))
     for s in SOLUTIONS:

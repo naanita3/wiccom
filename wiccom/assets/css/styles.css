@@ -817,3 +817,33 @@ a.channel:hover{background:var(--bg-2)}
   .burger{display:grid}
   .header__actions{margin-left:auto}
 }
+
+/* =========================================================
+   Hero con banner panorámico (Soluciones y cada solución)
+   La imagen se recorta sin deformarse (object-fit:cover) y
+   conserva al sujeto a la derecha; en móvil se muestra completa
+   arriba del texto, en su proporción.
+   ========================================================= */
+.hero--banner .hero__media{inset:0;-webkit-mask-image:none;mask-image:none}
+.hero--banner .hero__media .ph>img{object-position:right center}
+.hero--banner .hero__media::after{background:linear-gradient(90deg,rgba(8,27,63,.95) 0%,rgba(8,27,63,.86) 30%,rgba(8,27,63,.45) 52%,rgba(8,27,63,.05) 72%,rgba(8,27,63,0) 100%)}
+.hero--banner .hero__features{background:linear-gradient(90deg,rgba(8,27,63,0),rgba(8,27,63,.72) 22%,rgba(8,27,63,.82))}
+@media (max-width:1200px){
+  .hero--banner .hero__media::after{background:linear-gradient(90deg,rgba(8,27,63,.95) 0%,rgba(8,27,63,.85) 40%,rgba(8,27,63,.35) 70%,rgba(8,27,63,.1) 100%)}
+}
+@media (max-width:860px){
+  .hero--banner{flex-direction:column;align-items:stretch;background:var(--navy-3)}
+  .hero--banner .hero__media{position:relative;inset:auto;width:100%;aspect-ratio:2.4/1;z-index:0;flex:none}
+  .hero--banner .hero__media .ph>img{object-position:center}
+  .hero--banner .hero__media::after{background:linear-gradient(0deg,var(--navy-3) 0%,rgba(8,27,63,0) 45%)}
+  .hero--banner .hero__inner{padding-top:8px}
+}
+@media (max-width:520px){ .hero--banner .hero__media{aspect-ratio:2/1} }
+
+/* Cierre con dos botones */
+.ctaband__btns{display:flex;flex-wrap:wrap;gap:12px}
+/* Grid de 8 soluciones */
+.sol-grid{row-gap:26px}
+/* Logos ya vienen centrados y con margen propio: menos relleno en la tarjeta */
+.brand img{padding:3% 4%}
+.marquee--plain .brand img{padding:2% 3%}
