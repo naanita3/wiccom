@@ -145,6 +145,36 @@
     build();
   });
 
+  /* ---------- Carrusel de marcas: movimiento suave + navegación manual ---------- */
+  $$('.marquee').forEach(m => {
+    const track = $('.marquee__track', m); if (!track) return;
+    m.classList.add('is-js');
+    const secs = parseFloat(getComputedStyle(m).getPropertyValue('--speed')) || 40;
+    let paused = false, visible = true, last = 0, resumeT, pos = 0;
+    const half = () => track.scrollWidth / 2;
+    const wrap = () => { const h = half(); if (h <= 0) return; if (m.scrollLeft >= h) m.scrollLeft -= h; else if (m.scrollLeft <= 0) m.scrollLeft += h; };
+    const tick = t => {
+      const dt = last ? Math.min(t - last, 64) : 0; last = t;
+      if (!paused && visible && !reduceMotion) { pos += (half() / secs) * dt / 1000; const px = Math.floor(pos); if (px) { m.scrollLeft += px; pos -= px; wrap(); } }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    const pause = () => { paused = true; clearTimeout(resumeT); };
+    const resume = (ms = 0) => { clearTimeout(resumeT); resumeT = setTimeout(() => { paused = false; }, ms); };
+    m.addEventListener('mouseenter', pause); m.addEventListener('mouseleave', () => resume(300));
+    m.addEventListener('focusin', pause); m.addEventListener('focusout', () => resume(300));
+    m.addEventListener('touchstart', pause, { passive: true }); m.addEventListener('touchend', () => resume(2500), { passive: true });
+    m.addEventListener('scroll', () => { if (paused) wrap(); }, { passive: true });
+    // arrastre con mouse
+    let down = false, sx = 0, sl = 0, moved = false;
+    m.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = m.scrollLeft; });
+    addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) { moved = true; m.classList.add('is-dragging'); } m.scrollLeft = sl - dx; wrap(); if (Math.abs(m.scrollLeft - (sl - dx)) > 2) { sl = m.scrollLeft + dx; } });
+    addEventListener('pointerup', () => { if (!down) return; down = false; setTimeout(() => m.classList.remove('is-dragging'), 0); });
+    m.addEventListener('click', e => { if (moved) { e.preventDefault(); moved = false; } }, true);
+    m.addEventListener('dragstart', e => e.preventDefault());
+    if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(m);
+  });
+
   /* ---------- Contadores ---------- */
   const counters = $$('[data-count]');
   if (counters.length) {

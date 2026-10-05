@@ -609,7 +609,7 @@ a.channel:hover{background:var(--bg-2)}
 
 /* ---------- 16. Footer ---------- */
 .site-footer{background:var(--ink);color:#c1cce0;font-size:.9rem}
-.footer__grid{display:grid;grid-template-columns:1.2fr 1fr 1fr .9fr 1.2fr 1.4fr;gap:28px;padding:48px 0 34px}
+.footer__grid{display:grid;grid-template-columns:1.4fr 1.1fr 1.1fr .9fr 1.3fr;gap:32px;padding:48px 0 34px}
 .footer__brand p{margin:14px 0 18px;color:#9fb0cc;max-width:260px}
 .social{display:flex;gap:8px}
 .social a{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.06);color:#fff;transition:.25s}
@@ -847,3 +847,67 @@ a.channel:hover{background:var(--bg-2)}
 /* Logos ya vienen centrados y con margen propio: menos relleno en la tarjeta */
 .brand img{padding:3% 4%}
 .marquee--plain .brand img{padding:2% 3%}
+
+/* =========================================================
+   Páginas de solución (estructura oct-2026)
+   ========================================================= */
+/* ¿Qué incluye? — tarjetas con ícono, sin imagen, misma altura */
+.inc-grid{align-items:stretch}
+.inc{display:flex;flex-direction:column;gap:10px;height:100%;padding:26px 22px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-sm);transition:.3s var(--ease)}
+.inc:hover{border-color:#cddcf5;transform:translateY(-3px);box-shadow:var(--sh)}
+.inc__ico{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;margin-bottom:6px;box-shadow:0 8px 18px -8px rgba(31,111,235,.8)}
+.inc__ico .ico{width:26px;height:26px}
+.inc h3{font-size:1.05rem;margin:0}
+.inc p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.55}
+/* Aplicaciones — foto + nombre + una línea */
+.apptile{display:flex;flex-direction:column;height:100%;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.apptile__img{position:relative;aspect-ratio:3/2;overflow:hidden}
+.apptile__img .ph{position:absolute;inset:0}
+.apptile__img .ph>img{transition:transform .8s var(--ease)}
+.apptile:hover .apptile__img .ph>img{transform:scale(1.06)}
+.apptile h3{font-size:.98rem;margin:14px 16px 4px}
+.apptile p{font-size:.86rem;color:var(--muted);margin:0 16px 16px;line-height:1.45}
+/* Enfoque Wiccom */
+.focus{display:grid;grid-template-columns:minmax(240px,.8fr) 1.2fr;gap:clamp(20px,4vw,56px);align-items:start;padding:clamp(26px,4vw,42px);border-radius:var(--r-lg);background:linear-gradient(120deg,var(--navy-3),var(--navy-2));color:#dce6f7}
+.focus__tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:10px}
+.focus h2{color:#fff;margin:0;font-size:clamp(1.35rem,2.2vw,1.8rem)}
+.focus__body p{margin:0 0 12px;font-size:1rem;line-height:1.65}
+.focus__body p:last-child{margin:0}
+@media (max-width:860px){ .focus{grid-template-columns:1fr} }
+
+/* Marcas: "Por qué comprar con Wiccom" */
+.why{padding-bottom:30px}
+.why__head{text-align:center;max-width:680px;margin:0 auto 18px}
+.why__head h2{margin-bottom:6px}
+.why__head p{margin:0;color:var(--muted)}
+.mhero__img{aspect-ratio:16/10}
+/* Botón debajo del carrusel de Inicio */
+.marquee-cta{display:flex;justify-content:center;margin-top:26px}
+/* Recursos: una sola tarjeta de orientación */
+.duo--single{grid-template-columns:1fr}
+/* CTA con dos botones */
+@media (min-width:1025px){
+  .ctaband__grid{grid-template-columns:minmax(200px,300px) minmax(240px,1fr) auto auto}
+  .ctaband h2{max-width:300px}
+  .ctaband__btns{flex-direction:column;align-items:stretch;gap:10px}
+  .ctaband__btns .btn{min-height:44px;padding:.55em 1.2em}
+}
+
+/* Carrusel de marcas con navegación manual (JS): se arrastra o desliza */
+.marquee.is-js{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
+.marquee.is-js::-webkit-scrollbar{display:none}
+.marquee.is-js .marquee__track{animation:none}
+.marquee.is-js.is-dragging{cursor:grabbing}
+.marquee.is-js.is-dragging a{pointer-events:none}
+@media (max-width:640px){ .marquee .brand{width:120px} .marquee--plain{--gap:28px} }
+.ctaband__btns .btn{white-space:nowrap}
+@media (max-width:560px){
+  .inc-grid{grid-template-columns:1fr}
+  .inc{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px;padding:20px}
+  .inc__ico{margin:0;width:46px;height:46px}
+  .inc h3{flex:1}
+  .inc p{flex-basis:100%}
+  .hero--banner h1{font-size:clamp(1.7rem,7.4vw,2.1rem);overflow-wrap:anywhere}
+}
+.pill-link{min-width:0;overflow-wrap:anywhere}
+@media (max-width:560px){ .pill-grid{grid-template-columns:1fr} }

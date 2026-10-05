@@ -297,8 +297,6 @@ def footer(solutions, services):
       <li>{ic("phone")}<a href="tel:{SITE["phone_tel"]}">{SITE["phone_display"]}</a></li>
       <li>{ic("mail")}<a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li>
       <li>{ic("clock")}<span>{SITE["hours"][0][0]}<br>{SITE["hours"][0][1]}</span></li></ul></div>
-    <div class="footer__col footer__news"><h3>Suscríbete a novedades</h3><p>Guías, comparativas y avisos de producto, una vez al mes.</p>
-      <form class="inline-form" data-newsletter novalidate><label class="sr-only" for="nl-footer">Tu correo electrónico</label><input id="nl-footer" type="email" name="email" placeholder="Tu correo electrónico" autocomplete="email" required><button type="submit" aria-label="Suscribirme">{ic("arrow")}</button></form></div>
   </div>
   <div class="container footer__bottom">
     <nav class="footer__legal" aria-label="Legal"><a href="{u("terminos.html")}">Términos y condiciones</a><a href="{u("aviso-de-privacidad.html")}">Aviso de privacidad</a><a href="{u("contacto.html#faq")}">Preguntas frecuentes</a></nav>
@@ -354,7 +352,7 @@ def modals(solutions, services, brands):
   <div class="modal__view modal__form" data-name="form">
     <div class="modal__head"><div><h2 id="cot-title">Solicitar cotización</h2><p>Cuéntanos qué necesitas. Nuestro equipo te apoyará con la mejor solución.</p></div><button class="modal__close" type="button" data-close-modal aria-label="Cerrar">{ic("x")}</button></div>
     <div class="modal__body">
-      <form action="{u("php/enviar.php")}" method="post" enctype="multipart/form-data" data-validate novalidate>
+      <form action="{u("php/enviar.php")}" method="post" data-validate novalidate>
         <input type="hidden" name="tipo" value="Cotización de marca o producto"><input type="hidden" name="contexto" value=""><input type="hidden" name="_ts" value="">
         <div class="hp" aria-hidden="true"><label>No llenar<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <div class="form-grid">
@@ -365,7 +363,6 @@ def modals(solutions, services, brands):
           <div class="field"><label for="mc-marca">Marca de interés <span class="req">*</span></label><input class="input" id="mc-marca" name="marca" list="dl-marcas" required placeholder="Ej. Hikvision" data-prefill><datalist id="dl-marcas">{brand_opts}</datalist><span class="field__error" aria-live="polite"></span></div>
           {field("modelo", "Modelo o producto", ph="Ej. DS-2CD2347G2-LU", idp="mc", opt=True)}
           {field("mensaje", "Detalles de tu requerimiento", "textarea", True, "Cantidades, ubicación, fechas, etc.", idp="mc", full=True)}
-          {dropzone("mc")}
           <div class="field field--full">{privacy("mc")}</div>
           {captcha("mc")}
         </div>
@@ -479,6 +476,9 @@ def carousel(slides, per=4, autoplay=0, label="Carrusel", cls=""):
 </div>'''
 
 def marquee(brands, speed=40, board=False, reverse=False, label="Marcas con las que trabajamos", plain=False):
+    brands = list(brands)
+    while brands and len(brands) < 10:
+        brands = brands + brands[:10 - len(brands)]
     a = "".join(f"<li>{brand_tile(b)}</li>" for b in brands)
     b2 = "".join(f'<li aria-hidden="true">{brand_tile(b, extra=NOTAB)}</li>' for b in brands)
     cls = "marquee" + (" marquee--board" if board else "") + (" marquee--reverse" if reverse else "") + (" marquee--plain" if plain else "")
@@ -504,7 +504,9 @@ def steps(items, title=None, sub="", numbered=False):
         return f'<div class="feats-wrap"><div class="feats-wrap__title" data-aos="fade-right"><h2>{title}</h2><p>{sub}</p></div>{ol}</div>'
     return ol
 
-def ctaband(title, text, btn=("Solicitar asesoría", "cotizacion.html"), ctx="", extra=""):
+def ctaband(title, text, btn=("Solicitar cotización", "cotizacion.html"), ctx="", extra=None):
+    if extra is None:
+        extra = f'<button class="btn btn--ghost" type="button" data-modal="asesor" data-context="{ctx}">Hablar con un asesor</button>'
     return f'''
 <section class="ctaband" aria-label="Contacto rápido"><div class="container ctaband__grid">
   <h2 data-aos="fade-right">{title}</h2>
