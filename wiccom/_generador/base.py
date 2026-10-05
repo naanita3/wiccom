@@ -174,7 +174,7 @@ def ph(path, alt, size="1200x800", dark=False, eager=False, cls=""):
     Ctx.images.setdefault(path, [alt, size, set(), real == find_img(path, False) and real is not None])[2].add(Ctx.page)
     src = real or path
     load = 'fetchpriority="high"' if eager else 'loading="lazy"'
-    return (f'<figure class="ph{" ph--dark" if dark else ""} {cls}" data-ph="assets/img/{path} · {size}">'
+    return (f'<figure class="ph{" ph--dark" if dark else ""} {cls}">'
             f'<img src="{Ctx.r}assets/img/{src}" alt="{html.escape(alt)}" width="{w}" height="{h}" {load} decoding="async"></figure>')
 
 def clean(path):
