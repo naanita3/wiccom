@@ -908,3 +908,10 @@ a.channel:hover{background:var(--bg-2)}
 }
 .pill-link{min-width:0;overflow-wrap:anywhere}
 @media (max-width:560px){ .pill-grid{grid-template-columns:1fr} }
+
+/* Candado contra scroll horizontal (clip no rompe el header fijo, a diferencia de hidden) */
+html,body{overflow-x:clip;max-width:100%}
+@supports not (overflow-x:clip){ body{overflow-x:hidden} }
+/* Cifras de Inicio: que el texto se ajuste en lugar de desbordar */
+.stat{min-width:0}
+.stat strong,.stat span{overflow-wrap:anywhere}

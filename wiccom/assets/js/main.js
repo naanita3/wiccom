@@ -28,6 +28,11 @@
 
   /* ---------- AOS ---------- */
   if (window.AOS) {
+    // En pantallas chicas, las entradas laterales salen de la pantalla y generan scroll horizontal:
+    // se cambian por entradas desde abajo.
+    if (matchMedia('(max-width: 860px)').matches) {
+      $$('[data-aos^="fade-left"],[data-aos^="fade-right"],[data-aos^="slide-"],[data-aos^="zoom-in-left"],[data-aos^="zoom-in-right"]').forEach(el => el.setAttribute('data-aos', 'fade-up'));
+    }
     AOS.init({ duration: 750, easing: 'ease-out-cubic', once: true, offset: 60, disable: reduceMotion });
     // Recalcula posiciones cuando la página cambia de alto (imágenes cargadas, filtros, etc.)
     addEventListener('load', () => AOS.refresh());
