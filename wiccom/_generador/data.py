@@ -94,6 +94,18 @@ _B = [
  ("Yonusa", "yonusa", "videovigilancia acceso", "Energizadores y accesorios para cercas eléctricas perimetrales.", "Protección perimetral con cercas eléctricas."),
  ("Zebra", "zebra", "computo acceso", "Impresoras de etiquetas, lectores de códigos y computadoras móviles para logística, almacén y punto de venta.", "Identificación y movilidad para tu operación."),
  ("ZKTeco", "zkteco", "acceso videovigilancia", "Biométricos, control de acceso, asistencia, torniquetes y cerraduras inteligentes.", "Control de acceso y asistencia biométrica."),
+ # --- Marcas adicionales (correo de Wiccom, 5-oct-2026)
+ ("BenQ", "benq", "audio-video", "Proyectores, pantallas interactivas y monitores profesionales para aulas, salas de juntas y diseño.", "Proyección y pantallas interactivas para presentar y enseñar."),
+ ("Extron", "extron", "audio-video", "Distribución, conmutación y control de señales de audio y video para salas, auditorios y espacios corporativos.", "Distribución y control audiovisual profesional."),
+ ("Kramer", "kramer", "audio-video", "Soluciones de conmutación, distribución y colaboración audiovisual para salas de juntas y aulas.", "Integración audiovisual para espacios de colaboración."),
+ ("LG", "lg", "audio-video", "Pantallas profesionales, señalización digital, videowalls y monitores para empresas.", "Pantallas profesionales y señalización digital."),
+ ("Logitech", "logitech", "audio-video", "Cámaras, barras de video y kits de videoconferencia para salas de juntas y trabajo híbrido.", "Videoconferencia para salas de todos los tamaños."),
+ ("Poly", "poly", "audio-video", "Sistemas de videoconferencia, audífonos y teléfonos para comunicación y colaboración empresarial.", "Audio y video claros para cada reunión."),
+ ("Samsung", "samsung", "audio-video", "Pantallas profesionales, señalización digital, pizarrones interactivos y videowalls.", "Pantallas profesionales y videowalls."),
+ ("Sony", "sony", "audio-video", "Pantallas profesionales, proyectores y cámaras para presentación de contenidos y producción audiovisual.", "Imagen profesional para tus espacios."),
+ ("Yealink", "yealink", "audio-video", "Equipos de videoconferencia, teléfonos IP y dispositivos de colaboración certificados para Microsoft Teams y Zoom.", "Colaboración y videoconferencia empresarial."),
+ ("TruVision", "truvision", "videovigilancia acceso", "Cámaras, grabadores y software de videovigilancia con integración a sistemas de control de acceso.", "Videovigilancia profesional integrada."),
+ ("Lenel", "lenel", "videovigilancia acceso", "Plataformas de seguridad física (LenelS2) que integran control de acceso, videovigilancia y gestión de eventos.", "Seguridad física y control de acceso a nivel empresarial."),
 ]
 BRANDS = [dict(name=n, slug=sl, cats=c, desc=d, lead=l, sols=[CAT_SOL[k] for k in c.split()]) for n, sl, c, d, l in _B]
 BRAND = {b["slug"]: b for b in BRANDS}
@@ -161,7 +173,7 @@ SOLUTIONS = [
           "Cada proyecto de videovigilancia requiere considerar factores como áreas de cobertura, condiciones de iluminación, resolución, almacenamiento, infraestructura de red, tiempo de retención de grabaciones y necesidades de monitoreo.",
           "En Wiccom analizamos estos elementos para definir una solución adecuada a las condiciones de cada instalación, procurando compatibilidad entre tecnologías, facilidad de operación y capacidad de crecimiento."),
    brands_sub="Integramos soluciones con fabricantes especializados en videovigilancia y seguridad electrónica, seleccionando la tecnología adecuada para cada proyecto.",
-   brands=["hikvision", "dahua", "hanwha", "unv", "epcom", "ubiquiti", "streamax", "dsc", "honeywell", "secolarm", "yonusa", "western-digital", "seagate", "qnap", "synology"],
+   brands=["hikvision", "dahua", "hanwha", "unv", "truvision", "lenel", "epcom", "ubiquiti", "streamax", "dsc", "honeywell", "secolarm", "yonusa", "western-digital", "seagate", "qnap", "synology"],
    cta=("¿Listo para un entorno más seguro?", "Te ayudamos a diseñar la solución de videovigilancia ideal para tu empresa o proyecto."),
    kw="videovigilancia Monterrey, cámaras de seguridad empresas, CCTV, cámaras IP, NVR, alarmas"),
  dict(slug="control-de-acceso", name="Control de Acceso e Identidad", icon="lock",
@@ -378,7 +390,7 @@ SOLUTIONS = [
           "El diseño de una solución audiovisual depende del tamaño del espacio, cantidad de usuarios, acústica, distancia de visualización, tipo de contenido, plataformas utilizadas y nivel de interacción requerido.",
           "En Wiccom analizamos estos elementos para definir una solución fácil de operar, adecuada a cada espacio y preparada para integrarse con la infraestructura tecnológica existente."),
    brands_sub="Integramos soluciones con fabricantes especializados en audio, video y colaboración, seleccionando la tecnología adecuada para cada espacio y necesidad de comunicación.",
-   brands=["epson", "huawei", "microsoft"],
+   brands=["logitech", "epson", "benq", "huawei", "microsoft", "poly", "yealink", "samsung", "lg", "sony", "kramer", "extron"],
    cta=("¿Necesitas una mejor solución de audio y video?", "Diseñamos e integramos la solución adecuada para tus reuniones, presentaciones, capacitaciones y espacios de colaboración."),
    kw="videoconferencia Monterrey, salas de juntas, pantallas interactivas, proyectores, audio profesional"),
 ]

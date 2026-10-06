@@ -255,7 +255,7 @@ def p_brands():
     <h1 style="margin-top:12px">Tecnología de marcas reconocidas</h1>
     <p class="muted" style="font-size:1.08rem;max-width:540px">Trabajamos con fabricantes especializados en seguridad electrónica, redes, telecomunicaciones, infraestructura, energía, ciberseguridad, cómputo y soluciones audiovisuales, seleccionando la tecnología adecuada para cada proyecto.</p>
     <div class="hero__actions"><a class="btn btn--primary" href="#directorio">Explorar marcas {ic("arrow")}</a><a class="btn btn--outline" href="{SITE["store"]}" target="_blank" rel="noopener">{ic("cart")} Visitar tienda</a></div></div>
-  <div class="mhero__img" data-aos="zoom-in">{ph("marcas/hero-alianzas.jpg", "Asesores de Wiccom con equipos de videovigilancia, redes, energía y cómputo", "1400x730", dark=True, eager=True)}<p>Tecnología que respalda<br>tu proyecto</p></div>
+  <div class="mhero__img" data-aos="zoom-in">{ph("marcas/hero-alianzas.jpg", "Asesores de Wiccom con equipos de videovigilancia, redes, energía y cómputo", "1400x730", dark=True, eager=True)}<p>Tecnologías que respaldan<br>tus proyectos</p></div>
 </div>
 <div class="container why"><div class="why__head" data-aos="fade-up"><h2>Por qué comprar con Wiccom</h2><p>Te acompañamos para encontrar la tecnología adecuada para tu proyecto, con atención personalizada y respaldo técnico.</p></div><div class="grid-4">{feats}</div></div></section>
 <section class="section" id="directorio" aria-labelledby="h-dir"><div class="container" data-filter-group>
