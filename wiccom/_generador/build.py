@@ -98,7 +98,7 @@ def p_home():
     srv = carousel([srv_card(s, i) for i, s in enumerate(SERVICES)], per=4, autoplay=6000, label="Servicios")
     return f'''
 {hero("Tecnología que conecta, protege y mantiene en operación a", "tu empresa",
-      "Soluciones integrales en videovigilancia, redes, energía, control de acceso, cómputo y más, con el respaldo de las mejores marcas.",
+      "Soluciones integrales en videovigilancia, redes, energía, control de acceso, cómputo y más, con el respaldo de marcas reconocidas.",
       "hero/inicio.jpg", "Técnico de Wiccom junto a cámara de seguridad, cableado y UPS",
       eyebrow="Infraestructura · Seguridad · Conectividad · Energía · Cómputo",
       actions=btn_quote() + f'<a class="btn btn--ghost" href="{u("soluciones.html")}">Conocer soluciones</a>',
@@ -189,54 +189,51 @@ def p_solution(s):
 {ctaband(s["cta"][0], s["cta"][1], ("Solicitar cotización", q), s["name"])}'''
 
 # ================================================================== SERVICIOS
-HOW = [("msg", "Escuchamos", "Conocemos tus necesidades y objetivos."),
-       ("file-search", "Analizamos", "Evaluamos la mejor estrategia y solución."),
-       ("bulb", "Proponemos", "Te presentamos una propuesta clara y personalizada."),
-       ("users", "Acompañamos", "Te respaldamos en la implementación y operación.")]
-
 def p_services():
+    """Contenido: 'Servicios_Ajustes' (Wiccom, 6-oct-2026)."""
     return f'''
 {hero("Servicios que impulsan", "tus proyectos",
-      "En Wiccom complementamos cada solución con servicios de asesoría, instalación, configuración, soporte y acompañamiento para empresas y proyectos.",
-      "hero/servicios.jpg", "Técnico de Wiccom instalando una cámara domo",
+      "En Wiccom complementamos cada solución con servicios de asesoría, instalación, configuración, soporte, mantenimiento y capacitación, de acuerdo con las necesidades de cada proyecto.",
+      "hero/servicios.jpg", "Técnicos de Wiccom trabajando en un rack de comunicaciones dentro de una oficina corporativa",
       eyebrow="Asesoría · Instalación · Configuración · Soporte · Mantenimiento",
-      actions=btn_quote() + btn_advisor(), features=[("headset", "Atención especializada"), ("gear", "Implementación confiable"), ("users", "Acompañamiento técnico"), ("sliders", "Soluciones a la medida")],
+      actions=btn_quote() + btn_advisor(), features=[("headset", "Atención especializada"), ("gear", "Implementación confiable"), ("users", "Acompañamiento técnico"), ("sliders", "Servicios para cada proyecto")],
       script=("Tu proyecto", "en manos expertas"))}
-{intro([("Inicio", "index.html"), ("Servicios", "servicios.html")], "Servicios pensados para cada etapa del proyecto",
-       "En <strong>Wiccom</strong> te acompañamos durante todo el ciclo de vida de tu proyecto, con servicios profesionales que garantizan una implementación exitosa, operación confiable y el máximo aprovechamiento de la tecnología.")}
+{intro([("Inicio", "index.html"), ("Servicios", "servicios.html")], "Servicios para cada etapa de tu proyecto",
+       "En <strong>Wiccom</strong> te acompañamos durante todo el ciclo de vida de tu proyecto, con servicios profesionales orientados a una correcta implementación, operación confiable y mejor aprovechamiento de la tecnología.")}
 <section class="section" aria-labelledby="h-ns"><div class="container">
-  {sec_head("Nuestros servicios", "Soluciones expertas para que tu empresa nunca se detenga.", hid="h-ns")}
+  {sec_head("Nuestros servicios", "Servicios especializados para implementar, mantener y aprovechar mejor la tecnología.", hid="h-ns")}
   {carousel([srv_card(s, i) for i, s in enumerate(SERVICES)], per=6, label="Servicios")}
 </div></section>
-<section class="section section--tight section--tint"><div class="container">{steps(HOW, "¿Cómo trabajamos?", "Un proceso simple y efectivo para lograr grandes resultados.")}</div></section>
+<section class="section section--tight section--tint"><div class="container">{steps(HOW_STEPS, "¿Cómo trabajamos?", "Un proceso claro para entender, definir e implementar cada proyecto.")}</div></section>
 <section class="section section--tight"><div class="container">{feats_row([
-    ("gear", "Experiencia técnica", "Un equipo de especialistas con amplio conocimiento."),
-    ("award", "Marcas líderes", "Trabajamos con las mejores marcas del mercado."),
-    ("truck", "Cobertura para proyectos", "Atención en todo México."),
-    ("users", "Atención cercana", "Relación de largo plazo con nuestros clientes.")])}</div></section>
-{ctaband("¿Necesitas apoyo<br>para tu proyecto?", "Nuestro equipo te ayuda a identificar el servicio adecuado para tu empresa.")}'''
+    ("gear", "Experiencia técnica", "Un equipo con experiencia en TI, telecomunicaciones, conectividad y seguridad electrónica."),
+    ("award", "Marcas reconocidas", "Integramos tecnología de fabricantes reconocidos de acuerdo con las necesidades de cada proyecto."),
+    ("truck", "Cobertura nacional", "Realizamos envíos a todo México y atendemos proyectos en distintas regiones del país."),
+    ("users", "Atención personalizada", "Te acompañamos durante las distintas etapas de tu proyecto.")])}</div></section>
+{ctaband("¿Necesitas apoyo<br>para tu proyecto?", "Nuestro equipo puede ayudarte a identificar los servicios adecuados de acuerdo con las necesidades de tu proyecto.")}'''
 
 def p_service(s):
     others = [o for o in SERVICES if o["slug"] != s["slug"]]
+    q = "cotizacion.html?interes=" + s["name"].replace(" ", "%20")
     return f'''
 {hero(*s["h1"], s["lead"], f"hero/srv-{s['slug']}.jpg", s["name"], eyebrow=s["eyebrow"],
-      actions=btn_quote(s["name"]) + btn_advisor(s["name"]), features=s["feats"], script=("Soluciones de hoy", "para un mejor mañana"))}
+      actions=btn_quote(s["name"]) + btn_advisor(s["name"]), features=s["feats"], script=s.get("script"))}
 {intro([("Inicio", "index.html"), ("Servicios", "servicios.html"), (s["name"], "servicios/" + s["slug"] + ".html")], s["name"], s["intro"], s["sub"])}
 <section class="section" aria-labelledby="h-inc"><div class="container">
-  {sec_head("¿Qué incluye este servicio?", "Un servicio completo para cuidar tu proyecto con seguridad y confianza.", hid="h-inc")}
+  {sec_head("¿Qué incluye este servicio?", s["inc_sub"], hid="h-inc")}
   <div class="grid-4">{"".join(inc_card("servicios", s["slug"], i+1, *x, i) for i, x in enumerate(s["includes"]))}</div>
 </div></section>
-<section class="section section--tight section--tint"><div class="container">{steps(HOW, "¿Cómo trabajamos?", "Un proceso claro y colaborativo, enfocado en tu resultado.")}</div></section>
-<section class="section section--tight"><div class="container">{feats_row(s["benefits"], "Beneficios para tu empresa", "Más que un servicio, un aliado para tu crecimiento.")}</div></section>
+<section class="section section--tight section--tint"><div class="container">{steps(s.get("steps", HOW_STEPS), "¿Cómo trabajamos?", "Un proceso claro y colaborativo, enfocado en tu resultado.")}</div></section>
+<section class="section section--tight"><div class="container">{feats_row(s["benefits"], "Beneficios para tu empresa", s["ben_sub"])}</div></section>
 <section class="section section--tight section--alt"><div class="container">
-  <div class="feats-wrap"><div class="feats-wrap__title" data-aos="fade-right"><h2>¿En qué soluciones te apoyamos?</h2><p>Experiencia en múltiples áreas de tecnología.</p></div>
-  <div class="grid-4" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">{"".join(f'<a class="pill-link" href="{u("soluciones/" + o["slug"] + ".html")}" data-aos="fade-up" data-aos-delay="{i*60}">{ic(o["icon"])}{o["name"]}</a>' for i, o in enumerate(SOLUTIONS))}</div></div>
+  <div class="feats-wrap"><div class="feats-wrap__title" data-aos="fade-right"><h2>¿En qué soluciones te apoyamos?</h2><p>{s["sols_sub"]}</p></div>
+  <div class="grid-4 pill-grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">{"".join(f'<a class="pill-link" href="{u("soluciones/" + o["slug"] + ".html")}" data-aos="fade-up" data-aos-delay="{i*60}">{ic(o["icon"])}{o["name"]}</a>' for i, o in enumerate(SOLUTIONS))}</div></div>
 </div></section>
 <section class="section section--tight" aria-labelledby="h-os"><div class="container">
   {sec_head("Otros servicios", "Complementa tu proyecto de principio a fin.", ("Ver todos", "servicios.html"), "h-os")}
   {carousel([srv_card(o, i) for i, o in enumerate(others)], per=4, label="Otros servicios")}
 </div></section>
-{ctaband("¿Necesitas orientación<br>para tu proyecto?", "Hablemos sobre tus necesidades y encontremos en conjunto la mejor solución tecnológica.", ("Solicitar cotización", "cotizacion.html?interes=" + s["name"].replace(" ", "%20")), s["name"])}'''
+{ctaband(s["cta"][0], s["cta"][1], (s["cta"][2], q), s["name"])}'''
 
 # ================================================================== MARCAS
 def p_brands():
@@ -372,7 +369,7 @@ def p_about():
   <ul class="diff__list">{"".join(f'<li data-aos="fade-up" data-aos-delay="{i*90}">{ic(a)}<div><strong>{t}</strong><span>{d}</span></div></li>' for i, (a, t, d) in enumerate(diff))}</ul></div></section>
 <section class="section" aria-labelledby="h-how"><div class="container work">
   <div><h2 id="h-how" data-aos="fade-up">Cómo trabajamos</h2><p class="muted" data-aos="fade-up">Un proceso simple y efectivo para llevar tu proyecto del plan a la realidad.</p>
-    {steps([("", "Te escuchamos", "Entendemos tus necesidades."), ("", "Te asesoramos", "Diseñamos la mejor solución."), ("", "Implementamos", "Integramos tecnología de forma eficiente."), ("", "Te acompañamos", "Soporte y seguimiento continuo.")], numbered=True)}</div>
+    {steps([("", "Te escuchamos", "Entendemos tus necesidades."), ("", "Te asesoramos", "Diseñamos la solución adecuada."), ("", "Implementamos", "Integramos tecnología de forma eficiente."), ("", "Te acompañamos", "Soporte y seguimiento continuo.")], numbered=True)}</div>
   <div class="work__img" data-aos="zoom-in">{ph("nosotros/reunion-proyecto.jpg", "Asesor de Wiccom revisando un proyecto con un cliente", "900x450")}<p>De la idea<br>a la solución</p></div>
 </div></section>
 <section class="section section--alt" id="areas" aria-labelledby="h-areas"><div class="container">
@@ -382,7 +379,7 @@ def p_about():
 <section class="section section--tight" aria-labelledby="h-mq"><div class="container">
   {sec_head("Marcas que nos respaldan", "Trabajamos con fabricantes líderes a nivel global.", ("Ver todas las marcas", "marcas.html"), "h-mq")}
 </div>{marquee(FEATURED(), speed=45, plain=True)}</section>
-{ctabig("Hagamos tu próximo proyecto realidad", "Cuéntanos qué necesitas. Nuestro equipo te asesorará para encontrar la mejor solución en tecnología.",
+{ctabig("Hagamos tu próximo proyecto realidad", "Cuéntanos qué necesitas. Nuestro equipo te asesorará para encontrar la solución tecnológica adecuada.",
         f'<a class="btn btn--white" href="{u("contacto.html")}">Contáctanos {ic("arrow")}</a><a class="btn btn--ghost" href="{SITE["store"]}" target="_blank" rel="noopener">Visitar tienda</a>',
         tiles=[("file", "Solicita una cotización", "cotizacion.html"), ("msg", "Habla con un asesor", "contacto.html"), ("cart", "Explora nuestra tienda", SITE["store"])])}'''
 
@@ -415,10 +412,10 @@ def p_resources():
   <p class="empty-state">No hay artículos con ese criterio. Prueba otra palabra o <a class="hl-blue" href="{u("contacto.html")}">pregúntale a un asesor</a>.</p>
 </div></section>
 <section class="section section--tight" style="padding-top:0"><div class="container duo duo--single">
-  <div class="duo__card" data-aos="fade-up">{ic("users", "ico ico-lg")}<div style="flex:1"><h2>¿Buscas orientación para tu proyecto?</h2><p>Nuestro equipo de especialistas puede ayudarte a encontrar la mejor solución para tus necesidades.</p>
+  <div class="duo__card" data-aos="fade-up">{ic("users", "ico ico-lg")}<div style="flex:1"><h2>¿Buscas orientación para tu proyecto?</h2><p>Nuestro equipo de especialistas puede ayudarte a encontrar la solución adecuada para tus necesidades.</p>
     <div class="duo__actions">{btn_quote()}{btn_advisor(cls="btn btn--outline")}</div></div></div>
 </div></section>
-{ctabig("Hablemos de tu próximo proyecto", "Cuéntanos qué necesitas. Nuestro equipo está listo para asesorarte y encontrar la mejor solución en tecnología.",
+{ctabig("Hablemos de tu próximo proyecto", "Cuéntanos qué necesitas. Nuestro equipo está listo para asesorarte y encontrar la solución tecnológica adecuada.",
         f'<a class="btn btn--white" href="{u("contacto.html")}">Contáctanos {ic("arrow")}</a><a class="btn btn--ghost" href="{SITE["store"]}" target="_blank" rel="noopener">Visitar tienda {ic("cart")}</a>',
         script=("Tecnología hoy.", "Oportunidades mañana."))}'''
 
@@ -484,7 +481,7 @@ def p_article(a):
   {sec_head("Artículos relacionados", "", ("Ver todos", "recursos.html#articulos"), "h-rel")}
   {carousel([rcard(x, i=i) for i, x in enumerate(rel)], per=3, label="Artículos relacionados")}
 </div></section>
-{ctaband("¿Tienes un proyecto<br>en mente?", "Nuestro equipo te asesora para encontrar la mejor solución en tecnología.")}'''
+{ctaband("¿Tienes un proyecto<br>en mente?", "Nuestro equipo te asesora para encontrar la solución tecnológica adecuada.")}'''
 
 # ================================================================== COTIZACIÓN
 def quote_form(idp="cz", title="Completa el formulario", sub="Nos pondremos en contacto contigo para brindarte una propuesta personalizada.", tipo="Solicitud de cotización"):
@@ -543,7 +540,7 @@ def p_contact():
     faqs = "".join(f'<details data-aos="fade-up" data-aos-delay="{(i%3)*80}"><summary>{ic(a)}<span>{q}</span></summary><p>{r}</p></details>' for i, (a, q, r) in enumerate(FAQ))
     maps_q = f"{SITE['street']}, {SITE['city']}, {SITE['region']}".replace(" ", "+")
     return f'''
-{hero("Estamos para", "ayudarte", "Cuéntanos qué necesitas y nuestro equipo te asesorará para encontrar la mejor solución en tecnología.",
+{hero("Estamos para", "ayudarte", "Cuéntanos qué necesitas y nuestro equipo te asesorará para encontrar la solución tecnológica adecuada.",
       "hero/contacto.jpg", "Laptop con logotipo Wiccom y audífonos de atención a clientes", eyebrow="Contacto", compact=True,
       badges=[("msg", "Respuesta rápida"), ("users", "Atención personalizada"), ("shield", "Acompañamiento en tu proyecto")],
       script=("Tu proyecto comienza", "con una conversación"))}

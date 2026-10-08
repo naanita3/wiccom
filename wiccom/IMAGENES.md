@@ -1,6 +1,6 @@
 # Imágenes que necesita el sitio
 
-**156 de 226 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
+**193 de 226 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
 
 - Puedes usar **.webp, .jpg o .png** con el mismo nombre: el generador detecta la extensión sola (si hay varias, usa primero .webp).
 - Mientras falte una foto se muestra un recuadro con la ruta. Si en la carpeta existe `default.webp` (o `1.png`), se usa como imagen temporal.
@@ -13,13 +13,6 @@
 | ⏳ | `assets/img/hero/cotizacion.jpg` | Cámara domo de videovigilancia | 1600x900 |
 | ⏳ | `assets/img/hero/nosotros.jpg` | Fachada del edificio corporativo de Wiccom | 1600x900 |
 | ⏳ | `assets/img/hero/recursos.jpg` | Cámara, cableado de red y UPS | 1600x900 |
-| ⏳ | `assets/img/hero/servicios.jpg` | Técnico de Wiccom instalando una cámara domo | 1600x900 |
-| ⏳ | `assets/img/hero/srv-asesoria-especializada.jpg` | Asesoría especializada | 1600x900 |
-| ⏳ | `assets/img/hero/srv-capacitacion.jpg` | Capacitación | 1600x900 |
-| ⏳ | `assets/img/hero/srv-configuracion-y-puesta-en-marcha.jpg` | Configuración y puesta en marcha | 1600x900 |
-| ⏳ | `assets/img/hero/srv-instalacion.jpg` | Instalación | 1600x900 |
-| ⏳ | `assets/img/hero/srv-mantenimiento.jpg` | Mantenimiento | 1600x900 |
-| ⏳ | `assets/img/hero/srv-soporte-tecnico.jpg` | Soporte técnico | 1600x900 |
 | ⏳ | `assets/img/nosotros/area-atencion.jpg` | Atención al cliente | 800x450 |
 | ⏳ | `assets/img/nosotros/area-ingenieria.jpg` | Ingeniería y proyectos | 800x450 |
 | ⏳ | `assets/img/nosotros/area-logistica.jpg` | Logística y distribución | 800x450 |
@@ -48,37 +41,8 @@
 | ⏳ | `assets/img/recursos/switch-empresarial.jpg` | Cómo elegir un switch para tu red empresarial | 800x450 |
 | ⏳ | `assets/img/recursos/tendencias-2026.jpg` | Tendencias tecnológicas para empresas en 2026 | 800x450 |
 | ⏳ | `assets/img/recursos/ups-negocio.jpg` | ¿Por qué necesitas un UPS en tu negocio? | 800x450 |
-| ⏳ | `assets/img/servicios/asesoria-especializada-1.jpg` | Análisis de necesidades | 800x450 |
-| ⏳ | `assets/img/servicios/asesoria-especializada-2.jpg` | Recomendación tecnológica | 800x450 |
-| ⏳ | `assets/img/servicios/asesoria-especializada-3.jpg` | Evaluación de alternativas | 800x450 |
-| ⏳ | `assets/img/servicios/asesoria-especializada-4.jpg` | Planeación de solución | 800x450 |
-| ⏳ | `assets/img/servicios/asesoria.jpg` | Servicio de asesoría especializada Wiccom | 800x500 |
-| ⏳ | `assets/img/servicios/capacitacion-1.jpg` | Capacitación de operación | 800x450 |
-| ⏳ | `assets/img/servicios/capacitacion-2.jpg` | Capacitación de administración | 800x450 |
-| ⏳ | `assets/img/servicios/capacitacion-3.jpg` | Manuales y guías | 800x450 |
-| ⏳ | `assets/img/servicios/capacitacion-4.jpg` | Seguimiento | 800x450 |
-| ⏳ | `assets/img/servicios/capacitacion.jpg` | Servicio de capacitación Wiccom | 800x500 |
-| ⏳ | `assets/img/servicios/configuracion-y-puesta-en-marcha-1.jpg` | Redes y seguridad | 800x450 |
-| ⏳ | `assets/img/servicios/configuracion-y-puesta-en-marcha-2.jpg` | Videovigilancia | 800x450 |
-| ⏳ | `assets/img/servicios/configuracion-y-puesta-en-marcha-3.jpg` | Servidores y equipos | 800x450 |
-| ⏳ | `assets/img/servicios/configuracion-y-puesta-en-marcha-4.jpg` | Pruebas de operación | 800x450 |
-| ⏳ | `assets/img/servicios/configuracion.jpg` | Servicio de configuración y puesta en marcha Wiccom | 800x500 |
-| ⏳ | `assets/img/servicios/instalacion-1.jpg` | Levantamiento en sitio | 800x450 |
-| ⏳ | `assets/img/servicios/instalacion-2.jpg` | Montaje de equipos | 800x450 |
-| ⏳ | `assets/img/servicios/instalacion-3.jpg` | Canalización y cableado | 800x450 |
-| ⏳ | `assets/img/servicios/instalacion-4.jpg` | Pruebas y entrega | 800x450 |
-| ⏳ | `assets/img/servicios/instalacion.jpg` | Servicio de instalación Wiccom | 800x500 |
-| ⏳ | `assets/img/servicios/mantenimiento-1.jpg` | Revisión y diagnóstico | 800x450 |
-| ⏳ | `assets/img/servicios/mantenimiento-2.jpg` | Limpieza y ajuste | 800x450 |
-| ⏳ | `assets/img/servicios/mantenimiento-3.jpg` | Actualizaciones | 800x450 |
-| ⏳ | `assets/img/servicios/mantenimiento-4.jpg` | Reportes y recomendaciones | 800x450 |
-| ⏳ | `assets/img/servicios/mantenimiento.jpg` | Servicio de mantenimiento Wiccom | 800x500 |
-| ⏳ | `assets/img/servicios/soporte-tecnico-1.jpg` | Mesa de ayuda | 800x450 |
-| ⏳ | `assets/img/servicios/soporte-tecnico-2.jpg` | Soporte remoto | 800x450 |
-| ⏳ | `assets/img/servicios/soporte-tecnico-3.jpg` | Visitas en sitio | 800x450 |
-| ⏳ | `assets/img/servicios/soporte-tecnico-4.jpg` | Pólizas de soporte | 800x450 |
-| ⏳ | `assets/img/servicios/soporte.jpg` | Servicio de soporte técnico Wiccom | 800x500 |
 | ✅ | `assets/img/hero/inicio.jpg` | Técnico de Wiccom junto a cámara de seguridad, cableado y UPS | 1600x900 |
+| ✅ | `assets/img/hero/servicios.jpg` | Técnicos de Wiccom trabajando en un rack de comunicaciones dentro de una oficina corporativa | 1600x900 |
 | ✅ | `assets/img/hero/sol-audio-video-y-colaboracion.jpg` | Audio, Video y Colaboración | 2000x667 |
 | ✅ | `assets/img/hero/sol-cableado-fibra-e-infraestructura.jpg` | Cableado, Fibra e Infraestructura | 2000x667 |
 | ✅ | `assets/img/hero/sol-ciberseguridad.jpg` | Ciberseguridad | 2000x667 |
@@ -88,6 +52,12 @@
 | ✅ | `assets/img/hero/sol-redes-y-telecomunicaciones.jpg` | Redes y Telecomunicaciones | 2000x667 |
 | ✅ | `assets/img/hero/sol-videovigilancia.jpg` | Videovigilancia y Seguridad Electrónica | 2000x667 |
 | ✅ | `assets/img/hero/soluciones.jpg` | Oficina corporativa equipada con videovigilancia, red, sala de juntas y control de acceso | 2000x667 |
+| ✅ | `assets/img/hero/srv-asesoria-especializada.jpg` | Asesoría especializada | 1600x900 |
+| ✅ | `assets/img/hero/srv-capacitacion.jpg` | Capacitación | 1600x900 |
+| ✅ | `assets/img/hero/srv-configuracion-y-puesta-en-marcha.jpg` | Configuración y puesta en marcha | 1600x900 |
+| ✅ | `assets/img/hero/srv-instalacion.jpg` | Instalación | 1600x900 |
+| ✅ | `assets/img/hero/srv-mantenimiento.jpg` | Mantenimiento | 1600x900 |
+| ✅ | `assets/img/hero/srv-soporte-tecnico.jpg` | Soporte técnico | 1600x900 |
 | ✅ | `assets/img/marcas/accesspro.png` | Logotipo AccessPRO (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/marcas/altronix.png` | Logotipo Altronix (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/marcas/apc.png` | Logotipo APC (PNG o SVG, fondo blanco o transparente) | 400x200 |
@@ -186,6 +156,36 @@
 | ✅ | `assets/img/marcas/yonusa.png` | Logotipo Yonusa (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/marcas/zebra.png` | Logotipo Zebra (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/marcas/zkteco.png` | Logotipo ZKTeco (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/servicios/asesoria-especializada-1.jpg` | Análisis de necesidades | 800x450 |
+| ✅ | `assets/img/servicios/asesoria-especializada-2.jpg` | Recomendación tecnológica | 800x450 |
+| ✅ | `assets/img/servicios/asesoria-especializada-3.jpg` | Evaluación de alternativas | 800x450 |
+| ✅ | `assets/img/servicios/asesoria-especializada-4.jpg` | Planeación de solución | 800x450 |
+| ✅ | `assets/img/servicios/asesoria.jpg` | Servicio de asesoría especializada Wiccom | 800x500 |
+| ✅ | `assets/img/servicios/capacitacion-1.jpg` | Capacitación de operación | 800x450 |
+| ✅ | `assets/img/servicios/capacitacion-2.jpg` | Capacitación de administración | 800x450 |
+| ✅ | `assets/img/servicios/capacitacion-3.jpg` | Manuales y guías | 800x450 |
+| ✅ | `assets/img/servicios/capacitacion-4.jpg` | Seguimiento | 800x450 |
+| ✅ | `assets/img/servicios/capacitacion.jpg` | Servicio de capacitación Wiccom | 800x500 |
+| ✅ | `assets/img/servicios/configuracion-y-puesta-en-marcha-1.jpg` | Redes y seguridad | 800x450 |
+| ✅ | `assets/img/servicios/configuracion-y-puesta-en-marcha-2.jpg` | Videovigilancia | 800x450 |
+| ✅ | `assets/img/servicios/configuracion-y-puesta-en-marcha-3.jpg` | Servidores y equipos | 800x450 |
+| ✅ | `assets/img/servicios/configuracion-y-puesta-en-marcha-4.jpg` | Pruebas de operación | 800x450 |
+| ✅ | `assets/img/servicios/configuracion.jpg` | Servicio de configuración y puesta en marcha Wiccom | 800x500 |
+| ✅ | `assets/img/servicios/instalacion-1.jpg` | Levantamiento en sitio | 800x450 |
+| ✅ | `assets/img/servicios/instalacion-2.jpg` | Montaje de equipos | 800x450 |
+| ✅ | `assets/img/servicios/instalacion-3.jpg` | Canalización y cableado | 800x450 |
+| ✅ | `assets/img/servicios/instalacion-4.jpg` | Pruebas y entrega | 800x450 |
+| ✅ | `assets/img/servicios/instalacion.jpg` | Servicio de instalación Wiccom | 800x500 |
+| ✅ | `assets/img/servicios/mantenimiento-1.jpg` | Revisión y diagnóstico | 800x450 |
+| ✅ | `assets/img/servicios/mantenimiento-2.jpg` | Limpieza y ajuste | 800x450 |
+| ✅ | `assets/img/servicios/mantenimiento-3.jpg` | Actualizaciones | 800x450 |
+| ✅ | `assets/img/servicios/mantenimiento-4.jpg` | Reportes y recomendaciones | 800x450 |
+| ✅ | `assets/img/servicios/mantenimiento.jpg` | Servicio de mantenimiento Wiccom | 800x500 |
+| ✅ | `assets/img/servicios/soporte-tecnico-1.jpg` | Mesa de ayuda | 800x450 |
+| ✅ | `assets/img/servicios/soporte-tecnico-2.jpg` | Soporte remoto | 800x450 |
+| ✅ | `assets/img/servicios/soporte-tecnico-3.jpg` | Visitas en sitio | 800x450 |
+| ✅ | `assets/img/servicios/soporte-tecnico-4.jpg` | Pólizas de soporte | 800x450 |
+| ✅ | `assets/img/servicios/soporte.jpg` | Servicio de soporte técnico Wiccom | 800x500 |
 | ✅ | `assets/img/soluciones/apps/audio-video-y-colaboracion-1.jpg` | Salas de juntas – Audio, Video y Colaboración | 900x600 |
 | ✅ | `assets/img/soluciones/apps/audio-video-y-colaboracion-2.jpg` | Aulas y capacitación – Audio, Video y Colaboración | 900x600 |
 | ✅ | `assets/img/soluciones/apps/audio-video-y-colaboracion-3.jpg` | Auditorios – Audio, Video y Colaboración | 900x600 |
