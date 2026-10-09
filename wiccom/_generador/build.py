@@ -494,7 +494,7 @@ def quote_form(idp="cz", title="Completa el formulario", sub="Nos pondremos en c
       {field("nombre", "Nombre", required=True, ph="Ej. Juan Pérez", ac="name", idp=idp)}
       {field("empresa", "Empresa", required=True, ph="Ej. Nombre de tu empresa", ac="organization", idp=idp)}
       {field("correo", "Correo electrónico", "email", True, "nombre@empresa.com", "email", idp=idp)}
-      {field("telefono", "Teléfono", "tel", True, "Ej. 81 1234 5678", "tel", idp=idp)}
+      {field("telefono", "Teléfono", "tel", True, "Ej. 81 0000 0000", "tel", idp=idp)}
       {field("interes", "Solución, producto o servicio requerido", "select", True, idp=idp, options=options_html(SOLUTIONS, SERVICES), from_url=True)}
       {field("ciudad", "Ciudad / Estado", ph="Ej. Monterrey, N.L.", ac="address-level2", idp=idp, opt=True)}
       {field("mensaje", "Descripción de tu proyecto o necesidad", "textarea", True, "Cuéntanos más detalles: número de equipos, ubicaciones, fechas, etc.", idp=idp)}
@@ -554,7 +554,7 @@ def p_contact():
         {field("nombre", "Nombre completo", required=True, ph="Tu nombre", ac="name", idp="ct")}
         {field("empresa", "Empresa", ph="Nombre de tu empresa", ac="organization", idp="ct", opt=True)}
         {field("correo", "Correo electrónico", "email", True, "nombre@empresa.com", "email", idp="ct")}
-        {field("telefono", "Teléfono", "tel", True, "Ej. 81 1234 5678", "tel", idp="ct")}
+        {field("telefono", "Teléfono", "tel", True, "Ej. 81 0000 0000", "tel", idp="ct")}
         {field("interes", "¿En qué podemos ayudarte?", "select", True, idp="ct", options=options_html(SOLUTIONS, SERVICES), full=True, from_url=True)}
         {field("mensaje", "Mensaje", "textarea", True, "Cuéntanos los detalles de tu proyecto…", idp="ct")}
         <div class="field field--full">{privacy("ct")}</div>

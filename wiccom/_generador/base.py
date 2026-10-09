@@ -10,9 +10,9 @@ SITE = {
     "tagline": "Conectando Tecnología",
     "domain": "https://www.wiccom.com.mx",
     "store": "https://www.wiccom.mx",
-    "phone_display": "81 1234 5678",
-    "phone_tel": "+528112345678",
-    "whatsapp": "528112345678",
+    "phone_display": "+52 1 81 1200 4772",
+    "phone_tel": "+5218112004772",
+    "whatsapp": "5218112004772",
     "email": "contacto@wiccom.com.mx",
     "email_sales": "ventas@wiccom.com.mx",
     "street": "Av. Ejemplo 1234, Col. Tecnológico",
@@ -220,7 +220,7 @@ def logo(light=False):
     white = find_img("logo-wiccom-blanco", False)
     src = (white or color) if light else color
     inv = " logo__img--invert" if light and not white else ""
-    img = f'<img class="logo__img{inv}" src="{Ctx.r}assets/img/{src}" alt="Wiccom · Conectando Tecnología" width="200" height="56">' if src else ""
+    img = f'<img class="logo__img{inv}" src="{Ctx.r}assets/img/{src}" alt="Wiccom" width="200" height="56">' if src else ""
     return (f'<a class="logo{" logo--light" if light else ""}" href="{u("index.html")}" aria-label="Wiccom, ir al inicio">{img}'
             f'<span class="logo__fallback"><span class="logo__mark" aria-hidden="true">W</span>'
             f'<span class="logo__text"><span class="logo__name">wiccom</span><span class="logo__tag">Conectando Tecnología</span></span></span></a>')
@@ -251,7 +251,7 @@ def header(active):
 </header>
 <div class="mnav" id="mnav" aria-hidden="true">
   <div class="mnav__overlay" data-close-nav></div>
-  <div class="mnav__panel" role="dialog" aria-modal="true" aria-label="Menú">
+  <div class="mnav__panel" role="dialog" aria-modal="true" aria-label="Menú" tabindex="-1">
     <div class="mnav__head">{logo()}<button class="icon-btn" type="button" data-close-nav aria-label="Cerrar menú">{ic("x")}</button></div>
     <nav aria-label="Navegación móvil"><ul class="mnav__list">{mlinks}</ul></nav>
     <div class="mnav__cta">
@@ -312,7 +312,7 @@ def modals(solutions, services, brands):
   <div class="modal__view" data-name="menu">
     <div class="modal__head"><div><h2 id="asesor-title">Hablar con un asesor</h2><p>Elige el medio que prefieras. Estamos listos para ayudarte.</p></div><button class="modal__close" type="button" data-close-modal aria-label="Cerrar">{ic("x")}</button></div>
     <div class="modal__body opt-list">
-      <a class="opt-btn" data-wa-link href="{wa_url()}" target="_blank" rel="noopener"><span class="channel__ico channel__ico--wa">{ic("wa")}</span><span><strong>WhatsApp</strong><span>Chatea con un asesor ahora mismo.</span></span>{ic("chev-r", "ico go")}</a>
+      <a class="opt-btn" data-wa-link href="{wa_url()}" target="_blank" rel="noopener"><span class="channel__ico channel__ico--wa">{ic("wa")}</span><span><strong>WhatsApp</strong><span>Chatea con un asesor por WhatsApp.</span></span>{ic("chev-r", "ico go")}</a>
       <button class="opt-btn" type="button" data-view="call"><span class="channel__ico">{ic("phone")}</span><span><strong>Llamada telefónica</strong><span>Habla directamente con nuestro equipo.</span></span>{ic("chev-r", "ico go")}</button>
       <button class="opt-btn" type="button" data-view="form"><span class="channel__ico">{ic("mail")}</span><span><strong>Formulario rápido</strong><span>Déjanos tus datos y te contactamos.</span></span>{ic("chev-r", "ico go")}</button>
     </div>
@@ -335,7 +335,7 @@ def modals(solutions, services, brands):
         <div class="form-grid">
           {field("nombre", "Nombre completo", required=True, ph="Ej. Juan Pérez", ac="name", idp="qa")}
           {field("empresa", "Empresa", required=True, ph="Ej. Empresa S.A. de C.V.", ac="organization", idp="qa")}
-          {field("telefono", "Teléfono", "tel", True, "Ej. 81 1234 5678", "tel", idp="qa")}
+          {field("telefono", "Teléfono", "tel", True, "Ej. 81 0000 0000", "tel", idp="qa")}
           {field("correo", "Correo electrónico", "email", True, "nombre@empresa.com", "email", idp="qa")}
           {field("mensaje", "Mensaje", "textarea", False, "¿En qué te podemos ayudar?", idp="qa", full=True, opt=True)}
           <div class="field field--full">{privacy("qa")}</div>
@@ -359,7 +359,7 @@ def modals(solutions, services, brands):
           {field("nombre", "Nombre completo", required=True, ph="Ej. Juan Pérez", ac="name", idp="mc")}
           {field("empresa", "Empresa", required=True, ph="Ej. Empresa S.A. de C.V.", ac="organization", idp="mc")}
           {field("correo", "Correo electrónico", "email", True, "nombre@empresa.com", "email", idp="mc")}
-          {field("telefono", "Teléfono", "tel", True, "Ej. 81 1234 5678", "tel", idp="mc")}
+          {field("telefono", "Teléfono", "tel", True, "Ej. 81 0000 0000", "tel", idp="mc")}
           <div class="field"><label for="mc-marca">Marca de interés <span class="req">*</span></label><input class="input" id="mc-marca" name="marca" list="dl-marcas" required placeholder="Ej. Hikvision" data-prefill><datalist id="dl-marcas">{brand_opts}</datalist><span class="field__error" aria-live="polite"></span></div>
           {field("modelo", "Modelo o producto", ph="Ej. DS-2CD2347G2-LU", idp="mc", opt=True)}
           {field("mensaje", "Detalles de tu requerimiento", "textarea", True, "Cantidades, ubicación, fechas, etc.", idp="mc", full=True)}

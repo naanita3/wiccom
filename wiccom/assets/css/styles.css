@@ -916,3 +916,4 @@ html,body{overflow-x:clip;max-width:100%}
 /* Cifras de Inicio: que el texto se ajuste en lugar de desbordar */
 .stat{min-width:0}
 .stat strong,.stat span{overflow-wrap:anywhere}
+.mnav__panel:focus,.mnav__panel:focus-visible{outline:none}

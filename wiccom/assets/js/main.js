@@ -62,7 +62,7 @@
   /* ---------- Menú móvil ---------- */
   const mnav = $('#mnav');
   let lastFocus;
-  const openNav = () => { lastFocus = document.activeElement; mnav.classList.add('is-open'); mnav.removeAttribute('aria-hidden'); $('.burger')?.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; setTimeout(() => $('.mnav__panel a, .mnav__panel button', mnav)?.focus(), 50); };
+  const openNav = () => { lastFocus = document.activeElement; mnav.classList.add('is-open'); mnav.removeAttribute('aria-hidden'); $('.burger')?.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; setTimeout(() => $('.mnav__panel', mnav)?.focus({ preventScroll: true }), 50); };
   const closeNav = () => { mnav.classList.remove('is-open'); mnav.setAttribute('aria-hidden', 'true'); $('.burger')?.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; lastFocus?.focus(); };
   $('.burger')?.addEventListener('click', openNav);
   $$('[data-close-nav]').forEach(b => b.addEventListener('click', closeNav));
