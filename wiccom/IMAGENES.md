@@ -1,6 +1,6 @@
 # Imágenes que necesita el sitio
 
-**193 de 226 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
+**201 de 226 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
 
 - Puedes usar **.webp, .jpg o .png** con el mismo nombre: el generador detecta la extensión sola (si hay varias, usa primero .webp).
 - Mientras falte una foto se muestra un recuadro con la ruta. Si en la carpeta existe `default.webp` (o `1.png`), se usa como imagen temporal.
@@ -9,16 +9,8 @@
 | Estado | Ruta | Qué debe mostrar | Tamaño sugerido |
 |---|---|---|---|
 | ⏳ | `assets/img/banners/monterrey-ciudad.jpg` | Vista panorámica de Monterrey con la Sierra Madre al fondo | 1920x600 |
-| ⏳ | `assets/img/hero/contacto.jpg` | Laptop con logotipo Wiccom y audífonos de atención a clientes | 1600x900 |
 | ⏳ | `assets/img/hero/cotizacion.jpg` | Cámara domo de videovigilancia | 1600x900 |
-| ⏳ | `assets/img/hero/nosotros.jpg` | Fachada del edificio corporativo de Wiccom | 1600x900 |
 | ⏳ | `assets/img/hero/recursos.jpg` | Cámara, cableado de red y UPS | 1600x900 |
-| ⏳ | `assets/img/nosotros/area-atencion.jpg` | Atención al cliente | 800x450 |
-| ⏳ | `assets/img/nosotros/area-ingenieria.jpg` | Ingeniería y proyectos | 800x450 |
-| ⏳ | `assets/img/nosotros/area-logistica.jpg` | Logística y distribución | 800x450 |
-| ⏳ | `assets/img/nosotros/area-soporte.jpg` | Soporte técnico | 800x450 |
-| ⏳ | `assets/img/nosotros/oficina-recepcion.jpg` | Recepción de las oficinas de Wiccom | 900x600 |
-| ⏳ | `assets/img/nosotros/reunion-proyecto.jpg` | Asesor de Wiccom revisando un proyecto con un cliente | 900x450 |
 | ⏳ | `assets/img/nosotros/tecnico-site.jpg` | Técnico de Wiccom en un site de servidores | 1200x600 |
 | ⏳ | `assets/img/recursos/buenas-practicas-cctv.jpg` | Buenas prácticas para un sistema de videovigilancia | 800x450 |
 | ⏳ | `assets/img/recursos/cableado-estructurado.jpg` | Ventajas del cableado estructurado en tu empresa | 800x450 |
@@ -41,7 +33,9 @@
 | ⏳ | `assets/img/recursos/switch-empresarial.jpg` | Cómo elegir un switch para tu red empresarial | 800x450 |
 | ⏳ | `assets/img/recursos/tendencias-2026.jpg` | Tendencias tecnológicas para empresas en 2026 | 800x450 |
 | ⏳ | `assets/img/recursos/ups-negocio.jpg` | ¿Por qué necesitas un UPS en tu negocio? | 800x450 |
-| ✅ | `assets/img/hero/inicio.jpg` | Técnico de Wiccom junto a cámara de seguridad, cableado y UPS | 1600x900 |
+| ✅ | `assets/img/hero/contacto.jpg` | Asesora de atención a clientes de Wiccom con diadema | 1600x900 |
+| ✅ | `assets/img/hero/inicio.jpg` | Oficina corporativa con especialista de Wiccom junto a un rack de telecomunicaciones | 1600x900 |
+| ✅ | `assets/img/hero/nosotros.jpg` | Equipo de Wiccom revisando un proyecto en sala de juntas | 1600x900 |
 | ✅ | `assets/img/hero/servicios.jpg` | Técnicos de Wiccom trabajando en un rack de comunicaciones dentro de una oficina corporativa | 1600x900 |
 | ✅ | `assets/img/hero/sol-audio-video-y-colaboracion.jpg` | Audio, Video y Colaboración | 2000x667 |
 | ✅ | `assets/img/hero/sol-cableado-fibra-e-infraestructura.jpg` | Cableado, Fibra e Infraestructura | 2000x667 |
@@ -156,6 +150,12 @@
 | ✅ | `assets/img/marcas/yonusa.png` | Logotipo Yonusa (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/marcas/zebra.png` | Logotipo Zebra (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/marcas/zkteco.png` | Logotipo ZKTeco (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/nosotros/area-atencion.jpg` | Atención al cliente en Wiccom | 800x450 |
+| ✅ | `assets/img/nosotros/area-ingenieria.jpg` | Ingeniería y proyectos en Wiccom | 800x450 |
+| ✅ | `assets/img/nosotros/area-logistica.jpg` | Logística y distribución en Wiccom | 800x450 |
+| ✅ | `assets/img/nosotros/area-soporte.jpg` | Soporte técnico en Wiccom | 800x450 |
+| ✅ | `assets/img/nosotros/como-trabajamos.jpg` | Especialistas de Wiccom revisando un proyecto con un cliente | 900x450 |
+| ✅ | `assets/img/nosotros/quienes-somos.jpg` | Equipo de Wiccom colaborando en una reunión de trabajo | 900x600 |
 | ✅ | `assets/img/servicios/asesoria-especializada-1.jpg` | Análisis de necesidades | 800x450 |
 | ✅ | `assets/img/servicios/asesoria-especializada-2.jpg` | Recomendación tecnológica | 800x450 |
 | ✅ | `assets/img/servicios/asesoria-especializada-3.jpg` | Evaluación de alternativas | 800x450 |

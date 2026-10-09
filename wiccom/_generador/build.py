@@ -83,37 +83,37 @@ def btn_advisor(ctx="", cls="btn btn--ghost"):
 def p_home():
     strip = '<section class="strip" aria-label="Por qué Wiccom"><ul class="container strip__list">' + "".join(
         f'<li class="strip__item" data-aos="fade-up" data-aos-delay="{i*80}">{ic(icn)}<span>{t}</span></li>' for i, (icn, t) in enumerate([
-            ("gear", "Asesoría<br>especializada"), ("users", "Soluciones a la<br>medida de tu negocio"),
-            ("truck", "Envíos a<br>todo México"), ("shield", "Respaldo y garantía<br>con marcas líderes")])) + "</ul></section>"
+            ("gear", "Asesoría<br>especializada"), ("users", "Soluciones de acuerdo con<br>las necesidades de tu proyecto"),
+            ("truck", "Envíos a<br>todo México"), ("shield", "Respaldo con<br>marcas reconocidas")])) + "</ul></section>"
     sols = carousel([sol_card(s, i, True) for i, s in enumerate(SOLUTIONS)], per=5, label="Nuestras soluciones")
     stats = '<section class="stats" aria-label="Wiccom en números"><ul class="container stats__list">' + "".join(
         f'<li class="stat" data-aos="fade-up" data-aos-delay="{i*90}">{ic(icn)}<div><strong{a}>{n}</strong><span>{t}</span></div></li>'
         for i, (icn, n, a, t) in enumerate([
-            ("users", "+500", ' data-count="500" data-prefix="+"', "Proyectos atendidos"),
-            ("clock", "+10 años", ' data-count="10" data-prefix="+" data-suffix=" años"', "De experiencia"),
-            ("map", "Empresas", "", "de todo México"),
+            ("users", "Proyectos", "", "en distintas industrias"),
+            ("clock", "+10 años", ' data-count="10" data-prefix="+" data-suffix=" años"', "de experiencia"),
+            ("map", "Cobertura", "", "a nivel nacional"),
             ("headset", "Soporte", "", "en cada etapa")])) + "</ul></section>"
     feat = [a for a in ARTICLES if a.get("featured")]
     res = carousel([rcard(a, True, i) for i, a in enumerate(feat)], per=3, label="Recursos destacados")
     srv = carousel([srv_card(s, i) for i, s in enumerate(SERVICES)], per=4, autoplay=6000, label="Servicios")
     return f'''
 {hero("Tecnología que conecta, protege y mantiene en operación a", "tu empresa",
-      "Soluciones integrales en videovigilancia, redes, energía, control de acceso, cómputo y más, con el respaldo de marcas reconocidas.",
-      "hero/inicio.jpg", "Técnico de Wiccom junto a cámara de seguridad, cableado y UPS",
+      "Soluciones integrales en seguridad electrónica, redes, telecomunicaciones, infraestructura, energía, ciberseguridad, cómputo y colaboración, con tecnología de marcas reconocidas.",
+      "hero/inicio.jpg", "Oficina corporativa con especialista de Wiccom junto a un rack de telecomunicaciones",
       eyebrow="Infraestructura · Seguridad · Conectividad · Energía · Cómputo",
       actions=btn_quote() + f'<a class="btn btn--ghost" href="{u("soluciones.html")}">Conocer soluciones</a>',
-      script=("Soluciones hoy", "para un mejor mañana"))}
+      script=("Tecnología y respaldo para", "cada etapa de tu proyecto"))}
 {strip}
 <section class="section" aria-labelledby="h-sol"><div class="container">
-  {sec_head("Nuestras soluciones", "Tecnología, infraestructura y soporte para cada necesidad de tu empresa.", ("Ver todas las soluciones", "soluciones.html"), "h-sol")}
+  {sec_head("Nuestras soluciones", "Tecnología, infraestructura y soluciones especializadas para cada necesidad de tu proyecto.", ("Ver todas las soluciones", "soluciones.html"), "h-sol")}
   {sols}
 </div></section>
 <section class="section section--tight section--alt" aria-labelledby="h-srv"><div class="container">
-  {sec_head("Servicios que complementan cada solución", "No solo suministramos equipos: los instalamos, configuramos y mantenemos.", ("Conocer nuestros servicios", "servicios.html"), "h-srv")}
+  {sec_head("Servicios que complementan cada solución", "Complementamos cada solución con servicios de asesoría, instalación, configuración, soporte, mantenimiento y capacitación.", ("Conocer nuestros servicios", "servicios.html"), "h-srv")}
   {srv}
 </div></section>
 <section class="section section--tight" aria-labelledby="h-brands"><div class="container">
-  {sec_head("Marcas que impulsan tus proyectos", "Trabajamos con fabricantes líderes a nivel mundial.", ("Ver todas las marcas", "marcas.html"), "h-brands")}
+  {sec_head("Marcas que impulsan tus proyectos", "Trabajamos con fabricantes y marcas reconocidas en distintas áreas de tecnología.", ("Ver todas las marcas", "marcas.html"), "h-brands")}
 </div>{marquee(FEATURED(), speed=45, plain=True, label="Marcas destacadas")}
 <div class="container marquee-cta" data-aos="fade-up"><a class="btn btn--outline" href="{u("marcas.html")}">Ver todas las marcas {ic("arrow")}</a></div></section>
 {stats}
@@ -121,7 +121,7 @@ def p_home():
   {sec_head("Recursos para tu crecimiento", "Guías, consejos y novedades del mundo tecnológico.", ("Ver todos los artículos", "recursos.html"), "h-res")}
   {res}
 </div></section>
-{ctaband("¿Tienes un proyecto?<br>Hablemos.", "Nuestro equipo te ayuda a encontrar la solución ideal para tu empresa.", ("Contáctanos", "contacto.html"))}'''
+{ctaband("¿Tienes un proyecto?<br>Hablemos.", "Nuestro equipo te ayuda a encontrar la solución adecuada para las necesidades de tu proyecto.", ("Contáctanos", "contacto.html"))}'''
 
 # ================================================================== SOLUCIONES
 def p_solutions():
@@ -331,55 +331,56 @@ def p_brand(b):
 
 # ================================================================== NOSOTROS
 def p_about():
-    vals = [("handshake", "Compromiso", "Cumplimos lo que acordamos."), ("shield", "Confianza", "Relaciones transparentes y de largo plazo."),
-            ("users", "Integridad", "Actuamos con honestidad."), ("bulb", "Innovación", "Tecnología con propósito."),
-            ("user", "Enfoque en el cliente", "Entendemos sus necesidades."), ("star", "Calidad", "En productos, servicios y atención.")]
-    areas = [("ingenieria", "gear", "Ingeniería y proyectos", "Diseño e integración de soluciones a la medida."),
+    vals = [("users", "Respeto", "Valoramos a las personas, sus ideas y su trabajo."), ("shield", "Honestidad", "Actuamos con transparencia, claridad y ética."),
+            ("handshake", "Compromiso", "Participamos con dedicación y enfoque en cada proyecto."), ("check", "Responsabilidad", "Atendemos nuestras obligaciones con orden y profesionalismo."),
+            ("bulb", "Innovación", "Buscamos nuevas ideas y tecnologías que aporten valor."), ("trend", "Perseverancia", "Mantenemos la constancia para superar retos y alcanzar objetivos.")]
+    areas = [("ingenieria", "gear", "Ingeniería y proyectos", "Diseño e integración según los requerimientos del proyecto."),
              ("atencion", "users", "Atención al cliente", "Asesoría personalizada en cada etapa."),
-             ("soporte", "wrench", "Soporte técnico", "Tu operación siempre en buenas manos."),
-             ("logistica", "box", "Logística y distribución", "Productos disponibles y entregas confiables.")]
-    area_cards = [f'''<article class="scard" data-aos="fade-up" data-aos-delay="{i*80}"><div class="scard__media">{ph(f"nosotros/area-{k}.jpg", t, "800x450")}<span class="scard__icon">{ic(a)}</span></div><div class="scard__body"><h3>{t}</h3><p>{d}</p></div></article>''' for i, (k, a, t, d) in enumerate(areas)]
-    diff = [("gear", "Soluciones integrales", "Productos, servicios y soporte en un solo lugar."), ("users", "Atención personalizada", "Te acompañamos en cada etapa."),
-            ("chart", "Experiencia comprobada", "Proyectos en diversos sectores."), ("shield", "Alianzas estratégicas", "Trabajamos con fabricantes líderes a nivel global.")]
+             ("soporte", "wrench", "Soporte técnico", "Respaldo técnico para tu operación."),
+             ("logistica", "box", "Logística y distribución", "Suministros y entregas para cada proyecto.")]
+    area_cards = [f'''<article class="scard" data-aos="fade-up" data-aos-delay="{i*80}"><div class="scard__media">{ph(f"nosotros/area-{k}.jpg", f"{t} en Wiccom", "800x450")}<span class="scard__icon">{ic(a)}</span></div><div class="scard__body"><h3>{t}</h3><p>{d}</p></div></article>''' for i, (k, a, t, d) in enumerate(areas)]
+    diff = [("gear", "Soluciones integrales", "Tecnología e infraestructura de acuerdo con los requerimientos de cada proyecto."), ("users", "Atención personalizada", "Acompañamiento cercano durante las distintas etapas del proyecto."),
+            ("chart", "Experiencia en distintos sectores", "Proyectos con diferentes alcances."), ("shield", "Alianzas estratégicas", "Trabajamos con fabricantes y marcas reconocidas en distintas áreas de tecnología.")]
     return f'''
-{hero("Conectando personas con un", "mejor futuro",
-      "En Wiccom acercamos la tecnología a las personas, empresas e instituciones, con soluciones confiables, innovadoras y un acompañamiento cercano en cada proyecto.",
-      "hero/nosotros.jpg", "Fachada del edificio corporativo de Wiccom", eyebrow="Nosotros",
+{hero("Tecnología, experiencia y compromiso", "en cada proyecto",
+      "En Wiccom acercamos la tecnología a empresas e instituciones mediante soluciones confiables y un acompañamiento cercano en cada proyecto.",
+      "hero/nosotros.jpg", "Equipo de Wiccom revisando un proyecto en sala de juntas", eyebrow="Nosotros",
       actions=f'<a class="btn btn--white" href="{u("soluciones.html")}">Conoce nuestras soluciones {ic("arrow")}</a><a class="btn btn--ghost" href="{u("contacto.html")}">Contáctanos</a>',
-      features=[("gear", "Soluciones"), ("users", "Personas"), ("shield", "Confianza"), ("trend", "Crecimiento")], script=("Tecnología que", "impulsa resultados"))}
+      features=[("gear", "Soluciones"), ("award", "Experiencia"), ("shield", "Confianza"), ("handshake", "Compromiso")], script=("Tecnología que conecta", "soluciones y experiencia"))}
 <section class="section" aria-labelledby="h-who"><div class="container about">
   <div data-aos="fade-right"><h2 id="h-who">¿Quiénes somos?</h2>
     <p>Somos una empresa mexicana especializada en soluciones de Tecnologías de la Información, Telecomunicaciones, Seguridad Electrónica e Infraestructura Tecnológica.</p>
     <p>Acompañamos a nuestros clientes en cada etapa de sus proyectos: desde el diseño y la consultoría, hasta la implementación y el soporte, con un enfoque en calidad, eficiencia y atención personalizada.</p>
+    <p>Wiccom está conformado por profesionales con más de 15 años de experiencia en tecnologías de la información, infraestructura de telecomunicaciones, conectividad y seguridad electrónica, brindando soluciones integrales orientadas a las necesidades de cada proyecto.</p>
     <a class="btn btn--outline" href="#mvv">Conoce más sobre Wiccom {ic("arrow")}</a></div>
-  <div class="about__img" data-aos="zoom-in">{ph("nosotros/oficina-recepcion.jpg", "Recepción de las oficinas de Wiccom", "900x600")}</div>
+  <div class="about__img" data-aos="zoom-in">{ph("nosotros/quienes-somos.jpg", "Equipo de Wiccom colaborando en una reunión de trabajo", "900x600")}</div>
   <figure class="quote-card" data-aos="fade-left" style="margin:0">{ic("quote")}<blockquote>Creemos en el poder de la tecnología para generar oportunidades y construir un futuro más conectado.</blockquote><cite>Equipo Wiccom</cite></figure>
 </div></section>
 <section class="section section--alt" id="mvv" aria-labelledby="h-mvv"><div class="container">
   {sec_head("Misión, visión y valores", "Nuestros principios guían todo lo que hacemos.", hid="h-mvv")}
   <div class="mvv">
-    <div class="mvv__card" data-aos="fade-up"><div class="mvv__title">{ic("target")}<h3>Misión</h3></div><p>Brindar soluciones tecnológicas confiables y de alto valor que impulsen el crecimiento de nuestros clientes.</p></div>
-    <div class="mvv__card" data-aos="fade-up" data-aos-delay="100"><div class="mvv__title">{ic("eye")}<h3>Visión</h3></div><p>Ser el aliado tecnológico líder en México, reconocido por nuestra innovación, servicio y compromiso.</p></div>
+    <div class="mvv__card" data-aos="fade-up"><div class="mvv__title">{ic("target")}<h3>Misión</h3></div><p>Satisfacer las necesidades de nuestros clientes ofreciendo soluciones integrales con valor agregado, a través de un equipo profesional comprometido y alineado con nuestros valores.</p></div>
+    <div class="mvv__card" data-aos="fade-up" data-aos-delay="100"><div class="mvv__title">{ic("eye")}<h3>Visión</h3></div><p>Ser la compañía preferida en el mercado de tecnología y ser reconocida por los clientes como su mejor socio de negocios.</p></div>
     <div class="mvv__card mvv__card--values" data-aos="fade-up" data-aos-delay="200"><div class="mvv__title">{ic("users")}<h3>Valores</h3></div>
       <div class="values">{"".join(f'<div class="value">{ic(a)}<h4>{t}</h4><p>{d}</p></div>' for a, t, d in vals)}</div></div>
   </div>
 </div></section>
 <section class="diff" aria-labelledby="h-diff"><div class="diff__img">{ph("nosotros/tecnico-site.jpg", "Técnico de Wiccom en un site de servidores", "1200x600", dark=True)}</div>
-  <div class="container diff__inner"><div data-aos="fade-up"><h2 id="h-diff">Lo que nos diferencia</h2><p style="color:#cfdcf2">Más que productos, ofrecemos soluciones y un verdadero acompañamiento.</p></div>
+  <div class="container diff__inner"><div data-aos="fade-up"><h2 id="h-diff">Lo que nos diferencia</h2><p style="color:#cfdcf2">Más que productos, ofrecemos soluciones y acompañamiento en cada etapa del proyecto.</p></div>
   <ul class="diff__list">{"".join(f'<li data-aos="fade-up" data-aos-delay="{i*90}">{ic(a)}<div><strong>{t}</strong><span>{d}</span></div></li>' for i, (a, t, d) in enumerate(diff))}</ul></div></section>
 <section class="section" aria-labelledby="h-how"><div class="container work">
   <div><h2 id="h-how" data-aos="fade-up">Cómo trabajamos</h2><p class="muted" data-aos="fade-up">Un proceso simple y efectivo para llevar tu proyecto del plan a la realidad.</p>
-    {steps([("", "Te escuchamos", "Entendemos tus necesidades."), ("", "Te asesoramos", "Diseñamos la solución adecuada."), ("", "Implementamos", "Integramos tecnología de forma eficiente."), ("", "Te acompañamos", "Soporte y seguimiento continuo.")], numbered=True)}</div>
-  <div class="work__img" data-aos="zoom-in">{ph("nosotros/reunion-proyecto.jpg", "Asesor de Wiccom revisando un proyecto con un cliente", "900x450")}<p>De la idea<br>a la solución</p></div>
+    {steps([("", "Te escuchamos", "Entendemos tus necesidades."), ("", "Te asesoramos", "Diseñamos la solución adecuada para tu proyecto."), ("", "Implementamos", "Integramos tecnología de forma eficiente."), ("", "Te acompañamos", "Soporte y seguimiento en cada etapa del proyecto.")], numbered=True)}</div>
+  <div class="work__img" data-aos="zoom-in">{ph("nosotros/como-trabajamos.jpg", "Especialistas de Wiccom revisando un proyecto con un cliente", "900x450")}<p>De la idea<br>a la solución</p></div>
 </div></section>
 <section class="section section--alt" id="areas" aria-labelledby="h-areas"><div class="container">
-  {sec_head("Áreas que respaldan cada proyecto", "Un equipo especializado para ofrecerte la mejor experiencia.", hid="h-areas")}
+  {sec_head("Áreas que respaldan cada proyecto", "Un equipo especializado para brindar atención y respaldo en cada etapa del proyecto.", hid="h-areas")}
   {carousel(area_cards, per=4, label="Áreas de Wiccom")}
 </div></section>
 <section class="section section--tight" aria-labelledby="h-mq"><div class="container">
-  {sec_head("Marcas que nos respaldan", "Trabajamos con fabricantes líderes a nivel global.", ("Ver todas las marcas", "marcas.html"), "h-mq")}
+  {sec_head("Marcas que nos respaldan", "Trabajamos con fabricantes y marcas reconocidas en distintas áreas de tecnología.", ("Ver todas las marcas", "marcas.html"), "h-mq")}
 </div>{marquee(FEATURED(), speed=45, plain=True)}</section>
-{ctabig("Hagamos tu próximo proyecto realidad", "Cuéntanos qué necesitas. Nuestro equipo te asesorará para encontrar la solución tecnológica adecuada.",
+{ctabig("Hagamos tu próximo proyecto realidad", "Cuéntanos sobre tu proyecto y te ayudamos a definir la solución tecnológica adecuada.",
         f'<a class="btn btn--white" href="{u("contacto.html")}">Contáctanos {ic("arrow")}</a><a class="btn btn--ghost" href="{SITE["store"]}" target="_blank" rel="noopener">Visitar tienda</a>',
         tiles=[("file", "Solicita una cotización", "cotizacion.html"), ("msg", "Habla con un asesor", "contacto.html"), ("cart", "Explora nuestra tienda", SITE["store"])])}'''
 
@@ -512,14 +513,14 @@ def channels_card():
     <a class="channel" href="mailto:{SITE["email"]}"><span class="channel__ico">{ic("mail")}</span><span><strong>Correo electrónico</strong><span>{SITE["email"]}</span></span>{ic("chev-r", "ico go")}</a>
     <div class="channel"><span class="channel__ico">{ic("clock")}</span><span><strong>Horario de atención</strong><span>{h[0][0]}: {h[0][1]}<br>{h[1][0]}: {h[1][1]}</span></span></div>
   </div>
-  <div class="note" style="margin-top:12px">{ic("msg")}<span><strong>Tiempo estimado de respuesta: 24 h hábiles.</strong><br>Un especialista se pondrá en contacto contigo.</span></div></div>'''
+  <div class="note" style="margin-top:12px">{ic("msg")}<span><strong>Seguimiento a tu solicitud.</strong><br>Un especialista se pondrá en contacto contigo durante nuestro horario de atención.</span></div></div>'''
 
 def p_quote():
     mini = "".join(f'<a href="{u("soluciones/" + s["slug"] + ".html")}">{ic(s["icon"])}{s["name"]}</a>' for s in SOLUTIONS)
     return f'''
 {hero("Solicita una", "cotización", "Cuéntanos qué necesitas y te ayudaremos a encontrar la solución adecuada para tu empresa o proyecto.",
       "hero/cotizacion.jpg", "Cámara domo de videovigilancia", eyebrow="Asesoría · Planeación · Tecnología",
-      badges=[("shield", "Asesoría especializada en cada proyecto"), ("clock", "Soluciones a la medida"), ("users", "Respuesta rápida y acompañamiento")],
+      badges=[("shield", "Asesoría especializada en cada proyecto"), ("clock", "Soluciones según tu proyecto"), ("users", "Respuesta rápida y acompañamiento")],
       features=[("shield", "Tecnología para un futuro más seguro"), ("users", "Expertos en soluciones integrales"), ("user", "Te acompañamos en todo el proceso"), ("gear", "Tu aliado tecnológico de confianza")],
       script=("Proyectos más seguros,", "empresas más fuertes"))}
 <div class="intro"><div class="container" style="padding:14px 0">{breadcrumb([("Inicio", "index.html"), ("Contacto", "contacto.html"), ("Solicita una cotización", "cotizacion.html")])}</div></div>
@@ -538,10 +539,10 @@ def p_quote():
 def p_contact():
     h = SITE["hours"]
     faqs = "".join(f'<details data-aos="fade-up" data-aos-delay="{(i%3)*80}"><summary>{ic(a)}<span>{q}</span></summary><p>{r}</p></details>' for i, (a, q, r) in enumerate(FAQ))
-    maps_q = f"{SITE['street']}, {SITE['city']}, {SITE['region']}".replace(" ", "+")
+    maps_q = f"{SITE['city']}, {SITE['region']}".replace(" ", "+")
     return f'''
-{hero("Estamos para", "ayudarte", "Cuéntanos qué necesitas y nuestro equipo te asesorará para encontrar la solución tecnológica adecuada.",
-      "hero/contacto.jpg", "Laptop con logotipo Wiccom y audífonos de atención a clientes", eyebrow="Contacto", compact=True,
+{hero("Estamos para", "ayudarte", "Cuéntanos qué necesitas y nuestro equipo te ayudará a definir la solución tecnológica adecuada.",
+      "hero/contacto.jpg", "Asesora de atención a clientes de Wiccom con diadema", eyebrow="Contacto", compact=True,
       badges=[("msg", "Respuesta rápida"), ("users", "Atención personalizada"), ("shield", "Acompañamiento en tu proyecto")],
       script=("Tu proyecto comienza", "con una conversación"))}
 <section class="section"><div class="container grid-2" style="align-items:start">
@@ -563,26 +564,26 @@ def p_contact():
     </form>{success()}</div>
   <div><h2 data-aos="fade-up" style="color:var(--blue)">Otras formas de contactarnos</h2><p class="muted" data-aos="fade-up">Elige el medio que prefieras, estamos listos para atenderte.</p>
     <div class="contact-cards">
-      <div class="ccard" data-aos="fade-up"><span class="ccard__ico ccard__ico--wa">{ic("wa")}</span><h3>WhatsApp</h3><p>Chatea con un asesor de forma inmediata.</p><a class="btn btn--wa btn--sm" href="{wa_url()}" target="_blank" rel="noopener">Abrir WhatsApp {ic("arrow")}</a></div>
+      <div class="ccard" data-aos="fade-up"><span class="ccard__ico ccard__ico--wa">{ic("wa")}</span><h3>WhatsApp</h3><p>Chatea con un asesor durante nuestro horario de atención.</p><a class="btn btn--wa btn--sm" href="{wa_url()}" target="_blank" rel="noopener">Abrir WhatsApp {ic("arrow")}</a></div>
       <div class="ccard" data-aos="fade-up" data-aos-delay="80"><span class="ccard__ico">{ic("phone")}</span><h3>Teléfono</h3><p>Llámanos para atención directa.</p><strong>{SITE["phone_display"]}</strong><a class="btn btn--outline btn--sm" href="tel:{SITE["phone_tel"]}">Llamar ahora {ic("arrow")}</a></div>
-      <div class="ccard" data-aos="fade-up" data-aos-delay="160"><span class="ccard__ico">{ic("mail")}</span><h3>Correo electrónico</h3><p>Envíanos tu solicitud o dudas.</p><strong style="font-size:.95rem">{SITE["email_sales"]}<br>{SITE["email"]}</strong><a class="btn btn--outline btn--sm" href="mailto:{SITE["email_sales"]}">Enviar correo {ic("arrow")}</a></div>
+      <div class="ccard" data-aos="fade-up" data-aos-delay="160"><span class="ccard__ico">{ic("mail")}</span><h3>Correo electrónico</h3><p>Para cotizaciones y atención comercial.</p><strong style="font-size:.95rem">{SITE["email_sales"]}</strong><a class="btn btn--outline btn--sm" href="mailto:{SITE["email_sales"]}">Enviar correo {ic("arrow")}</a></div>
       <div class="ccard" data-aos="fade-up" data-aos-delay="240"><span class="ccard__ico">{ic("clock")}</span><h3>Horario de atención</h3><p>{h[0][0]}<br><strong>{h[0][1]}</strong></p><p>{h[1][0]}<br><strong>{h[1][1]}</strong></p></div>
     </div></div>
 </div></section>
 <section class="section section--alt" aria-labelledby="h-visit"><div class="container visit">
-  <div class="visit__info" data-aos="fade-right"><div><h2 id="h-visit">Visítanos</h2><p class="muted">Te recibimos en nuestras oficinas en {SITE["city"]}, {SITE["region_short"]}</p></div>
-    <div class="visit__item">{ic("pin")}<div><h3>Dirección</h3><p>{SITE["street"]}<br>{SITE["city"]}, {SITE["region_short"]} C.P. {SITE["zip"]}</p></div></div>
-    <div class="visit__item">{ic("globe")}<div><h3>Cobertura</h3><p>Atendemos proyectos en todo México.</p></div></div>
-    <a class="btn btn--outline" style="justify-self:start" href="https://www.google.com/maps/dir/?api=1&destination={maps_q}" target="_blank" rel="noopener">{ic("pin")} Cómo llegar {ic("arrow")}</a></div>
+  <div class="visit__info" data-aos="fade-right"><div><h2 id="h-visit">Ubicación</h2><p class="muted">Estamos ubicados en {SITE["city"]}, {SITE["region_short"]}</p></div>
+    <div class="visit__item">{ic("pin")}<div><h3>Ciudad</h3><p>{SITE["city"]}, {SITE["region"]}</p></div></div>
+    <div class="visit__item">{ic("globe")}<div><h3>Cobertura</h3><p>Atendemos proyectos en distintas regiones del país y realizamos envíos a todo México.</p></div></div>
+    </div>
   <div class="map" data-aos="zoom-in"><iframe title="Ubicación de Wiccom en Google Maps" src="https://www.google.com/maps?q={maps_q}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
 </div></section>
 <section class="section" id="faq" aria-labelledby="h-faq"><div class="container">
   {sec_head("Preguntas frecuentes", "Respuestas rápidas a las dudas más comunes.", hid="h-faq")}
   <div class="faq">{faqs}</div>
 </div></section>
-{ctabig("Conectemos tu próximo proyecto", "Ya sea un proyecto de infraestructura, seguridad, redes o cómputo, nuestro equipo está listo para ayudarte.",
+{ctabig("Conectemos tu próximo proyecto", "Cuéntanos sobre tu proyecto y te ayudamos a definir la solución tecnológica adecuada.",
         f'<a class="btn btn--white" href="{u("cotizacion.html")}">Solicita una cotización {ic("arrow")}</a><a class="btn btn--ghost" href="{wa_url()}" target="_blank" rel="noopener">Chatea en WhatsApp {ic("arrow")}</a>',
-        script=("Tecnología que acerca", "grandes ideas"))}'''
+        script=("Tu proyecto comienza", "con una conversación"), img=None)}'''
 
 # ================================================================== LEGALES / 404
 def p_legal(kind):
@@ -620,10 +621,10 @@ def build():
                 if f.endswith(".html"):
                     os.remove(os.path.join(folder, f))
     write("index.html", "Wiccom | Videovigilancia, redes, energía y cómputo en Monterrey",
-          "Tecnología que conecta, protege y mantiene en operación a tu empresa. Videovigilancia, redes, energía, control de acceso y cómputo con marcas líderes. Envíos a todo México.",
+          "Tecnología que conecta, protege y mantiene en operación a tu empresa. Videovigilancia, redes, energía, control de acceso y cómputo con marcas reconocidas. Envíos a todo México.",
           p_home, "inicio", schemas=[{"@context": "https://schema.org", "@type": "WebSite", "name": "Wiccom", "url": SITE["domain"] + "/"}],
           search=("Inicio", "Tecnología que conecta, protege y mantiene en operación a tu empresa."), keywords="Wiccom, videovigilancia Monterrey, redes, cableado estructurado, UPS, control de acceso, cómputo empresarial")
-    write("soluciones.html", "Soluciones tecnológicas para empresas", "Videovigilancia, control de acceso, redes, cableado y fibra, energía, ciberseguridad, cómputo y audio y video. Diseñamos soluciones a la medida con marcas líderes.",
+    write("soluciones.html", "Soluciones tecnológicas para empresas", "Videovigilancia, control de acceso, redes, cableado y fibra, energía, ciberseguridad, cómputo y audio y video. Soluciones de acuerdo con cada proyecto, con marcas reconocidas.",
           p_solutions, "soluciones", crumbs=[("Inicio", "index.html"), ("Soluciones", "soluciones.html")],
           search=("Soluciones", "Todas las soluciones tecnológicas de Wiccom."))
     for s in SOLUTIONS:
@@ -656,9 +657,9 @@ def build():
                         "image": SITE["domain"] + "/assets/img/" + (find_img(f"recursos/{a['img']}") or f"recursos/{a['img']}.jpg"), "author": {"@type": "Organization", "name": "Wiccom"}, "publisher": {"@id": SITE["domain"] + "/#org"},
                         "mainEntityOfPage": SITE["domain"] + f"/recursos/{a['slug']}", "inLanguage": "es-MX"}],
               search=(a["title"], a["desc"], a["catn"]))
-    write("cotizacion.html", "Solicita una cotización", "Cuéntanos tu proyecto y recibe una propuesta personalizada en menos de 24 horas hábiles. Adjunta planos o listas de materiales.",
+    write("cotizacion.html", "Solicita una cotización", "Cuéntanos tu proyecto y recibe una propuesta personalizada de Wiccom para soluciones de TI, telecomunicaciones, seguridad electrónica e infraestructura.",
           p_quote, "contacto", crumbs=[("Inicio", "index.html"), ("Contacto", "contacto.html"), ("Solicita una cotización", "cotizacion.html")], search=("Solicitar cotización", "Formulario de cotización con carga de archivos.", "precio presupuesto"))
-    write("contacto.html", "Contacto", f"Contáctanos por WhatsApp, teléfono o correo. Oficinas en {SITE['city']}, {SITE['region_short']} y cobertura en todo México.",
+    write("contacto.html", "Contacto", f"Contáctanos por WhatsApp, teléfono o correo. Estamos en {SITE['city']}, {SITE['region_short']}, con envíos a todo México y proyectos en distintas regiones del país.",
           p_contact, "contacto", crumbs=[("Inicio", "index.html"), ("Contacto", "contacto.html")],
           schemas=[{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": r}} for _, q, r in FAQ]}],
           search=("Contacto", "Teléfono, WhatsApp, correo, dirección y preguntas frecuentes.", "ubicación horario"))

@@ -10,7 +10,7 @@ header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
 // ================= CONFIGURACIÓN =================
-const DESTINO      = 'danaeearrieta@gmail.com';        // quién recibe
+const DESTINO      = 'contacto@wiccom.com.mx';         // quién recibe
 const DESTINO_CC   = 'tecnologia8@globalbtek.com';      // copia (déjalo '' si no aplica)
 const REMITENTE    = 'no-reply@wiccom.com.mx';    // debe ser del mismo dominio del hosting
 const MAX_BYTES    = 10 * 1024 * 1024;            // 10 MB por archivo

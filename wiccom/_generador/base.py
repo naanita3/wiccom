@@ -7,13 +7,13 @@ import json, re, html, os
 # ------------------------------------------------------------------
 SITE = {
     "name": "Wiccom",
-    "tagline": "Tecnología que te conecta",
+    "tagline": "Conectando Tecnología",
     "domain": "https://www.wiccom.com.mx",
     "store": "https://www.wiccom.mx",
     "phone_display": "81 1234 5678",
     "phone_tel": "+528112345678",
     "whatsapp": "528112345678",
-    "email": "info@wiccom.com.mx",
+    "email": "contacto@wiccom.com.mx",
     "email_sales": "ventas@wiccom.com.mx",
     "street": "Av. Ejemplo 1234, Col. Tecnológico",
     "city": "Monterrey",
@@ -220,10 +220,10 @@ def logo(light=False):
     white = find_img("logo-wiccom-blanco", False)
     src = (white or color) if light else color
     inv = " logo__img--invert" if light and not white else ""
-    img = f'<img class="logo__img{inv}" src="{Ctx.r}assets/img/{src}" alt="Wiccom · Tecnología que te conecta" width="200" height="56">' if src else ""
+    img = f'<img class="logo__img{inv}" src="{Ctx.r}assets/img/{src}" alt="Wiccom · Conectando Tecnología" width="200" height="56">' if src else ""
     return (f'<a class="logo{" logo--light" if light else ""}" href="{u("index.html")}" aria-label="Wiccom, ir al inicio">{img}'
             f'<span class="logo__fallback"><span class="logo__mark" aria-hidden="true">W</span>'
-            f'<span class="logo__text"><span class="logo__name">wiccom</span><span class="logo__tag">Tecnología que te conecta</span></span></span></a>')
+            f'<span class="logo__text"><span class="logo__name">wiccom</span><span class="logo__tag">Conectando Tecnología</span></span></span></a>')
 
 def header(active):
     links = "".join(
@@ -350,7 +350,7 @@ def modals(solutions, services, brands):
 
 <dialog class="modal modal--lg" id="modal-cotizacion" aria-labelledby="cot-title">
   <div class="modal__view modal__form" data-name="form">
-    <div class="modal__head"><div><h2 id="cot-title">Solicitar cotización</h2><p>Cuéntanos qué necesitas. Nuestro equipo te apoyará para definir la solución adecuada.</p></div><button class="modal__close" type="button" data-close-modal aria-label="Cerrar">{ic("x")}</button></div>
+    <div class="modal__head"><div><h2 id="cot-title">Solicitar cotización</h2><p>Cuéntanos qué necesitas. Nuestro equipo te ayudará a identificar la solución adecuada.</p></div><button class="modal__close" type="button" data-close-modal aria-label="Cerrar">{ic("x")}</button></div>
     <div class="modal__body">
       <form action="{u("php/enviar.php")}" method="post" data-validate novalidate>
         <input type="hidden" name="tipo" value="Cotización de marca o producto"><input type="hidden" name="contexto" value=""><input type="hidden" name="_ts" value="">
@@ -413,7 +413,7 @@ def captcha(idp):
             f'<div class="cf-turnstile" data-sitekey="{SITE["turnstile_sitekey"]}" data-language="es" data-theme="light" data-size="flexible" aria-labelledby="{idp}-cap-l"></div>'
             f'<span class="field__error" aria-live="polite"></span></div>')
 
-def success(msg="Recibimos tu solicitud. Un asesor te contactará en menos de 24 horas hábiles."):
+def success(msg="Recibimos tu solicitud. Un asesor se pondrá en contacto contigo para dar seguimiento."):
     return f'''<div class="form-success" role="status">{ic("check")}<h3>¡Gracias por escribirnos!</h3><p class="muted">{msg}</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn btn--wa btn--sm" href="{wa_url()}" target="_blank" rel="noopener">{ic("wa")} Seguir por WhatsApp</a><button class="btn btn--outline btn--sm" type="button" data-reset-form>Enviar otra solicitud</button></div></div>'''
 
@@ -527,7 +527,7 @@ def ctabig(title, text, actions, script=("Tecnología", "que acerca"), tiles=Non
         right = f'<p class="ctabig__script" aria-hidden="true" data-aos="zoom-in">{script[0]}<br>{script[1]}</p>'
     return f'''
 <section class="ctabig" aria-labelledby="ctabig-title">
-  <div class="ctabig__bg">{ph(img, "Vista panorámica de Monterrey con la Sierra Madre al fondo", "1920x600", dark=True)}</div>
+  {f'<div class="ctabig__bg">{ph(img, "Vista panorámica de Monterrey con la Sierra Madre al fondo", "1920x600", dark=True)}</div>' if img else ""}
   <div class="container ctabig__grid">
     <div data-aos="fade-up"><h2 id="ctabig-title">{title}</h2><p>{text}</p><div class="ctabig__actions">{actions}</div></div>
     {right}
@@ -543,8 +543,7 @@ def org_schema():
         "name": "Wiccom", "slogan": SITE["tagline"], "url": SITE["domain"] + "/",
         "logo": SITE["domain"] + "/assets/img/" + (find_img("logo-wiccom", False) or "logo.png"), "image": SITE["domain"] + "/" + SITE["og_default"],
         "telephone": SITE["phone_tel"], "email": SITE["email"], "priceRange": "$$",
-        "address": {"@type": "PostalAddress", "streetAddress": SITE["street"], "addressLocality": SITE["city"],
-                    "addressRegion": SITE["region"], "postalCode": SITE["zip"], "addressCountry": "MX"},
+        "address": {"@type": "PostalAddress", "addressLocality": SITE["city"], "addressRegion": SITE["region"], "addressCountry": "MX"},
         "areaServed": {"@type": "Country", "name": "México"},
         "openingHoursSpecification": [
             {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "08:30", "closes": "18:30"},
