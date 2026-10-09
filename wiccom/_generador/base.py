@@ -232,9 +232,9 @@ def logo(light=False):
     """Logo de Wiccom (assets/img/logo-wiccom.png, a color, sin slogan). Es la misma versión en header y footer; el tamaño se ajusta por CSS."""
     src = find_img("logo-wiccom", False) or find_img("logo", False)
     img = f'<img class="logo__img" src="{Ctx.r}assets/img/{src}" alt="Wiccom" width="200" height="56">' if src else ""
-    return (f'<a class="logo{" logo--light" if light else ""}" href="{u("index.html")}" aria-label="Wiccom, ir al inicio">{img}'
-            f'<span class="logo__fallback"><span class="logo__mark" aria-hidden="true">W</span>'
-            f'<span class="logo__text"><span class="logo__name">wiccom</span></span></span></a>')
+    if not img:
+        img = '<span class="logo__fallback"><span class="logo__name">Wiccom</span></span>'
+    return f'<a class="logo{" logo--light" if light else ""}" href="{u("index.html")}" aria-label="Wiccom">{img}</a>'
 
 def header(active):
     links = "".join(
