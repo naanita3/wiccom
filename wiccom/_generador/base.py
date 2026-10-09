@@ -193,37 +193,47 @@ def wa_url(msg="¡Hola! Me gustaría hablar con un asesor de Wiccom."):
     from urllib.parse import quote
     return f"https://wa.me/{SITE['whatsapp']}?text={quote(msg)}"
 
+# Por indicación de Wiccom no se muestran logotipos de fabricantes: las marcas se presentan solo con su nombre en texto.
+THIRD_PARTY_LOGOS = False
+
 def brand_logo(b):
-    """Ruta del logo de la marca: assets/img/marcas/<slug>.(svg|png|webp|jpg) o el campo 'logo' de data.py."""
+    """Ruta del logo de la marca (desactivado mientras THIRD_PARTY_LOGOS sea False)."""
+    if not THIRD_PARTY_LOGOS:
+        return None
     if b.get("logo"):
         return find_img("marcas/" + b["logo"], False)
     return find_img("marcas/" + b["slug"], False)
 
-def brand_tile(b, tag="a", extra=""):
-    """Logo de marca. Si no hay archivo de logo, muestra el nombre como respaldo."""
+def brand_tile(b, tag="a", extra="", sub=""):
+    """Marca en texto (nombre y, opcionalmente, las soluciones con que se relaciona)."""
     lg = brand_logo(b)
-    Ctx.images.setdefault(f"marcas/{b['slug']}.png", [f"Logotipo {b['name']} (PNG o SVG, fondo blanco o transparente)", "400x200", set(), bool(lg)])[2].add(Ctx.page)
     if lg:
         inner = f'<img src="{Ctx.r}assets/img/{lg}" alt="{b["name"]}" width="400" height="200" loading="lazy" decoding="async">'
     else:
-        inner = f'<span class="brand__name">{b["name"]}</span>'
+        inner = f'<span class="brand__name">{b["name"]}</span>' + (f'<span class="brand__sub">{sub}</span>' if sub else "")
     if tag == "a":
         return f'<a class="brand" href="{u("marcas/" + b["slug"] + ".html")}" aria-label="Marca {b["name"]}" {extra}>{inner}</a>'
     return f'<div class="brand" {extra}>{inner}</div>'
+
+def brand_pills(brands, limit=24):
+    """Lista estática de marcas en texto, cada una enlazada a su ficha."""
+    seen, out = set(), []
+    for b in brands:
+        if b["slug"] not in seen:
+            seen.add(b["slug"]); out.append(b)
+    return '<ul class="brand-pills" data-aos="fade-up">' + "".join(
+        f'<li><a href="{u("marcas/" + b["slug"] + ".html")}">{b["name"]}</a></li>' for b in out[:limit]) + "</ul>"
 
 # ------------------------------------------------------------------
 # BLOQUES DE LAYOUT
 # ------------------------------------------------------------------
 def logo(light=False):
-    """Logo de Wiccom: assets/img/logo-wiccom.(svg|png) a color y logo-wiccom-blanco.(svg|png) para fondos oscuros."""
-    color = find_img("logo-wiccom", False) or find_img("logo", False)
-    white = find_img("logo-wiccom-blanco", False)
-    src = (white or color) if light else color
-    inv = " logo__img--invert" if light and not white else ""
-    img = f'<img class="logo__img{inv}" src="{Ctx.r}assets/img/{src}" alt="Wiccom" width="200" height="56">' if src else ""
+    """Logo de Wiccom (assets/img/logo-wiccom.png, a color, sin slogan). Es la misma versión en header y footer; el tamaño se ajusta por CSS."""
+    src = find_img("logo-wiccom", False) or find_img("logo", False)
+    img = f'<img class="logo__img" src="{Ctx.r}assets/img/{src}" alt="Wiccom" width="200" height="56">' if src else ""
     return (f'<a class="logo{" logo--light" if light else ""}" href="{u("index.html")}" aria-label="Wiccom, ir al inicio">{img}'
             f'<span class="logo__fallback"><span class="logo__mark" aria-hidden="true">W</span>'
-            f'<span class="logo__text"><span class="logo__name">wiccom</span><span class="logo__tag">Conectando Tecnología</span></span></span></a>')
+            f'<span class="logo__text"><span class="logo__name">wiccom</span></span></span></a>')
 
 def header(active):
     links = "".join(
@@ -299,7 +309,7 @@ def footer(solutions, services):
       <li>{ic("clock")}<span>{SITE["hours"][0][0]}<br>{SITE["hours"][0][1]}</span></li></ul></div>
   </div>
   <div class="container footer__bottom">
-    <nav class="footer__legal" aria-label="Legal"><a href="{u("terminos.html")}">Términos y condiciones</a><a href="{u("aviso-de-privacidad.html")}">Aviso de privacidad</a><a href="{u("contacto.html#faq")}">Preguntas frecuentes</a></nav>
+    <nav class="footer__legal" aria-label="Legal"><a href="{u("terminos.html")}">Términos y condiciones</a><a href="{u("aviso-de-privacidad.html")}">Aviso de privacidad</a><a href="{u("preguntas-frecuentes.html")}">Preguntas frecuentes</a></nav>
     <p style="margin:0">© <span data-year>2026</span> Wiccom. Todos los derechos reservados.</p>
   </div>
 </footer>'''

@@ -585,10 +585,12 @@ def fdate(d, long=False):
     return f"{int(dd)} de {MESES_L[int(m)]} de {y}" if long else f"{dd} {MESES[int(m)].upper()} {y}"
 
 FAQ = [
- ("truck", "¿Hacen envíos a toda la República?", "Sí. Enviamos productos a todo México y atendemos proyectos de instalación en distintas ciudades según el alcance."),
- ("box", "¿Puedo solicitar una cotización sin compromiso?", "Por supuesto. Cuéntanos tu necesidad y un asesor te enviará una propuesta sin costo ni compromiso."),
- ("headset", "¿Tienen soporte técnico?", "Sí. Te acompañamos en la implementación y ofrecemos soporte remoto, en sitio y pólizas de soporte de acuerdo con las necesidades de tu operación."),
- ("clock", "¿En cuánto tiempo responden?", "Damos seguimiento a las solicitudes durante nuestro horario de atención. Por WhatsApp, el tiempo de respuesta puede variar según la disponibilidad del equipo."),
- ("award", "¿Los productos tienen garantía?", "Trabajamos con productos originales de marcas reconocidas, sujetos a las condiciones de garantía de cada fabricante."),
- ("file", "¿Puedo compartir planos o una lista de materiales?", "Sí. Puedes indicarlo en tu solicitud y nuestro equipo te orientará sobre el medio adecuado para compartir la información."),
+ ("file", "¿Cómo puedo solicitar una cotización?", 'Puedes enviar tu solicitud a través del formulario de <a class="hl-blue" href="cotizacion.html">Solicitar cotización</a> o comunicarte con nuestro equipo por los medios de contacto disponibles en el sitio. Mientras más información proporciones sobre tu requerimiento, podremos orientarte mejor.'),
+ ("truck", "¿Atienden proyectos en todo México?", "Sí. Atendemos proyectos en distintas regiones del país y realizamos envíos a todo México. La cobertura de instalación, configuración u otros servicios se revisa de acuerdo con la ubicación y alcance de cada proyecto."),
+ ("box", "¿Puedo comprar únicamente el producto sin contratar servicios?", "Sí. Wiccom puede comercializar productos de manera individual o integrarlos como parte de una solución que incluya instalación, configuración, soporte u otros servicios."),
+ ("wrench", "¿Realizan instalación y configuración de los equipos?", "Sí. Contamos con servicios de instalación, configuración y puesta en marcha para diferentes soluciones tecnológicas. El alcance se define de acuerdo con los requerimientos de cada proyecto."),
+ ("users", "¿Pueden ayudarme a seleccionar el equipo adecuado?", "Sí. Nuestro equipo puede orientarte en la selección de productos, marcas y modelos de acuerdo con las necesidades técnicas, operativas y comerciales de tu proyecto."),
+ ("award", "¿Los productos cuentan con garantía?", "Los productos comercializados por Wiccom están sujetos a las condiciones de garantía establecidas por cada fabricante o proveedor. La cobertura, vigencia y procedimiento pueden variar según la marca y el producto."),
+ ("shield", "¿Qué marcas maneja Wiccom?", 'Trabajamos con distintas marcas y fabricantes especializados en seguridad electrónica, redes, telecomunicaciones, infraestructura, energía, ciberseguridad, cómputo y soluciones audiovisuales. Puedes consultar nuestro <a class="hl-blue" href="marcas.html">Directorio de marcas</a> para conocer algunas de ellas.'),
+ ("msg", "¿Puedo compartir planos, una lista de materiales o información adicional de mi proyecto?", "Sí. Puedes indicarlo en tu solicitud y nuestro equipo te orientará sobre el medio adecuado para compartir la información necesaria."),
 ]
