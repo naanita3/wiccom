@@ -10,8 +10,8 @@ from data import *
 def LOGO_BRANDS(prefer=(), exclude=None):
     """Marcas para carruseles: solo las que tienen logo. Primero las relacionadas (prefer),
     luego el resto de MARQUEE, sin repetir."""
-    out = [b for b in prefer if b["slug"] != exclude]
-    out += [BRAND[k] for k in MARQUEE if k in BRAND and k != exclude and BRAND[k] not in out]
+    out = [b for b in prefer if brand_logo(b) and b["slug"] != exclude]
+    out += [BRAND[k] for k in MARQUEE if k in BRAND and k != exclude and BRAND[k] not in out and brand_logo(BRAND[k])]
     return out
 
 def FEATURED():
@@ -112,6 +112,10 @@ def p_home():
   {sec_head("Servicios que complementan cada solución", "Complementamos cada solución con servicios de asesoría, instalación, configuración, soporte, mantenimiento y capacitación.", ("Conocer nuestros servicios", "servicios.html"), "h-srv")}
   {srv}
 </div></section>
+<section class="section section--tight" aria-labelledby="h-brands"><div class="container">
+  {sec_head("Marcas que impulsan tus proyectos", "Trabajamos con fabricantes y marcas reconocidas en distintas áreas de tecnología.", ("Ver todas las marcas", "marcas.html"), "h-brands")}
+</div>{marquee(FEATURED(), speed=45, plain=True, label="Marcas destacadas")}
+<div class="container marquee-cta" data-aos="fade-up"><a class="btn btn--outline" href="{u("marcas.html")}">Ver todas las marcas {ic("arrow")}</a></div></section>
 {stats}
 <section class="section" aria-labelledby="h-res"><div class="container">
   {sec_head("Recursos para tu crecimiento", "Guías, consejos y novedades del mundo tecnológico.", ("Ver todos los artículos", "recursos.html"), "h-res")}
@@ -148,7 +152,7 @@ def sol_brands(s):
     cat = [k for k, v in CAT_SOL.items() if v == s["slug"]][0]
     out = [BRAND[b] for b in s["brands"] if b in BRAND]
     out += [b for b in BRANDS if cat in b["cats"].split() and b not in out]
-    return out
+    return [b for b in out if brand_logo(b)]
 
 def p_solution(s):
     q = "cotizacion.html?interes=" + s["name"].replace(" ", "%20")
@@ -177,8 +181,7 @@ def p_solution(s):
 </div></section>
 <section class="section section--tight" aria-labelledby="h-mb"><div class="container">
   {sec_head("Tecnología de marcas reconocidas", s["brands_sub"], ("Ver todas las marcas", "marcas.html"), "h-mb")}
-  {brand_pills(sol_brands(s))}
-</div></section>
+</div>{marquee(sol_brands(s), speed=45, plain=True, label=f"Marcas de {s['name']}")}</section>
 <section class="section section--tight" aria-labelledby="h-os"><div class="container">
   {sec_head("Otras soluciones", OTHERS_SUB, ("Ver todas", "soluciones.html"), "h-os")}
   <div class="grid-4 pill-grid">{"".join(f'<a class="pill-link" href="{u("soluciones/" + o["slug"] + ".html")}" data-aos="fade-up" data-aos-delay="{i*60}">{ic(o["icon"])}{o["name"]}</a>' for i, o in enumerate(others))}</div>
@@ -237,7 +240,7 @@ def p_brands():
     chips = '<button class="chip" type="button" data-filter="all" aria-pressed="true">Todas</button>' + "".join(
         f'<button class="chip" type="button" data-filter="{k}" aria-pressed="false">{n}</button>' for k, n in CATS)
     sel = '<option value="all">Todas las categorías</option>' + "".join(f'<option value="{k}">{n}</option>' for k, n in CATS)
-    tiles = "".join(brand_tile(b, extra=f'data-cat="{b["cats"]}" data-name="{b["name"]}"', sub=" · ".join(dict(CATS)[k] for k in b["cats"].split())) for b in BRANDS)
+    tiles = "".join(brand_tile(b, extra=f'data-cat="{b["cats"]}" data-name="{b["name"]}"') for b in BRANDS)
     feats = "".join(f'<div class="icard" data-aos="fade-up" data-aos-delay="{i*80}" style="background:transparent;border:0">{ic(a)}<h3>{b}</h3><p>{c}</p></div>' for i, (a, b, c) in enumerate([
         ("shield", "Productos originales", "Trabajamos con productos provenientes de fabricantes y canales de distribución reconocidos."),
         ("gear", "Soluciones para cada proyecto", "Seleccionamos marcas y tecnologías de acuerdo con los requerimientos de cada aplicación."),
@@ -246,14 +249,14 @@ def p_brands():
     return f'''
 <section class="mhero"><div class="container mhero__grid">
   <div data-aos="fade-up">{breadcrumb([("Inicio", "index.html"), ("Marcas", "marcas.html")])}
-    <h1 style="margin-top:12px">Directorio de marcas</h1>
+    <h1 style="margin-top:12px">Tecnología de marcas reconocidas</h1>
     <p class="muted" style="font-size:1.08rem;max-width:540px">Trabajamos con fabricantes especializados en seguridad electrónica, redes, telecomunicaciones, infraestructura, energía, ciberseguridad, cómputo y soluciones audiovisuales, seleccionando la tecnología adecuada para cada proyecto.</p>
     <div class="hero__actions"><a class="btn btn--primary" href="#directorio">Explorar marcas {ic("arrow")}</a><a class="btn btn--outline" href="{SITE["store"]}" target="_blank" rel="noopener">{ic("cart")} Visitar tienda</a></div></div>
   <div class="mhero__img" data-aos="zoom-in">{ph("marcas/hero-alianzas.jpg", "Asesores de Wiccom con equipos de videovigilancia, redes, energía y cómputo", "1400x730", dark=True, eager=True)}<p>Tecnologías que respaldan<br>tus proyectos</p></div>
 </div>
 <div class="container why"><div class="why__head" data-aos="fade-up"><h2>Por qué comprar con Wiccom</h2><p>Te acompañamos para encontrar la tecnología adecuada para tu proyecto, con atención personalizada y respaldo técnico.</p></div><div class="grid-4">{feats}</div></div></section>
 <section class="section" id="directorio" aria-labelledby="h-dir"><div class="container" data-filter-group>
-  {sec_head("Marcas por solución", "Filtra por solución o busca por nombre. Cada marca tiene su ficha con información general y soluciones relacionadas.", hid="h-dir")}
+  {sec_head("Directorio de marcas", "Filtra por categoría o busca por nombre.", hid="h-dir")}
   <div class="toolbar"><div class="searchbox">{ic("search")}<label class="sr-only" for="brand-q">Buscar una marca</label><input class="input" id="brand-q" type="search" placeholder="Buscar una marca…" data-filter-search></div>
     <label class="sr-only" for="brand-cat">Categoría</label><select class="input" id="brand-cat" style="max-width:340px" data-filter-select>{sel}</select></div>
   <div class="chips" style="margin-bottom:24px" role="group" aria-label="Filtrar por categoría">{chips}</div>
@@ -303,7 +306,7 @@ def p_brand(b):
     return f'''
 <section class="mhero mhero--brand"><div class="container mhero__grid">
   <div data-aos="fade-up">{breadcrumb([("Inicio", "index.html"), ("Marcas", "marcas.html"), (b["name"], "marcas/" + b["slug"] + ".html")])}
-    <p class="mhero__name">{b["name"]}</p>
+    <div class="mhero__logo">{brand_tile(b, tag="div")}</div>
     <p class="mhero__cats">{cats}</p>
     <h1 class="mhero__h1"><span class="sr-only">{b["name"]}: </span>{b["lead"]}</h1>
     <p class="muted">{b["desc"]}</p>
@@ -323,7 +326,7 @@ def p_brand(b):
 <section class="section section--tight"><div class="container">
   <div class="store-invite store-invite--plain" data-aos="fade-up">{ic("msg", "ico ico-lg")}<div><h2>¿Te interesa implementar {b["name"]} en tu proyecto?</h2><p>Te asesoramos para elegir el modelo adecuado y lo cotizamos con instalación, configuración y soporte.</p></div><div class="store-invite__actions"><a class="btn btn--primary" href="{u(q)}">Solicitar cotización {ic("arrow")}</a>{btn_advisor(b["name"], "btn btn--outline")}</div></div>
 </div></section>
-<section class="section section--tight" aria-labelledby="h-ob"><div class="container">{sec_head("Otras marcas relacionadas", "", ("Ver directorio de marcas", "marcas.html"), "h-ob")}{brand_pills(LOGO_BRANDS(others, b["slug"]))}</div></section>
+<section class="section section--tight" aria-labelledby="h-ob"><div class="container">{sec_head("Otras marcas relacionadas", "", ("Ver todas las marcas", "marcas.html"), "h-ob")}</div>{marquee(LOGO_BRANDS(others, b["slug"]), speed=45, plain=True)}</section>
 {ctaband("¿Tienes un proyecto?<br>Hablemos.", f"Te ayudamos a elegir el modelo {b['name']} adecuado para tu necesidad.", ("Solicitar cotización", q), b["name"])}'''
 
 # ================================================================== NOSOTROS
@@ -375,9 +378,8 @@ def p_about():
   {carousel(area_cards, per=4, label="Áreas de Wiccom")}
 </div></section>
 <section class="section section--tight" aria-labelledby="h-mq"><div class="container">
-  {sec_head("Marcas con las que trabajamos", "Trabajamos con fabricantes y marcas reconocidas en distintas áreas de tecnología.", ("Ver directorio de marcas", "marcas.html"), "h-mq")}
-  {brand_pills(FEATURED())}
-</div></section>
+  {sec_head("Marcas que nos respaldan", "Trabajamos con fabricantes y marcas reconocidas en distintas áreas de tecnología.", ("Ver todas las marcas", "marcas.html"), "h-mq")}
+</div>{marquee(FEATURED(), speed=45, plain=True)}</section>
 {ctabig("Hagamos tu próximo proyecto realidad", "Cuéntanos sobre tu proyecto y te ayudamos a definir la solución tecnológica adecuada.",
         f'<a class="btn btn--white" href="{u("contacto.html")}">Contáctanos {ic("arrow")}</a><a class="btn btn--ghost" href="{SITE["store"]}" target="_blank" rel="noopener">Visitar tienda</a>',
         tiles=[("file", "Solicita una cotización", "cotizacion.html"), ("msg", "Habla con un asesor", "contacto.html"), ("cart", "Explora nuestra tienda", SITE["store"])])}'''
@@ -638,7 +640,7 @@ def build():
     write("marcas.html", "Marcas con las que trabajamos", "Hikvision, Dahua, Ubiquiti, Fortinet, Dell, APC, Panduit y más. Productos originales, con garantía y soporte técnico.",
           p_brands, "marcas", crumbs=[("Inicio", "index.html"), ("Marcas", "marcas.html")], search=("Marcas", "Directorio de fabricantes con los que trabajamos."))
     for b in BRANDS:
-        write(f"marcas/{b['slug']}.html", f"{b['name']} | Productos y soluciones en Monterrey", f"{b['lead']} {b['desc'][:90]}… Cotiza {b['name']} con Wiccom.",
+        write(f"marcas/{b['slug']}.html", f"{b['name']} en Monterrey | Distribuidor e integrador", f"{b['lead']} {b['desc'][:90]}… Cotiza {b['name']} con Wiccom.",
               lambda b=b: p_brand(b), "marcas", crumbs=[("Inicio", "index.html"), ("Marcas", "marcas.html"), (b["name"], f"marcas/{b['slug']}.html")],
               search=(b["name"], b["lead"], b["cats"]))
     write("nosotros.html", "Nosotros | Conoce a Wiccom", "Empresa mexicana especializada en TI, telecomunicaciones, seguridad electrónica e infraestructura tecnológica. Conoce nuestra misión, visión y forma de trabajar.",

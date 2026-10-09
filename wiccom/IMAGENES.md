@@ -1,6 +1,6 @@
 # Imágenes que necesita el sitio
 
-**112 de 137 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
+**201 de 226 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
 
 - Puedes usar **.webp, .jpg o .png** con el mismo nombre: el generador detecta la extensión sola (si hay varias, usa primero .webp).
 - Mientras falte una foto se muestra un recuadro con la ruta. Si en la carpeta existe `default.webp` (o `1.png`), se usa como imagen temporal.
@@ -52,6 +52,15 @@
 | ✅ | `assets/img/hero/srv-instalacion.jpg` | Instalación | 1600x900 |
 | ✅ | `assets/img/hero/srv-mantenimiento.jpg` | Mantenimiento | 1600x900 |
 | ✅ | `assets/img/hero/srv-soporte-tecnico.jpg` | Soporte técnico | 1600x900 |
+| ✅ | `assets/img/marcas/accesspro.png` | Logotipo AccessPRO (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/altronix.png` | Logotipo Altronix (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/apc.png` | Logotipo APC (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/apple.png` | Logotipo Apple (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/asus.png` | Logotipo ASUS (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/belden.png` | Logotipo Belden (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/benq.png` | Logotipo BenQ (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/cambium-networks.png` | Logotipo Cambium Networks (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/came.png` | Logotipo CAME (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/marcas/cat/acceso.jpg` | Tecnología AccessPRO – Control de Acceso e Identidad | 1200x675 |
 | ✅ | `assets/img/marcas/cat/audio-video.jpg` | Tecnología Enson – Audio, Video y Colaboración | 1200x675 |
 | ✅ | `assets/img/marcas/cat/cableado.jpg` | Tecnología Belden – Cableado, Fibra e Infraestructura | 1200x675 |
@@ -60,7 +69,87 @@
 | ✅ | `assets/img/marcas/cat/energia.jpg` | Tecnología Altronix – Energía y Respaldo | 1200x675 |
 | ✅ | `assets/img/marcas/cat/redes.jpg` | Tecnología Cambium Networks – Redes y Telecomunicaciones | 1200x675 |
 | ✅ | `assets/img/marcas/cat/videovigilancia.jpg` | Tecnología Dahua – Videovigilancia y Seguridad Electrónica | 1200x675 |
+| ✅ | `assets/img/marcas/cdp.png` | Logotipo CDP (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/charofil.png` | Logotipo Charofil (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/check-point.png` | Logotipo Check Point (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/cisco.png` | Logotipo Cisco (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/commscope.png` | Logotipo CommScope (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/condumex.png` | Logotipo Condumex (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/cyberpower.png` | Logotipo CyberPower (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/dahua.png` | Logotipo Dahua (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/dell.png` | Logotipo Dell (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/dji-enterprise.png` | Logotipo DJI Enterprise (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/dsc.png` | Logotipo DSC (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/eaton.png` | Logotipo Eaton (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/elo.png` | Logotipo Elo (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/enson.png` | Logotipo Enson (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/epcom.png` | Logotipo EPCOM (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/epson.png` | Logotipo Epson (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/extron.png` | Logotipo Extron (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/faac.png` | Logotipo FAAC (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/fanvil.png` | Logotipo Fanvil (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/fiberhome.png` | Logotipo FiberHome (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/fibrain.png` | Logotipo Fibrain (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/fluke.png` | Logotipo Fluke Networks (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/fortinet.png` | Logotipo Fortinet (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/grandstream.png` | Logotipo Grandstream (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/hanwha.png` | Logotipo Hanwha Vision (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/marcas/hero-alianzas.jpg` | Asesores de Wiccom con equipos de videovigilancia, redes, energía y cómputo | 1400x730 |
+| ✅ | `assets/img/marcas/hid.png` | Logotipo HID (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/hikvision.png` | Logotipo Hikvision (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/hiref.png` | Logotipo HiRef (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/hoffman.png` | Logotipo nVent Hoffman (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/honeywell.png` | Logotipo Honeywell (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/hp.png` | Logotipo HP (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/hpe-aruba.png` | Logotipo HPE Aruba Networking (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/hpe.png` | Logotipo HPE (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/huawei.png` | Logotipo Huawei (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/idemia.png` | Logotipo IDEMIA (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/intellinet.png` | Logotipo Intellinet (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/kaspersky.png` | Logotipo Kaspersky (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/kingston.png` | Logotipo Kingston (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/kramer.png` | Logotipo Kramer (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/lapp.png` | Logotipo LAPP (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/lenel.png` | Logotipo Lenel (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/lenovo.png` | Logotipo Lenovo (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/lg.png` | Logotipo LG (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/linkedpro.png` | Logotipo LinkedPRO (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/logitech.png` | Logotipo Logitech (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/microsoft.png` | Logotipo Microsoft (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/mikrotik.png` | Logotipo MikroTik (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/motorola.png` | Logotipo Motorola (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/multilink.png` | Logotipo Multilink (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/optronics.png` | Logotipo Optronics (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/panduit.png` | Logotipo Panduit (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/planet.png` | Logotipo PLANET (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/poly.png` | Logotipo Poly (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/qnap.png` | Logotipo QNAP (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/rittal.png` | Logotipo Rittal (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/rosslare.png` | Logotipo Rosslare (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/ruijie.png` | Logotipo Ruijie (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/samsung.png` | Logotipo Samsung (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/sandisk.png` | Logotipo SanDisk (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/seagate.png` | Logotipo Seagate (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/secolarm.png` | Logotipo Seco-Larm (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/siemon.png` | Logotipo Siemon (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/sony.png` | Logotipo Sony (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/streamax.png` | Logotipo Streamax (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/suprema.png` | Logotipo Suprema (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/synology.png` | Logotipo Synology (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/teltonika.png` | Logotipo Teltonika (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/thorsman.png` | Logotipo Thorsman (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/total-ground.png` | Logotipo Total Ground (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/tp-link.png` | Logotipo TP-Link (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/truvision.png` | Logotipo TruVision (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/ubiquiti.png` | Logotipo Ubiquiti (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/unv.png` | Logotipo UNV (Uniview) (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/velcro.png` | Logotipo Velcro (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/viakon.png` | Logotipo Viakon (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/western-digital.png` | Logotipo Western Digital (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/yealink.png` | Logotipo Yealink (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/yonusa.png` | Logotipo Yonusa (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/zebra.png` | Logotipo Zebra (PNG o SVG, fondo blanco o transparente) | 400x200 |
+| ✅ | `assets/img/marcas/zkteco.png` | Logotipo ZKTeco (PNG o SVG, fondo blanco o transparente) | 400x200 |
 | ✅ | `assets/img/nosotros/area-atencion.jpg` | Atención al cliente en Wiccom | 800x450 |
 | ✅ | `assets/img/nosotros/area-ingenieria.jpg` | Ingeniería y proyectos en Wiccom | 800x450 |
 | ✅ | `assets/img/nosotros/area-logistica.jpg` | Logística y distribución en Wiccom | 800x450 |

@@ -920,15 +920,5 @@ html,body{overflow-x:clip;max-width:100%}
 .stat{min-width:0}
 .stat strong,.stat span{overflow-wrap:anywhere}
 .mnav__panel:focus,.mnav__panel:focus-visible{outline:none}
-/* Marcas en texto (sin logotipos de fabricantes) */
-.brand-grid .brand{aspect-ratio:auto;min-height:96px;border:1px solid var(--line);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;padding:16px 18px;text-decoration:none}
-.brand-grid .brand:hover{border-color:#bcd2f5;box-shadow:var(--sh-sm)}
-.brand__name{font:700 1.02rem var(--ff-h);letter-spacing:0;text-transform:none;color:var(--title);padding:0;text-align:left}
-.brand__sub{font-size:.78rem;line-height:1.35;color:var(--muted)}
-.brand-pills{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
-.brand-pills a{display:inline-block;padding:9px 16px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--title);font-weight:600;font-size:.92rem;text-decoration:none;transition:border-color .2s,color .2s}
-.brand-pills a:hover{border-color:var(--blue);color:var(--blue)}
-.mhero__name{font:800 clamp(1.6rem,3vw,2.2rem) var(--ff-h);color:var(--title);margin:18px 0 6px}
 .faq--page{grid-template-columns:repeat(2,1fr);margin-top:24px}
-@media (max-width:900px){.brand-grid{grid-template-columns:repeat(3,1fr)}.faq--page{grid-template-columns:1fr}}
-@media (max-width:560px){.brand-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){.faq--page{grid-template-columns:1fr}}
