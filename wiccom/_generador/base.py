@@ -194,7 +194,7 @@ def wa_url(msg="¡Hola! Me gustaría hablar con un asesor de Wiccom."):
     return f"https://wa.me/{SITE['whatsapp']}?text={quote(msg)}"
 
 # Por indicación de Wiccom no se muestran logotipos de fabricantes: las marcas se presentan solo con su nombre en texto.
-THIRD_PARTY_LOGOS = True
+THIRD_PARTY_LOGOS = False
 
 def brand_logo(b):
     """Ruta del logo de la marca (desactivado mientras THIRD_PARTY_LOGOS sea False)."""
@@ -207,7 +207,6 @@ def brand_logo(b):
 def brand_tile(b, tag="a", extra="", sub=""):
     """Marca en texto (nombre y, opcionalmente, las soluciones con que se relaciona)."""
     lg = brand_logo(b)
-    Ctx.images.setdefault(f"marcas/{b['slug']}.png", [f"Logotipo {b['name']} (PNG o SVG, fondo blanco o transparente)", "400x200", set(), bool(lg)])[2].add(Ctx.page)
     if lg:
         inner = f'<img src="{Ctx.r}assets/img/{lg}" alt="{b["name"]}" width="400" height="200" loading="lazy" decoding="async">'
     else:
