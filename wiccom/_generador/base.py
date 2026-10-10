@@ -150,6 +150,19 @@ class Ctx:
 IMG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets", "img"))
 EXTS = (".webp", ".jpg", ".jpeg", ".png", ".svg")
 
+def _asset_version():
+    """Versión para evitar caché viejo: cambia cuando cambian estilos, scripts o contenido del generador."""
+    import hashlib, os
+    here = os.path.dirname(os.path.abspath(__file__)); root = os.path.dirname(here)
+    h = hashlib.md5()
+    for f in ["assets/css/styles.css", "assets/js/main.js"]:
+        h.update(open(os.path.join(root, f), "rb").read())
+    for f in ["base.py", "data.py", "build.py"]:
+        h.update(open(os.path.join(here, f), "rb").read())
+    return h.hexdigest()[:8]
+
+ASSET_V = _asset_version()
+
 def find_img(path, fallback=True):
     """Busca la imagen con cualquier extensión (webp, jpg, png, svg).
     Si no existe y fallback=True, usa la imagen genérica de la carpeta (default.* o 1.*)."""
@@ -598,7 +611,7 @@ def document(path, title, desc, body, active, solutions, services, brands, schem
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-<link rel="stylesheet" href="{r}assets/css/styles.css">
+<link rel="stylesheet" href="{r}assets/css/styles.css?v={ASSET_V}">
 {extra_head}{ld_html}
 </head>
 <body>
@@ -613,9 +626,9 @@ def document(path, title, desc, body, active, solutions, services, brands, schem
 <div class="toast" id="toast" role="status" aria-live="polite"><span class="toast__ok">{ic("check")}</span><span class="toast__err">{ic("x")}</span><span class="toast__msg"></span></div>
 {'<div class="progress" aria-hidden="true"></div>' if article else ""}
 <script>window.WICCOM={{root:"{r}",whatsapp:"{SITE["whatsapp"]}"}};</script>
-<script src="{r}assets/js/search-index.js" defer></script>
+<script src="{r}assets/js/search-index.js?v={ASSET_V}" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
-<script src="{r}assets/js/main.js" defer></script>
+<script src="{r}assets/js/main.js?v={ASSET_V}" defer></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>
 </html>'''
