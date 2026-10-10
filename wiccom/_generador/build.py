@@ -240,7 +240,7 @@ def p_brands():
     chips = '<button class="chip" type="button" data-filter="all" aria-pressed="true">Todas</button>' + "".join(
         f'<button class="chip" type="button" data-filter="{k}" aria-pressed="false">{n}</button>' for k, n in CATS)
     sel = '<option value="all">Todas las categorías</option>' + "".join(f'<option value="{k}">{n}</option>' for k, n in CATS)
-    tiles = "".join(brand_tile(b, extra=f'data-cat="{b["cats"]}" data-name="{b["name"]}"', sub=" · ".join(dict(CATS)[k] for k in b["cats"].split())) for b in BRANDS)
+    tiles = "".join(brand_tile(b, extra=f'data-cat="{b["cats"]}" data-name="{b["name"]}"') for b in BRANDS)
     feats = "".join(f'<div class="icard" data-aos="fade-up" data-aos-delay="{i*80}" style="background:transparent;border:0">{ic(a)}<h3>{b}</h3><p>{c}</p></div>' for i, (a, b, c) in enumerate([
         ("shield", "Productos originales", "Trabajamos con productos provenientes de fabricantes y canales de distribución reconocidos."),
         ("gear", "Soluciones para cada proyecto", "Seleccionamos marcas y tecnologías de acuerdo con los requerimientos de cada aplicación."),
