@@ -63,7 +63,9 @@ def inc_card(folder, slug, n, icn, t, d, i):
   <div class="scard__body"><h3>{t}</h3><p>{d}</p></div></article>'''
 
 def rcard(a, horizontal=False, i=0, filt=False):
-    img = ph(f"recursos/{a['img']}.jpg", a["title"], "800x450")
+    # Imagen propia del artículo si existe; si no, la de su categoría.
+    src = f"recursos/{a['img']}.jpg" if find_img(f"recursos/{a['img']}", False) else f"recursos/cat-{a['cat']}.jpg"
+    img = ph(src, a["title"], "800x450")
     attrs = f' data-cat="{a["cat"]}" data-name="{a["title"]} {a["desc"]}"' if filt else ""
     cls = "rcard rcard--h" if horizontal else "rcard"
     aos = "" if filt else f' data-aos="fade-up" data-aos-delay="{i*80}"'
@@ -390,12 +392,12 @@ def p_resources():
     feat = [a for a in ARTICLES if a.get("featured")]
     chips = '<button class="chip" type="button" data-filter="all" aria-pressed="true">Todas</button>' + "".join(
         f'<button class="chip" type="button" data-filter="{k}" aria-pressed="false">{n}</button>' for k, n, _, _ in ART_CATS)
-    cats = "".join(f'<a class="icard" href="#articulos" data-set-filter="{k}" data-aos="fade-up" data-aos-delay="{i*60}">{ic(a)}<h3>{n}</h3><p>{d}</p></a>' for i, (k, n, a, d) in enumerate(ART_CATS))
+    cats = "".join(f'<a class="scard scard--link" href="#articulos" data-set-filter="{k}" data-aos="fade-up" data-aos-delay="{(i%3)*80}"><div class="scard__media">{ph(f"recursos/cat-{k}.jpg", n, "900x600")}<span class="scard__icon">{ic(a)}</span></div><div class="scard__body"><h3>{n}</h3><p>{d}</p></div></a>' for i, (k, n, a, d) in enumerate(ART_CATS))
     allcards = "".join(rcard(a, filt=True) for a in ARTICLES)
     return f'''
 {hero("Recursos para impulsar", "tus decisiones tecnológicas",
       "En Wiccom compartimos guías, tutoriales, comparativas, consejos técnicos y novedades para ayudar a empresas y proyectos a elegir mejor, con información confiable y actualizada.",
-      "hero/recursos.jpg", "Oficina corporativa con vista a la ciudad", eyebrow="Recursos", banner=True,
+      "hero/recursos.jpg", "Oficina corporativa con pantallas de datos y vista a la ciudad", eyebrow="Recursos", banner=True,
       actions=f'<a class="btn btn--primary" href="{u("soluciones.html")}">Conocer soluciones {ic("arrow")}</a><a class="btn btn--ghost" href="{u("contacto.html")}">Contáctanos</a>',
       script=("Tecnología hoy.", "Oportunidades mañana."))}
 <section class="section" aria-labelledby="h-fe"><div class="container">
@@ -404,7 +406,7 @@ def p_resources():
 </div></section>
 <section class="section section--tight section--alt" aria-labelledby="h-cat"><div class="container">
   {sec_head("Explora por categoría", "Encuentra fácilmente el contenido que más te interesa.", hid="h-cat")}
-  <div class="grid-6">{cats}</div>
+  <div class="grid-3">{cats}</div>
 </div></section>
 <section class="section" id="articulos" aria-labelledby="h-art"><div class="container" data-filter-group>
   {sec_head("Artículos recientes", "Contenido actualizado sobre tecnología, aplicaciones y tendencias del sector.", hid="h-art")}
@@ -465,7 +467,7 @@ def p_article(a):
         toc = [("introduccion", "Introducción"), ("conclusion", "Siguiente paso")]
     toc_html = "".join(f'<a href="#{i}">{t}</a>' for i, t in toc)
     return f'''
-<section class="ahero ahero--banner" aria-labelledby="hero-title"><div class="ahero__img">{ph("recursos/banner-interno.jpg", "Escritorio de trabajo con laptop y reportes frente a la ciudad", "2000x667", dark=True, eager=True)}</div>
+<section class="ahero ahero--banner" aria-labelledby="hero-title"><div class="ahero__img">{ph("recursos/banner-interno.jpg", "Sala corporativa con vista panorámica de la ciudad", "2000x667", dark=True, eager=True)}</div>
   <div class="container"><div class="ahero__inner">{breadcrumb([("Recursos", "recursos.html"), (dict((k, n) for k, n, _, _ in ART_CATS)[a["cat"]], "recursos.html?categoria=" + a["cat"] + "#articulos"), (a["title"].strip("¿?"), "recursos/" + a["slug"] + ".html")]).replace('class="breadcrumb"', 'class="breadcrumb" style="--muted:#b8c7e3"')}
     <span class="cat" style="margin-top:22px">{a["catn"]}</span><h1 id="hero-title" data-aos="fade-up">{a["title"]}</h1><p data-aos="fade-up" data-aos-delay="100">{a["desc"]}</p></div></div></section>
 <div class="container">

@@ -792,3 +792,4 @@ html,body{overflow-x:clip;max-width:100%}
 @media (max-width:900px){.brand-grid{grid-template-columns:repeat(3,1fr)}.faq--page{grid-template-columns:1fr}}
 @media (max-width:560px){.brand-grid{grid-template-columns:repeat(2,1fr)}}
 .ahero--banner .ahero__img img{object-position:right center}
+.scard--link{text-decoration:none;color:inherit}
