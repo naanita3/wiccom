@@ -17,14 +17,7 @@
     const done = () => { if (img.naturalWidth > 0) { ph && ph.classList.add('is-loaded'); } else { img.remove(); } };
     if (img.complete) done(); else { img.addEventListener('load', done, { once: true }); img.addEventListener('error', () => img.remove(), { once: true }); }
   };
-  $$('.ph > img, .brand img, .logo__img').forEach(img => {
-    if (img.classList.contains('logo__img')) {
-      const ok = () => img.naturalWidth > 0 ? img.nextElementSibling?.remove() : img.remove();
-      img.complete ? ok() : (img.addEventListener('load', ok, { once: true }), img.addEventListener('error', () => img.remove(), { once: true }));
-      return;
-    }
-    handleImg(img);
-  });
+  $$('.ph > img').forEach(handleImg);
 
   /* ---------- AOS ---------- */
   if (window.AOS) {
@@ -150,36 +143,6 @@
     build();
   });
 
-  /* ---------- Carrusel de marcas: movimiento suave + navegación manual ---------- */
-  $$('.marquee').forEach(m => {
-    const track = $('.marquee__track', m); if (!track) return;
-    m.classList.add('is-js');
-    const secs = parseFloat(getComputedStyle(m).getPropertyValue('--speed')) || 40;
-    let paused = false, visible = true, last = 0, resumeT, pos = 0;
-    const half = () => track.scrollWidth / 2;
-    const wrap = () => { const h = half(); if (h <= 0) return; if (m.scrollLeft >= h) m.scrollLeft -= h; else if (m.scrollLeft <= 0) m.scrollLeft += h; };
-    const tick = t => {
-      const dt = last ? Math.min(t - last, 64) : 0; last = t;
-      if (!paused && visible && !reduceMotion) { pos += (half() / secs) * dt / 1000; const px = Math.floor(pos); if (px) { m.scrollLeft += px; pos -= px; wrap(); } }
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-    const pause = () => { paused = true; clearTimeout(resumeT); };
-    const resume = (ms = 0) => { clearTimeout(resumeT); resumeT = setTimeout(() => { paused = false; }, ms); };
-    m.addEventListener('mouseenter', pause); m.addEventListener('mouseleave', () => resume(300));
-    m.addEventListener('focusin', pause); m.addEventListener('focusout', () => resume(300));
-    m.addEventListener('touchstart', pause, { passive: true }); m.addEventListener('touchend', () => resume(2500), { passive: true });
-    m.addEventListener('scroll', () => { if (paused) wrap(); }, { passive: true });
-    // arrastre con mouse
-    let down = false, sx = 0, sl = 0, moved = false;
-    m.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = m.scrollLeft; });
-    addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) { moved = true; m.classList.add('is-dragging'); } m.scrollLeft = sl - dx; wrap(); if (Math.abs(m.scrollLeft - (sl - dx)) > 2) { sl = m.scrollLeft + dx; } });
-    addEventListener('pointerup', () => { if (!down) return; down = false; setTimeout(() => m.classList.remove('is-dragging'), 0); });
-    m.addEventListener('click', e => { if (moved) { e.preventDefault(); moved = false; } }, true);
-    m.addEventListener('dragstart', e => e.preventDefault());
-    if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(m);
-  });
-
   /* ---------- Contadores ---------- */
   const counters = $$('[data-count]');
   if (counters.length) {
@@ -261,9 +224,6 @@
     t.classList.add('is-visible');
     clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('is-visible'), ms);
   };
-  const MAX = 10 * 1024 * 1024;
-  const OK_EXT = /\.(pdf|docx?|xlsx?|jpe?g|png|dwg)$/i;
-  const fmtSize = b => b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.ceil(b / 1024) + ' KB';
 
   $$('form[data-validate]').forEach(form => {
     const started = Date.now();
@@ -284,31 +244,6 @@
       const upd = () => out && (out.textContent = `${ta.value.length}/${ta.maxLength}`);
       ta.addEventListener('input', upd); upd();
     });
-
-    // Dropzone
-    const dz = $('.dropzone', form);
-    let files = [];
-    if (dz) {
-      const inp = $('input[type=file]', dz);
-      const list = dz.parentElement.querySelector('.files');
-      const render = () => {
-        list.innerHTML = files.map((f, i) => `<li><svg class="ico" aria-hidden="true"><use href="#i-clip"/></svg><span>${f.name}</span><small>${fmtSize(f.size)}</small><button type="button" data-rm="${i}" aria-label="Quitar ${f.name}"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></li>`).join('');
-      };
-      const add = fl => {
-        [...fl].forEach(f => {
-          if (!OK_EXT.test(f.name)) return toast(`“${f.name}” no es un formato permitido.`);
-          if (f.size > MAX) return toast(`“${f.name}” supera los 10 MB.`);
-          if (files.length >= 5) return toast('Puedes adjuntar hasta 5 archivos.');
-          files.push(f);
-        });
-        render();
-      };
-      inp.addEventListener('change', () => { add(inp.files); inp.value = ''; });
-      ['dragenter', 'dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('is-over'); }));
-      ['dragleave', 'drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('is-over'); }));
-      dz.addEventListener('drop', e => add(e.dataTransfer.files));
-      list.addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (b) { files.splice(+b.dataset.rm, 1); render(); } });
-    }
 
     const setErr = (field, msg) => {
       const wrap = field.closest('.field') || field.closest('.check');
@@ -331,7 +266,7 @@
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      const fields = $$('input:not([type=hidden]):not(.hp input), select, textarea', form).filter(f => !f.closest('.hp') && f.type !== 'file');
+      const fields = $$('input:not([type=hidden]):not(.hp input), select, textarea', form).filter(f => !f.closest('.hp'));
       const bad = fields.filter(f => !check(f));
       if (bad.length) { bad[0].focus(); toast('Revisa los campos marcados.', 4200, 'error'); return; }
       // CAPTCHA (Cloudflare Turnstile)
@@ -347,7 +282,6 @@
       const btn = $('[type=submit]', form);
       btn.classList.add('is-loading');
       const data = new FormData(form);
-      files.forEach(f => data.append('archivos[]', f));
       const wrap = form.parentElement;
       try {
         if (DEMO) await new Promise(r => setTimeout(r, 900)); // modo demo (local o vista previa): no envía
@@ -357,7 +291,7 @@
           if (!res.ok || json.ok === false) throw new Error(json.message || 'Error');
         }
         wrap.classList.add('is-sent');
-        form.reset(); files = []; $$('.files', wrap).forEach(l => l.innerHTML = '');
+        form.reset();
         wrap.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
       } catch (err) {
         toast(err.message && err.message !== 'Error' ? err.message : 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.', 6000, 'error');
@@ -368,14 +302,6 @@
     });
   });
   $$('[data-reset-form]').forEach(b => b.addEventListener('click', () => b.closest('.is-sent')?.classList.remove('is-sent')));
-
-  // Newsletter
-  $$('form[data-newsletter]').forEach(f => f.addEventListener('submit', e => {
-    e.preventDefault();
-    const inp = $('input[type=email]', f);
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(inp.value.trim())) { toast('Escribe un correo válido para suscribirte.', 4200, 'error'); inp.focus(); return; }
-    toast('¡Listo! Te suscribiste a las novedades de Wiccom.'); f.reset();
-  }));
 
   /* ---------- Compartir / copiar enlace ---------- */
   $$('[data-copy-link]').forEach(b => b.addEventListener('click', async () => {

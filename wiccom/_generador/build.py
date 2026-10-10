@@ -395,11 +395,11 @@ def p_resources():
     return f'''
 {hero("Recursos para impulsar", "tus decisiones tecnológicas",
       "En Wiccom compartimos guías, tutoriales, comparativas, consejos técnicos y novedades para ayudar a empresas y proyectos a elegir mejor, con información confiable y actualizada.",
-      "hero/recursos.jpg", "Cámara, cableado de red y UPS", eyebrow="Recursos",
+      "hero/recursos.jpg", "Oficina corporativa con vista a la ciudad", eyebrow="Recursos", banner=True,
       actions=f'<a class="btn btn--primary" href="{u("soluciones.html")}">Conocer soluciones {ic("arrow")}</a><a class="btn btn--ghost" href="{u("contacto.html")}">Contáctanos</a>',
-      script=("Tecnología, conocimiento,", "mejores decisiones"))}
+      script=("Tecnología hoy.", "Oportunidades mañana."))}
 <section class="section" aria-labelledby="h-fe"><div class="container">
-  {sec_head("Recursos destacados", "Contenido seleccionado por nuestro equipo para ayudarte a tomar mejores decisiones.", ("Ver todos los recursos", "#articulos"), "h-fe")}
+  {sec_head("Recursos destacados", "Contenido seleccionado por nuestro equipo para ayudarte a evaluar distintas opciones tecnológicas.", ("Ver todos los recursos", "#articulos"), "h-fe")}
   {carousel([rcard(a, i=i) for i, a in enumerate(feat)], per=3, autoplay=6500, label="Recursos destacados")}
 </div></section>
 <section class="section section--tight section--alt" aria-labelledby="h-cat"><div class="container">
@@ -407,7 +407,7 @@ def p_resources():
   <div class="grid-6">{cats}</div>
 </div></section>
 <section class="section" id="articulos" aria-labelledby="h-art"><div class="container" data-filter-group>
-  {sec_head("Artículos recientes", "Contenido nuevo y actualizado para mantenerte siempre informado.", hid="h-art")}
+  {sec_head("Artículos recientes", "Contenido actualizado sobre tecnología, aplicaciones y tendencias del sector.", hid="h-art")}
   <div class="toolbar"><div class="searchbox">{ic("search")}<label class="sr-only" for="art-q">Buscar artículos</label><input class="input" id="art-q" type="search" placeholder="Buscar recursos, temas o palabras clave…" data-filter-search></div>
     <div class="chips chips--blue" role="group" aria-label="Filtrar por categoría">{chips}</div></div>
   <div class="grid-3" data-filter-items>{allcards}</div>
@@ -432,7 +432,7 @@ def article_body_full():
     s = "como-elegir-la-camara-de-seguridad-ideal"
     return f'''
 <h2 id="introduccion">Introducción</h2>
-<p>Elegir una cámara de seguridad no se trata solo de ver el precio o la resolución. Es importante considerar el entorno, el tipo de instalación, las funciones que realmente necesitas y la compatibilidad con tu sistema. En esta guía te explicamos los puntos clave para tomar la mejor decisión.</p>
+<p>Elegir una cámara de seguridad no se trata solo de ver el precio o la resolución. Es importante considerar el entorno, el tipo de instalación, las funciones que realmente necesitas y la compatibilidad con tu sistema. En esta guía te explicamos los puntos clave para elegir la opción adecuada.</p>
 <h2 id="lugar">1. Define el lugar de instalación</h2>
 <p class="lead">El entorno donde se instalará la cámara es fundamental para elegir el modelo adecuado.</p>
 <div class="opt-grid opt-grid--2">{"".join(f'<div class="opt"><div class="opt__img">{ph(f"recursos/{s}-{t.lower()}.jpg", f"Cámara de seguridad en {t.lower()}", "800x450")}</div><div class="opt__body"><h3>{t}</h3><ul class="checklist">{"".join(f"<li>{ic(CHECK)}{x}</li>" for x in xs)}</ul></div></div>' for t, xs in loc)}</div>
@@ -465,7 +465,7 @@ def p_article(a):
         toc = [("introduccion", "Introducción"), ("conclusion", "Siguiente paso")]
     toc_html = "".join(f'<a href="#{i}">{t}</a>' for i, t in toc)
     return f'''
-<section class="ahero" aria-labelledby="hero-title"><div class="ahero__img">{ph(f"recursos/{a['img']}.jpg", a["title"], "1600x900", dark=True, eager=True)}</div>
+<section class="ahero ahero--banner" aria-labelledby="hero-title"><div class="ahero__img">{ph("recursos/banner-interno.jpg", "Escritorio de trabajo con laptop y reportes frente a la ciudad", "2000x667", dark=True, eager=True)}</div>
   <div class="container"><div class="ahero__inner">{breadcrumb([("Recursos", "recursos.html"), (dict((k, n) for k, n, _, _ in ART_CATS)[a["cat"]], "recursos.html?categoria=" + a["cat"] + "#articulos"), (a["title"].strip("¿?"), "recursos/" + a["slug"] + ".html")]).replace('class="breadcrumb"', 'class="breadcrumb" style="--muted:#b8c7e3"')}
     <span class="cat" style="margin-top:22px">{a["catn"]}</span><h1 id="hero-title" data-aos="fade-up">{a["title"]}</h1><p data-aos="fade-up" data-aos-delay="100">{a["desc"]}</p></div></div></section>
 <div class="container">
@@ -646,7 +646,7 @@ def build():
               search=(b["name"], b["lead"], b["cats"]))
     write("nosotros.html", "Nosotros | Conoce a Wiccom", "Empresa mexicana especializada en TI, telecomunicaciones, seguridad electrónica e infraestructura tecnológica. Conoce nuestra misión, visión y forma de trabajar.",
           p_about, "nosotros", crumbs=[("Inicio", "index.html"), ("Nosotros", "nosotros.html")], search=("Nosotros", "Misión, visión, valores y equipo de Wiccom."))
-    write("recursos.html", "Recursos: guías, comparativas y consejos técnicos", "Guías, tutoriales, comparativas y consejos técnicos sobre videovigilancia, redes, energía y cómputo para tomar mejores decisiones.",
+    write("recursos.html", "Recursos: guías, comparativas y consejos técnicos", "Guías, tutoriales, comparativas y consejos técnicos sobre videovigilancia, redes, energía y cómputo para evaluar distintas opciones tecnológicas.",
           p_resources, "recursos", crumbs=[("Inicio", "index.html"), ("Recursos", "recursos.html")], search=("Recursos", "Guías, tutoriales y comparativas."))
     for a in ARTICLES:
         write(f"recursos/{a['slug']}.html", a["title"], a["desc"], lambda a=a: p_article(a), "recursos", article=True, og_type="article",

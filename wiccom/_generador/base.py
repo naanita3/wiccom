@@ -245,7 +245,7 @@ def logo(light=False):
     src = find_img("logo-wiccom", False) or find_img("logo", False)
     img = f'<img class="logo__img" src="{Ctx.r}assets/img/{src}" alt="Wiccom" width="200" height="56">' if src else ""
     if not img:
-        img = '<span class="logo__fallback"><span class="logo__name">Wiccom</span></span>'
+        img = "Wiccom"
     return f'<a class="logo{" logo--light" if light else ""}" href="{u("index.html")}" aria-label="Wiccom">{img}</a>'
 
 def header(active):
@@ -421,11 +421,6 @@ def field(name, label, kind="text", required=False, ph="", ac="", idp="f", full=
         ctl = f'<input class="input" id="{fid}" type="{kind}" name="{name}" placeholder="{ph}"{acs}{im}{r}>'
     return f'<div class="{cls}"><label for="{fid}">{label}{req}{optl}</label>{ctl}<span class="field__error" aria-live="polite"></span></div>'
 
-def dropzone(idp):
-    return f'''<div class="field field--full"><span class="label" id="{idp}-dz-l">Adjuntar archivo <small>(opcional)</small></span>
-      <div class="dropzone">{ic("clip")}<p>Arrastra y suelta tus archivos aquí o <u>haz clic para seleccionar</u></p><small>Planos, listas de materiales, especificaciones · PDF, DOC, XLS, JPG, PNG · máx. 10 MB por archivo</small>
-      <input type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.dwg" aria-labelledby="{idp}-dz-l"></div><ul class="files"></ul></div>'''
-
 def privacy(idp):
     return (f'<label class="check"><input type="checkbox" name="privacidad" value="acepto" required> <span>Acepto el <a href="{u("aviso-de-privacidad.html")}" target="_blank">Aviso de Privacidad</a> de Wiccom y autorizo el tratamiento de mis datos para atender mi solicitud. <span class="req" style="color:var(--blue)">*</span></span></label>'
             f'<span class="field__error" aria-live="polite"></span>')
@@ -497,16 +492,6 @@ def carousel(slides, per=4, autoplay=0, label="Carrusel", cls=""):
   <div class="carousel__track" tabindex="0">{items}</div>
   <div class="carousel__ctrl"><div class="carousel__dots"></div><div class="carousel__arrows"><button class="carousel__btn" type="button" data-prev aria-label="Anterior">{ic("chev-l")}</button><button class="carousel__btn" type="button" data-next aria-label="Siguiente">{ic("chev-r")}</button></div></div>
 </div>'''
-
-def marquee(brands, speed=40, board=False, reverse=False, label="Marcas con las que trabajamos", plain=False):
-    brands = list(brands)
-    while brands and len(brands) < 10:
-        brands = brands + brands[:10 - len(brands)]
-    a = "".join(f"<li>{brand_tile(b)}</li>" for b in brands)
-    b2 = "".join(f'<li aria-hidden="true">{brand_tile(b, extra=NOTAB)}</li>' for b in brands)
-    cls = "marquee" + (" marquee--board" if board else "") + (" marquee--reverse" if reverse else "") + (" marquee--plain" if plain else "")
-    speed = max(speed, round(len(brands) * 3.6))
-    return f'<div class="{cls}" style="--speed:{speed}s" aria-label="{label}"><ul class="marquee__track">{a}{b2}</ul></div>'
 
 def feats_row(items, title=None, sub=""):
     row = '<div class="feats">' + "".join(
@@ -633,6 +618,6 @@ def document(path, title, desc, body, active, solutions, services, brands, schem
 </body>
 </html>'''
     used = set(re.findall(r'#i-([a-z0-9-]+)"', page))
-    used |= {"clip", "x", "check"}
+    used |= {"x", "check"}
     page = page.replace("<body>\n", "<body>\n" + sprite(used) + "\n", 1)
     return page

@@ -558,14 +558,14 @@ ARTICLES = [
       desc="Consejos clave para maximizar la seguridad y el aprovechamiento de tus cámaras.", img="buenas-practicas-cctv"),
  dict(slug="fibra-optica-vs-cobre", cat="consejos", catn="Consejo técnico", title="Fibra óptica vs. cobre: ¿cuál elegir?", date="2026-08-10", read=6,
       desc="Comparamos ventajas, costos y escenarios de uso para que elijas el medio adecuado.", img="fibra-vs-cobre"),
- dict(slug="control-de-acceso-caso-real", cat="casos", catn="Caso de uso", title="Control de acceso en empresas: un caso real", date="2026-08-02", read=4,
-      desc="Cómo un corporativo mejoró su seguridad y eficiencia con control de acceso integrado.", img="caso-control-acceso"),
+ dict(slug="control-de-acceso-en-empresas", cat="casos", catn="Caso de uso", title="Control de acceso en empresas: ejemplo de aplicación", date="2026-08-02", read=4,
+      desc="Cómo una solución integrada de control de acceso puede mejorar la seguridad y la administración de accesos en una empresa.", img="caso-control-acceso"),
  dict(slug="nube-vs-almacenamiento-local", cat="comparativas", catn="Comparativa", title="Almacenamiento en la nube vs. almacenamiento local", date="2026-07-28", read=6,
       desc="Diferencias, beneficios y recomendaciones según tu operación.", img="nube-vs-local"),
  dict(slug="tendencias-tecnologicas-2026", cat="novedades", catn="Novedad", title="Tendencias tecnológicas para empresas en 2026", date="2026-07-22", read=5,
       desc="Las tecnologías que están transformando la seguridad y la operación de los negocios.", img="tendencias-2026"),
  dict(slug="camaras-ip-vs-analogicas", cat="comparativas", catn="Comparativa", title="Cámaras IP vs. analógicas: ¿cuál te conviene?", date="2026-07-15", read=6,
-      desc="Te ayudamos a entender las diferencias para tomar la mejor decisión.", img="ip-vs-analogicas"),
+      desc="Te ayudamos a entender las diferencias para elegir la opción adecuada.", img="ip-vs-analogicas"),
  dict(slug="como-elegir-un-switch", cat="guias", catn="Guía", title="Cómo elegir un switch para tu red empresarial", date="2026-07-08", read=6,
       desc="Puertos, PoE, capa 2 o 3 y administración: lo que debes revisar antes de comprar.", img="switch-empresarial"),
  dict(slug="nvr-vs-dvr", cat="comparativas", catn="Comparativa", title="Grabadores NVR vs. DVR: ¿cuál elegir?", date="2026-07-01", read=5,
@@ -573,10 +573,10 @@ ARTICLES = [
 ]
 ART_CATS = [("guias", "Guías", "file", "Aprende paso a paso con nuestros expertos."),
             ("tutoriales", "Tutoriales", "play", "Videos y guías prácticas para tu operación."),
-            ("comparativas", "Comparativas", "scale", "Analiza opciones y toma la mejor decisión."),
+            ("comparativas", "Comparativas", "scale", "Analiza opciones y elige la alternativa adecuada."),
             ("consejos", "Consejos técnicos", "gear", "Recomendaciones de nuestros especialistas."),
             ("novedades", "Novedades", "bell", "Entérate de las tendencias del sector."),
-            ("casos", "Casos de uso", "users", "Historias reales de éxito.")]
+            ("casos", "Casos de uso", "users", "Ejemplos de aplicación en distintos escenarios.")]
 
 MESES = ["", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 MESES_L = ["", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]

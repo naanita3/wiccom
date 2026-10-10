@@ -13,10 +13,7 @@ header('X-Content-Type-Options: nosniff');
 const DESTINO      = 'contacto@wiccom.com.mx';         // quién recibe
 const DESTINO_CC   = 'tecnologia8@globalbtek.com';      // copia (déjalo '' si no aplica)
 const REMITENTE    = 'no-reply@wiccom.com.mx';    // debe ser del mismo dominio del hosting
-const MAX_BYTES    = 10 * 1024 * 1024;            // 10 MB por archivo
-const MAX_ARCHIVOS = 5;
 const MIN_SEGUNDOS = 3;                           // tiempo mínimo para llenar (anti-bots)
-const EXT_OK = ['pdf','doc','docx','xls','xlsx','jpg','jpeg','png','dwg'];
 // Cloudflare Turnstile (CAPTCHA): pega aquí la "Secret Key" de tu sitio en dash.cloudflare.com → Turnstile.
 // IMPORTANTE: pégala solo en el archivo del servidor (hosting). No la subas a GitHub.
 // La de abajo es la clave de PRUEBA de Cloudflare (siempre aprueba).
@@ -86,33 +83,13 @@ $html = '<h2 style="font-family:Arial;color:#0D1B2A">Nueva solicitud desde wicco
 foreach ($filas as $k => $v) if ($v !== '') $html .= '<tr><td style="color:#667085"><b>'.$k.'</b></td><td>'.htmlspecialchars($v).'</td></tr>';
 $html .= '</table><p style="font-family:Arial;font-size:14px"><b>Mensaje:</b><br>'.nl2br(htmlspecialchars($mensaje)).'</p>';
 
-// Adjuntos
-$adjuntos = [];
-if (!empty($_FILES['archivos']) && is_array($_FILES['archivos']['name'])) {
-  $n = min(count($_FILES['archivos']['name']), MAX_ARCHIVOS);
-  $finfo = new finfo(FILEINFO_MIME_TYPE);
-  for ($i = 0; $i < $n; $i++) {
-    if ($_FILES['archivos']['error'][$i] !== UPLOAD_ERR_OK) continue;
-    $tmp  = $_FILES['archivos']['tmp_name'][$i];
-    $name = preg_replace('/[^\w.\- ]/u', '_', basename($_FILES['archivos']['name'][$i]));
-    $ext  = strtolower(pathinfo($name, PATHINFO_EXTENSION));
-    if (!in_array($ext, EXT_OK, true) || filesize($tmp) > MAX_BYTES || !is_uploaded_file($tmp)) continue;
-    $adjuntos[] = ['name' => $name, 'mime' => $finfo->file($tmp) ?: 'application/octet-stream', 'data' => file_get_contents($tmp)];
-  }
-}
-
 // MIME
 $asunto = '=?UTF-8?B?'.base64_encode('Wiccom · '.ucfirst($form).' · '.$nombre).'?=';
-$b = 'wc_'.bin2hex(random_bytes(8));
 $headers  = 'From: Sitio Wiccom <'.REMITENTE.">\r\n";
 if ($correo) $headers .= 'Reply-To: '.$correo."\r\n";
 if (DESTINO_CC) $headers .= 'Cc: '.DESTINO_CC."\r\n";
-$headers .= "MIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"$b\"\r\n";
-$body  = "--$b\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n".chunk_split(base64_encode($html));
-foreach ($adjuntos as $a) {
-  $body .= "--$b\r\nContent-Type: {$a['mime']}; name=\"{$a['name']}\"\r\nContent-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename=\"{$a['name']}\"\r\n\r\n".chunk_split(base64_encode($a['data']));
-}
-$body .= "--$b--";
+$headers .= "MIME-Version: 1.0\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n";
+$body = chunk_split(base64_encode($html));
 
 if (@mail(DESTINO, $asunto, $body, $headers, '-f'.REMITENTE)) {
   responder(true, '¡Gracias! Un asesor se pondrá en contacto contigo muy pronto.');

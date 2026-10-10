@@ -1,6 +1,6 @@
 # Imágenes que necesita el sitio
 
-**112 de 137 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
+**114 de 138 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
 
 - Puedes usar **.webp, .jpg o .png** con el mismo nombre: el generador detecta la extensión sola (si hay varias, usa primero .webp).
 - Mientras falte una foto se muestra un recuadro con la ruta. Si en la carpeta existe `default.webp` (o `1.png`), se usa como imagen temporal.
@@ -10,12 +10,11 @@
 |---|---|---|---|
 | ⏳ | `assets/img/banners/monterrey-ciudad.jpg` | Vista panorámica de Monterrey con la Sierra Madre al fondo | 1920x600 |
 | ⏳ | `assets/img/hero/cotizacion.jpg` | Cámara domo de videovigilancia | 1600x900 |
-| ⏳ | `assets/img/hero/recursos.jpg` | Cámara, cableado de red y UPS | 1600x900 |
 | ⏳ | `assets/img/nosotros/tecnico-site.jpg` | Técnico de Wiccom en un site de servidores | 1200x600 |
 | ⏳ | `assets/img/recursos/buenas-practicas-cctv.jpg` | Buenas prácticas para un sistema de videovigilancia | 800x450 |
 | ⏳ | `assets/img/recursos/cableado-estructurado.jpg` | Ventajas del cableado estructurado en tu empresa | 800x450 |
 | ⏳ | `assets/img/recursos/camara-seguridad.jpg` | ¿Cómo elegir la cámara de seguridad ideal? | 800x450 |
-| ⏳ | `assets/img/recursos/caso-control-acceso.jpg` | Control de acceso en empresas: un caso real | 800x450 |
+| ⏳ | `assets/img/recursos/caso-control-acceso.jpg` | Control de acceso en empresas: ejemplo de aplicación | 800x450 |
 | ⏳ | `assets/img/recursos/como-elegir-la-camara-de-seguridad-ideal-exterior.jpg` | Cámara de seguridad en exterior | 800x450 |
 | ⏳ | `assets/img/recursos/como-elegir-la-camara-de-seguridad-ideal-interior.jpg` | Cámara de seguridad en interior | 800x450 |
 | ⏳ | `assets/img/recursos/como-elegir-la-camara-de-seguridad-ideal-res-1.jpg` | Ejemplo de imagen en 2 MP (Full HD) | 600x340 |
@@ -36,6 +35,7 @@
 | ✅ | `assets/img/hero/contacto.jpg` | Asesora de atención a clientes de Wiccom con diadema | 1600x900 |
 | ✅ | `assets/img/hero/inicio.jpg` | Oficina corporativa con especialista de Wiccom junto a un rack de telecomunicaciones | 1600x900 |
 | ✅ | `assets/img/hero/nosotros.jpg` | Equipo de Wiccom revisando un proyecto en sala de juntas | 1600x900 |
+| ✅ | `assets/img/hero/recursos.jpg` | Oficina corporativa con vista a la ciudad | 2000x667 |
 | ✅ | `assets/img/hero/servicios.jpg` | Técnicos de Wiccom trabajando en un rack de comunicaciones dentro de una oficina corporativa | 1600x900 |
 | ✅ | `assets/img/hero/sol-audio-video-y-colaboracion.jpg` | Audio, Video y Colaboración | 2000x667 |
 | ✅ | `assets/img/hero/sol-cableado-fibra-e-infraestructura.jpg` | Cableado, Fibra e Infraestructura | 2000x667 |
@@ -67,6 +67,7 @@
 | ✅ | `assets/img/nosotros/area-soporte.jpg` | Soporte técnico en Wiccom | 800x450 |
 | ✅ | `assets/img/nosotros/como-trabajamos.jpg` | Especialistas de Wiccom revisando un proyecto con un cliente | 900x450 |
 | ✅ | `assets/img/nosotros/quienes-somos.jpg` | Equipo de Wiccom colaborando en una reunión de trabajo | 900x600 |
+| ✅ | `assets/img/recursos/banner-interno.jpg` | Escritorio de trabajo con laptop y reportes frente a la ciudad | 2000x667 |
 | ✅ | `assets/img/servicios/asesoria-especializada-1.jpg` | Análisis de necesidades | 800x450 |
 | ✅ | `assets/img/servicios/asesoria-especializada-2.jpg` | Recomendación tecnológica | 800x450 |
 | ✅ | `assets/img/servicios/asesoria-especializada-3.jpg` | Evaluación de alternativas | 800x450 |
