@@ -547,7 +547,7 @@ SRV = {s["slug"]: s for s in SERVICES}
 
 ARTICLES = [
  dict(slug="como-elegir-la-camara-de-seguridad-ideal", cat="guias", catn="Guía", title="¿Cómo elegir la cámara de seguridad ideal?", date="2026-08-12", read=7,
-      desc="Los factores clave para elegir el sistema de videovigilancia que mejor se adapta a tu empresa: lugar, resolución, tipo de cámara y funciones.", img="camara-seguridad", featured=True, full=True),
+      desc="Los factores clave para elegir el sistema de videovigilancia adecuado para tu empresa: lugar, resolución, tipo de cámara y funciones.", img="camara-seguridad", featured=True, full=True),
  dict(slug="ventajas-del-cableado-estructurado", cat="comparativas", catn="Comparativa", title="Ventajas del cableado estructurado en tu empresa", date="2026-08-05", read=6,
       desc="Por qué un cableado bien diseñado mejora el rendimiento, la seguridad y la escalabilidad de tu red.", img="cableado-estructurado", featured=True),
  dict(slug="por-que-necesitas-un-ups", cat="consejos", catn="Consejo técnico", title="¿Por qué necesitas un UPS en tu negocio?", date="2026-07-28", read=5,

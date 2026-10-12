@@ -793,3 +793,8 @@ html,body{overflow-x:clip;max-width:100%}
 @media (max-width:560px){.brand-grid{grid-template-columns:repeat(2,1fr)}}
 .ahero--banner .ahero__img img{object-position:right center}
 .scard--link{text-decoration:none;color:inherit}
+.opt__img--product{aspect-ratio:4/3;background:#fff;border-bottom:1px solid var(--line)}
+.opt__img--product .ph{background:#fff}
+.opt__img--product .ph>img{object-fit:contain;padding:8%}
+.note-small{font-size:.8rem;color:var(--muted);margin-top:10px}
+.conclusion__actions{display:flex;gap:10px;flex-wrap:wrap}

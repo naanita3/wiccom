@@ -351,8 +351,8 @@ def p_about():
       features=[("gear", "Soluciones"), ("award", "Experiencia"), ("shield", "Confianza"), ("handshake", "Compromiso")], script=("Tecnología que conecta", "soluciones y experiencia"))}
 <section class="section" aria-labelledby="h-who"><div class="container about">
   <div data-aos="fade-right"><h2 id="h-who">¿Quiénes somos?</h2>
-    <p>Somos una empresa mexicana especializada en soluciones de Tecnologías de la Información, Telecomunicaciones, Seguridad Electrónica e Infraestructura Tecnológica.</p>
-    <p>Acompañamos a nuestros clientes en cada etapa de sus proyectos: desde el diseño y la consultoría, hasta la implementación y el soporte, con un enfoque en calidad, eficiencia y atención personalizada.</p>
+    <p>Somos una empresa mexicana especializada en soluciones de tecnologías de la información, telecomunicaciones, seguridad electrónica e infraestructura tecnológica.</p>
+    <p>Acompañamos a nuestros clientes en cada etapa de sus proyectos: desde el diseño y la consultoría hasta la implementación y el soporte, de acuerdo con los requerimientos de cada proyecto.</p>
     <p>Wiccom está conformado por profesionales con más de 15 años de experiencia en tecnologías de la información, infraestructura de telecomunicaciones, conectividad y seguridad electrónica, brindando soluciones integrales orientadas a las necesidades de cada proyecto.</p>
     <a class="btn btn--outline" href="#mvv">Conoce más sobre Wiccom {ic("arrow")}</a></div>
   <div class="about__img" data-aos="zoom-in">{ph("nosotros/quienes-somos.jpg", "Equipo de Wiccom colaborando en una reunión de trabajo", "900x600")}</div>
@@ -424,30 +424,44 @@ def p_resources():
         script=("Tecnología hoy.", "Oportunidades mañana."))}'''
 
 def article_body_full():
-    loc = [("Interior", ["Diseño discreto", "Ideal para oficinas, comercios y hogares", "Opciones fijas o con movimiento (PT)"]),
-           ("Exterior", ["Resistencia a intemperie (IP66 o superior)", "Visión nocturna", "Materiales más robustos"])]
-    res = [("2 MP (Full HD)", "Uso básico: pasillos y áreas pequeñas."), ("4 MP (2K)", "Mayor detalle para identificar rostros."), ("8 MP (4K)", "Ideal para espacios amplios y mayor precisión.")]
-    types = [("Cámara tipo bala", "Ideal para exteriores y largas distancias."), ("Cámara domo", "Diseño discreto y uso en interiores."),
-             ("Cámara PTZ", "Movimiento horizontal, vertical y zoom."), ("Cámara Wi-Fi", "Fácil instalación y monitoreo desde el celular.")]
-    extra = [("moon", "Visión nocturna", "Imágenes claras en condiciones de poca luz."), ("walk", "Detección de movimiento", "Alertas en tiempo real."),
-             ("sound", "Audio bidireccional", "Comunicación en tiempo real."), ("hdd", "Almacenamiento", "NVR, DVR, nube o tarjeta SD.")]
-    s = "como-elegir-la-camara-de-seguridad-ideal"
+    """Guía "¿Cómo elegir la cámara de seguridad ideal?" con el texto final entregado por Wiccom.
+    Las fotos de cámaras son solo ilustrativas de cada formato (recursos/camaras/)."""
+    cam = lambda k, alt: f'<div class="opt__img opt__img--product">{ph(f"recursos/camaras/{k}.jpg", alt, "600x600")}</div>'
+    loc = [("Interior", "pt", ["Diseño discreto.", "Adecuada para oficinas, comercios y áreas interiores.", "Existen opciones fijas o con movimiento, según la aplicación."]),
+           ("Exterior", "turret", ["Protección contra intemperie, de acuerdo con la clasificación del equipo.", "Opciones con visión nocturna o desempeño en baja iluminación.", "Construcción más robusta para condiciones ambientales exigentes."])]
+    res = [("2 MP (Full HD)", "bala-2mp", "Adecuada para supervisión general en pasillos, oficinas y áreas pequeñas."),
+           ("4 MP", "bala-4mp", "Ofrece un mayor nivel de detalle para supervisión e identificación en distancias adecuadas."),
+           ("8 MP (4K)", "domo", "Proporciona un mayor nivel de detalle en áreas amplias o en escenas donde se requiere una resolución superior.")]
+    types = [("Cámara tipo bala", "bala", "Adecuada para exteriores y aplicaciones que requieren mayor alcance o una dirección de vigilancia claramente definida."),
+             ("Cámara domo", "domo", "Ofrece un diseño compacto y discreto, común en interiores y en espacios donde se busca una mejor integración visual."),
+             ("Cámara PTZ", "ptz", "Permite movimiento horizontal, vertical y zoom, lo que facilita la supervisión de áreas extensas cuando la aplicación lo requiere."),
+             ("Cámara Wi-Fi", "wifi", "Permite conexión inalámbrica y, según el modelo, monitoreo mediante aplicaciones móviles. Su conveniencia dependerá de la cobertura y estabilidad de la red inalámbrica disponible.")]
+    extra = [("moon", "Visión nocturna", "Permite obtener imágenes en condiciones de baja iluminación. El desempeño puede variar según la tecnología utilizada y las condiciones del entorno."),
+             ("walk", "Detección de movimiento", "Algunos modelos pueden generar eventos o alertas cuando detectan movimiento, de acuerdo con sus capacidades y configuración."),
+             ("sound", "Audio bidireccional", "Determinados equipos incorporan micrófono y altavoz para permitir comunicación en ambos sentidos."),
+             ("hdd", "Almacenamiento", "Dependiendo del sistema, la grabación puede realizarse mediante NVR, DVR, almacenamiento en la nube, tarjeta microSD u otras opciones compatibles.")]
     return f'''
 <h2 id="introduccion">Introducción</h2>
-<p>Elegir una cámara de seguridad no se trata solo de ver el precio o la resolución. Es importante considerar el entorno, el tipo de instalación, las funciones que realmente necesitas y la compatibilidad con tu sistema. En esta guía te explicamos los puntos clave para elegir la opción adecuada.</p>
+<p>Elegir una cámara de seguridad no depende únicamente del precio o de la resolución. También es importante considerar el entorno, el tipo de instalación, las funciones que realmente se requieren y la compatibilidad con el sistema existente.</p>
+<p>En esta guía revisamos los principales aspectos que conviene evaluar para seleccionar una cámara adecuada para cada aplicación.</p>
 <h2 id="lugar">1. Define el lugar de instalación</h2>
-<p class="lead">El entorno donde se instalará la cámara es fundamental para elegir el modelo adecuado.</p>
-<div class="opt-grid opt-grid--2">{"".join(f'<div class="opt"><div class="opt__img">{ph(f"recursos/{s}-{t.lower()}.jpg", f"Cámara de seguridad en {t.lower()}", "800x450")}</div><div class="opt__body"><h3>{t}</h3><ul class="checklist">{"".join(f"<li>{ic(CHECK)}{x}</li>" for x in xs)}</ul></div></div>' for t, xs in loc)}</div>
+<p class="lead">El entorno donde se instalará la cámara es uno de los primeros factores a considerar.</p>
+<div class="opt-grid opt-grid--2">{"".join(f'<div class="opt">{cam(k, f"Cámara de seguridad para {t.lower()}")}<div class="opt__body"><h3>{t}</h3><ul class="checklist">{"".join(f"<li>{ic(CHECK)}{x}</li>" for x in xs)}</ul></div></div>' for t, k, xs in loc)}</div>
 <h2 id="resolucion">2. Considera la resolución</h2>
-<p class="lead">La resolución determina la calidad de la imagen y el nivel de detalle que podrás ver.</p>
-<div class="opt-grid opt-grid--3">{"".join(f'<div class="opt"><div class="opt__img">{ph(f"recursos/{s}-res-{i+1}.jpg", f"Ejemplo de imagen en {t}", "600x340")}</div><div class="opt__body"><h3>{t}</h3><p>{d}</p></div></div>' for i, (t, d) in enumerate(res))}</div>
+<p class="lead">La resolución influye en el nivel de detalle disponible en la imagen. Sin embargo, no debe evaluarse de forma aislada; también intervienen factores como la lente, la distancia, el ángulo de visión y la iluminación.</p>
+<div class="opt-grid opt-grid--3">{"".join(f'<div class="opt">{cam(k, f"Cámara de {t}")}<div class="opt__body"><h3>{t}</h3><p>{d}</p></div></div>' for t, k, d in res)}</div>
 <h2 id="tipo">3. Elige el tipo de cámara</h2>
-<p class="lead">Existen diferentes tipos de cámaras según tus necesidades.</p>
-<div class="opt-grid opt-grid--4">{"".join(f'<div class="opt"><div class="opt__img">{ph(f"recursos/{s}-tipo-{i+1}.jpg", t, "500x400")}</div><div class="opt__body"><h3>{t}</h3><p>{d}</p></div></div>' for i, (t, d) in enumerate(types))}</div>
+<p class="lead">Existen distintos formatos de cámara y cada uno responde a necesidades específicas de instalación.</p>
+<div class="opt-grid opt-grid--4">{"".join(f'<div class="opt">{cam(k, t)}<div class="opt__body"><h3>{t}</h3><p>{d}</p></div></div>' for t, k, d in types)}</div>
+<p class="note-small">Las imágenes de cámaras son ilustrativas de cada formato y no representan una recomendación de marca o modelo.</p>
 <h2 id="caracteristicas">4. Otras características importantes</h2>
 <div class="opt-grid opt-grid--4">{"".join(f'<div class="opt opt--center">{ic(a)}<h3 style="font-size:.95rem;margin:0 0 4px">{t}</h3><p style="margin:0;font-size:.84rem;color:var(--muted)">{d}</p></div>' for a, t, d in extra)}</div>
-<div class="conclusion" id="conclusion"><div><h2>Conclusión</h2><p>La cámara de seguridad ideal es la que se adapta a tus necesidades específicas. Evalúa el entorno, la resolución, el tipo de cámara y las funciones adicionales para obtener un sistema confiable y eficiente.</p></div>
-  {btn_quote("Videovigilancia", "Solicita una cotización")}</div>'''
+<h2 id="conclusion">Conclusión</h2>
+<p>La cámara adecuada depende del entorno, el objetivo de vigilancia y los requerimientos de cada instalación.</p>
+<p>Antes de elegir un modelo, conviene evaluar el lugar de instalación, la resolución necesaria, el tipo de cámara, las condiciones de iluminación, el almacenamiento y las funciones adicionales requeridas.</p>
+<p>Una correcta selección ayuda a integrar un sistema de videovigilancia más adecuado para las necesidades del proyecto.</p>
+<div class="conclusion"><div><h2>¿Necesitas ayuda para tu proyecto?</h2><p>Nuestro equipo puede orientarte de acuerdo con los requerimientos de tu proyecto.</p></div>
+  <div class="conclusion__actions">{btn_quote("Videovigilancia")}<a class="btn btn--outline" href="{u("contacto.html")}">Contáctanos</a></div></div>'''
 
 def p_article(a):
     rel = [x for x in ARTICLES if x["slug"] != a["slug"]]
@@ -477,7 +491,7 @@ def p_article(a):
     <article class="prose">{body}</article>
     <aside class="article__aside" aria-label="Contenido relacionado">
       <nav class="help-card toc" aria-label="Índice del artículo"><h3 style="margin-top:0">En este artículo</h3>{toc_html}</nav>
-      <div class="help-card">{ic("mail")}<h3>¿Necesitas ayuda para tu proyecto?</h3><p>Nuestro equipo te asesora sin compromiso.</p><a class="btn btn--primary btn--block btn--sm" href="{u("contacto.html")}">Contáctanos {ic("arrow")}</a></div>
+      <div class="help-card">{ic("mail")}<h3>¿Necesitas ayuda para tu proyecto?</h3><p>Nuestro equipo puede orientarte de acuerdo con los requerimientos de tu proyecto.</p><a class="btn btn--primary btn--block btn--sm" href="{u("contacto.html")}">Contáctanos {ic("arrow")}</a></div>
     </aside>
   </div>
 </div>
