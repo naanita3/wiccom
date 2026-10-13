@@ -354,7 +354,7 @@ def modals(solutions, services, brands):
     <div class="modal__body">
       <form action="{u("php/enviar.php")}" method="post" data-validate novalidate>
         <input type="hidden" name="tipo" value="Asesor (formulario rápido)"><input type="hidden" name="contexto" value=""><input type="hidden" name="_ts" value="">
-        <div class="hp" aria-hidden="true"><label>No llenar<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
         <div class="form-grid">
           {field("nombre", "Nombre completo", required=True, ph="Ej. Juan Pérez", ac="name", idp="qa")}
           {field("empresa", "Empresa", required=True, ph="Ej. Empresa S.A. de C.V.", ac="organization", idp="qa")}
@@ -377,7 +377,7 @@ def modals(solutions, services, brands):
     <div class="modal__body">
       <form action="{u("php/enviar.php")}" method="post" data-validate novalidate>
         <input type="hidden" name="tipo" value="Cotización de marca o producto"><input type="hidden" name="contexto" value=""><input type="hidden" name="_ts" value="">
-        <div class="hp" aria-hidden="true"><label>No llenar<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
         <div class="form-grid">
           {field("nombre", "Nombre completo", required=True, ph="Ej. Juan Pérez", ac="name", idp="mc")}
           {field("empresa", "Empresa", required=True, ph="Ej. Empresa S.A. de C.V.", ac="organization", idp="mc")}
@@ -422,7 +422,7 @@ def field(name, label, kind="text", required=False, ph="", ac="", idp="f", full=
     return f'<div class="{cls}"><label for="{fid}">{label}{req}{optl}</label>{ctl}<span class="field__error" aria-live="polite"></span></div>'
 
 def privacy(idp):
-    return (f'<label class="check"><input type="checkbox" name="privacidad" value="acepto" required> <span>Acepto el <a href="{u("aviso-de-privacidad.html")}" target="_blank">Aviso de Privacidad</a> de Wiccom y autorizo el tratamiento de mis datos para atender mi solicitud. <span class="req" style="color:var(--blue)">*</span></span></label>'
+    return (f'<label class="check"><input type="checkbox" name="privacidad" value="acepto" required> <span>Acepto el <a href="{u("aviso-de-privacidad.html")}" target="_blank" rel="noopener">Aviso de Privacidad</a> de Wiccom y autorizo el tratamiento de mis datos para atender mi solicitud. <span class="req" style="color:var(--blue)">*</span></span></label>'
             f'<span class="field__error" aria-live="polite"></span>')
 
 def captcha(idp):
@@ -442,7 +442,7 @@ def hero(h1a, h1b, lead, img, img_alt, eyebrow="", actions="", features=None, sc
     feats = ""
     if features:
         feats = '<ul class="hero__features" data-aos="fade-left" data-aos-delay="300">' + "".join(f"<li>{ic(i)}<span>{t}</span></li>" for i, t in features) + "</ul>"
-    sc = f'<p class="hero__script" aria-hidden="true" data-aos="zoom-in" data-aos-delay="450">{script[0]}<em>{script[1]}</em></p>' if script else ""
+    sc = f'<p class="hero__script" aria-hidden="true" data-aos="zoom-in" data-aos-delay="450">{script[0]} <em>{script[1]}</em></p>' if script else ""
     bd = ""
     if badges:
         bd = '<ul class="hero__badges">' + "".join(f"<li>{ic(i)}<span>{t}</span></li>" for i, t in badges) + "</ul>"
@@ -593,9 +593,8 @@ def document(path, title, desc, body, active, solutions, services, brands, schem
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{full_title}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{og}">
 <link rel="icon" href="{r}assets/img/favicon.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="{r}assets/img/apple-touch-icon.png">
 <link rel="manifest" href="{r}site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<link rel="preload" href="{r}assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{r}assets/vendor/aos.css">
 <link rel="stylesheet" href="{r}assets/css/styles.css?v={ASSET_V}">
 {extra_head}{ld_html}
 </head>
@@ -612,7 +611,7 @@ def document(path, title, desc, body, active, solutions, services, brands, schem
 {'<div class="progress" aria-hidden="true"></div>' if article else ""}
 <script>window.WICCOM={{root:"{r}",whatsapp:"{SITE["whatsapp"]}"}};</script>
 <script src="{r}assets/js/search-index.js?v={ASSET_V}" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+<script src="{r}assets/vendor/aos.js" defer></script>
 <script src="{r}assets/js/main.js?v={ASSET_V}" defer></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>

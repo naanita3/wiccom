@@ -164,27 +164,23 @@
     const chips = $$('[data-filter]', group);
     const select = $('[data-filter-select]', group);
     const input = $('[data-filter-search]', group);
-    const moreBtn = $('[data-load-more]', group);
     const empty = $('.empty-state', group);
-    const pageSize = +group.dataset.pageSize || 999;
-    let cat = 'all', q = '', limit = pageSize;
+    let cat = 'all', q = '';
 
     const apply = () => {
       const nq = norm(q.trim());
       const matches = items.filter(it => (cat === 'all' || it.dataset.cat.split(' ').includes(cat)) && (!nq || norm(it.dataset.name || it.textContent).includes(nq)));
       items.forEach(it => it.classList.add('is-hidden'));
-      matches.slice(0, limit).forEach((it, i) => { it.classList.remove('is-hidden'); if (!reduceMotion) it.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 400, delay: Math.min(i, 12) * 30, easing: 'ease-out', fill: 'backwards' }); });
-      if (moreBtn) moreBtn.parentElement.hidden = matches.length <= limit;
+      matches.forEach((it, i) => { it.classList.remove('is-hidden'); if (!reduceMotion) it.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 400, delay: Math.min(i, 12) * 30, easing: 'ease-out', fill: 'backwards' }); });
       empty?.classList.toggle('is-visible', matches.length === 0);
       chips.forEach(c => c.setAttribute('aria-pressed', c.dataset.filter === cat ? 'true' : 'false'));
       if (select) select.value = cat;
       refreshAOS();
     };
-    const setCat = c => { cat = c; limit = pageSize; apply(); };
+    const setCat = c => { cat = c; apply(); };
     chips.forEach(c => c.addEventListener('click', () => setCat(c.dataset.filter)));
     select?.addEventListener('change', () => setCat(select.value));
-    input?.addEventListener('input', () => { q = input.value; limit = pageSize; apply(); });
-    moreBtn?.addEventListener('click', () => { limit += pageSize; apply(); });
+    input?.addEventListener('input', () => { q = input.value; apply(); });
     $$('[data-set-filter]').forEach(a => a.addEventListener('click', () => setCat(a.dataset.setFilter)));
     const hashCat = new URLSearchParams(location.search).get('categoria');
     if (hashCat) cat = hashCat;

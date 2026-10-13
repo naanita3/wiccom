@@ -31,6 +31,10 @@ def write(path, title, desc, body_fn, active, schemas=(), crumbs=None, search=No
     if crumbs:
         sch.append(crumb_schema(crumbs))
     html_ = document(path, title, desc, body, active, SOLUTIONS, SERVICES, BRANDS, schemas=sch, **kw)
+    # Un espacio antes de cada salto de línea: al copiar el texto o leerlo un buscador no se pegan las palabras ("para<br>cada").
+    html_ = re.sub(r"(?<=[^\s>])<br>", " <br>", html_)
+    # Enlaces que abren pestaña nueva: siempre con noopener y noreferrer.
+    html_ = html_.replace('target="_blank" rel="noopener"', 'target="_blank" rel="noopener noreferrer"')
     full = os.path.join(OUT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     open(full, "w", encoding="utf-8").write(html_)
@@ -101,7 +105,7 @@ def p_home():
     return f'''
 {hero("Tecnología que conecta, protege y mantiene en operación a", "tu empresa",
       "Soluciones integrales en seguridad electrónica, redes, telecomunicaciones, infraestructura, energía, ciberseguridad, cómputo y colaboración, con tecnología de marcas reconocidas.",
-      "hero/inicio.jpg", "Oficina corporativa con especialista de Wiccom junto a un rack de telecomunicaciones",
+      "hero/inicio.jpg", "Oficina corporativa con especialista junto a un rack de telecomunicaciones",
       eyebrow="Infraestructura · Seguridad · Conectividad · Energía · Cómputo",
       actions=btn_quote() + f'<a class="btn btn--ghost" href="{u("soluciones.html")}">Conocer soluciones</a>',
       script=("Tecnología y respaldo para", "cada etapa de tu proyecto"))}
@@ -196,7 +200,7 @@ def p_services():
     return f'''
 {hero("Servicios que impulsan", "tus proyectos",
       "En Wiccom complementamos cada solución con servicios de asesoría, instalación, configuración, soporte, mantenimiento y capacitación, de acuerdo con las necesidades de cada proyecto.",
-      "hero/servicios.jpg", "Técnicos de Wiccom trabajando en un rack de comunicaciones dentro de una oficina corporativa",
+      "hero/servicios.jpg", "Técnicos trabajando en un rack de comunicaciones dentro de una oficina corporativa",
       eyebrow="Asesoría · Instalación · Configuración · Soporte · Mantenimiento",
       actions=btn_quote() + btn_advisor(), features=[("headset", "Atención especializada"), ("gear", "Implementación confiable"), ("users", "Acompañamiento técnico"), ("sliders", "Servicios para cada proyecto")],
       script=("Tu proyecto", "en manos expertas"))}
@@ -244,7 +248,7 @@ def p_brands():
     sel = '<option value="all">Todas las categorías</option>' + "".join(f'<option value="{k}">{n}</option>' for k, n in CATS)
     tiles = "".join(brand_tile(b, extra=f'data-cat="{b["cats"]}" data-name="{b["name"]}"') for b in BRANDS)
     feats = "".join(f'<div class="icard" data-aos="fade-up" data-aos-delay="{i*80}" style="background:transparent;border:0">{ic(a)}<h3>{b}</h3><p>{c}</p></div>' for i, (a, b, c) in enumerate([
-        ("shield", "Productos originales", "Trabajamos con productos provenientes de fabricantes y canales de distribución reconocidos."),
+        ("shield", "Productos de marcas reconocidas", "Trabajamos con productos provenientes de fabricantes y canales de distribución reconocidos."),
         ("gear", "Soluciones para cada proyecto", "Seleccionamos marcas y tecnologías de acuerdo con los requerimientos de cada aplicación."),
         ("headset", "Respaldo y soporte técnico", "Te acompañamos en la selección, implementación, configuración y soporte de las soluciones."),
         ("truck", "Cobertura a nivel nacional", "Atendemos proyectos y suministros para clientes en distintas regiones de México.")]))
@@ -254,7 +258,7 @@ def p_brands():
     <h1 style="margin-top:12px">Directorio de marcas</h1>
     <p class="muted" style="font-size:1.08rem;max-width:540px">Trabajamos con fabricantes especializados en seguridad electrónica, redes, telecomunicaciones, infraestructura, energía, ciberseguridad, cómputo y soluciones audiovisuales, seleccionando la tecnología adecuada para cada proyecto.</p>
     <div class="hero__actions"><a class="btn btn--primary" href="#directorio">Explorar marcas {ic("arrow")}</a><a class="btn btn--outline" href="{SITE["store"]}" target="_blank" rel="noopener">{ic("cart")} Visitar tienda</a></div></div>
-  <div class="mhero__img" data-aos="zoom-in">{ph("marcas/hero-alianzas.jpg", "Asesores de Wiccom con equipos de videovigilancia, redes, energía y cómputo", "1400x730", dark=True, eager=True)}<p>Tecnologías que respaldan<br>tus proyectos</p></div>
+  <div class="mhero__img" data-aos="zoom-in">{ph("marcas/hero-alianzas.jpg", "Asesores con equipos de videovigilancia, redes, energía y cómputo", "1400x730", dark=True, eager=True)}<p>Tecnologías que respaldan<br>tus proyectos</p></div>
 </div>
 <div class="container why"><div class="why__head" data-aos="fade-up"><h2>Por qué comprar con Wiccom</h2><p>Te acompañamos para encontrar la tecnología adecuada para tu proyecto, con atención personalizada y respaldo técnico.</p></div><div class="grid-4">{feats}</div></div></section>
 <section class="section" id="directorio" aria-labelledby="h-dir"><div class="container" data-filter-group>
@@ -340,13 +344,13 @@ def p_about():
              ("atencion", "users", "Atención al cliente", "Asesoría personalizada en cada etapa."),
              ("soporte", "wrench", "Soporte técnico", "Respaldo técnico para tu operación."),
              ("logistica", "box", "Logística y distribución", "Suministros y entregas para cada proyecto.")]
-    area_cards = [f'''<article class="scard" data-aos="fade-up" data-aos-delay="{i*80}"><div class="scard__media">{ph(f"nosotros/area-{k}.jpg", f"{t} en Wiccom", "800x450")}<span class="scard__icon">{ic(a)}</span></div><div class="scard__body"><h3>{t}</h3><p>{d}</p></div></article>''' for i, (k, a, t, d) in enumerate(areas)]
+    area_cards = [f'''<article class="scard" data-aos="fade-up" data-aos-delay="{i*80}"><div class="scard__media">{ph(f"nosotros/area-{k}.jpg", t, "800x450")}<span class="scard__icon">{ic(a)}</span></div><div class="scard__body"><h3>{t}</h3><p>{d}</p></div></article>''' for i, (k, a, t, d) in enumerate(areas)]
     diff = [("gear", "Soluciones integrales", "Tecnología e infraestructura de acuerdo con los requerimientos de cada proyecto."), ("users", "Atención personalizada", "Acompañamiento cercano durante las distintas etapas del proyecto."),
-            ("chart", "Experiencia en distintos sectores", "Proyectos con diferentes alcances."), ("shield", "Alianzas estratégicas", "Trabajamos con fabricantes y marcas reconocidas en distintas áreas de tecnología.")]
+            ("chart", "Experiencia en distintos sectores", "Proyectos con diferentes alcances."), ("shield", "Marcas y fabricantes", "Trabajamos con fabricantes y marcas reconocidas en distintas áreas de tecnología.")]
     return f'''
 {hero("Tecnología, experiencia y compromiso", "en cada proyecto",
       "En Wiccom acercamos la tecnología a empresas e instituciones mediante soluciones confiables y un acompañamiento cercano en cada proyecto.",
-      "hero/nosotros.jpg", "Equipo de Wiccom revisando un proyecto en sala de juntas", eyebrow="Nosotros",
+      "hero/nosotros.jpg", "Equipo profesional revisando un proyecto tecnológico en sala de juntas", eyebrow="Nosotros",
       actions=f'<a class="btn btn--white" href="{u("soluciones.html")}">Conoce nuestras soluciones {ic("arrow")}</a><a class="btn btn--ghost" href="{u("contacto.html")}">Contáctanos</a>',
       features=[("gear", "Soluciones"), ("award", "Experiencia"), ("shield", "Confianza"), ("handshake", "Compromiso")], script=("Tecnología que conecta", "soluciones y experiencia"))}
 <section class="section" aria-labelledby="h-who"><div class="container about">
@@ -355,7 +359,7 @@ def p_about():
     <p>Acompañamos a nuestros clientes en cada etapa de sus proyectos: desde el diseño y la consultoría hasta la implementación y el soporte, de acuerdo con los requerimientos de cada proyecto.</p>
     <p>Wiccom está conformado por profesionales con más de 15 años de experiencia en tecnologías de la información, infraestructura de telecomunicaciones, conectividad y seguridad electrónica, brindando soluciones integrales orientadas a las necesidades de cada proyecto.</p>
     <a class="btn btn--outline" href="#mvv">Conoce más sobre Wiccom {ic("arrow")}</a></div>
-  <div class="about__img" data-aos="zoom-in">{ph("nosotros/quienes-somos.jpg", "Equipo de Wiccom colaborando en una reunión de trabajo", "900x600")}</div>
+  <div class="about__img" data-aos="zoom-in">{ph("nosotros/quienes-somos.jpg", "Equipo profesional colaborando en una reunión de trabajo", "900x600")}</div>
   <figure class="quote-card" data-aos="fade-left" style="margin:0">{ic("quote")}<blockquote>Creemos en el poder de la tecnología para generar oportunidades y construir un futuro más conectado.</blockquote><cite>Equipo Wiccom</cite></figure>
 </div></section>
 <section class="section section--alt" id="mvv" aria-labelledby="h-mvv"><div class="container">
@@ -367,13 +371,13 @@ def p_about():
       <div class="values">{"".join(f'<div class="value">{ic(a)}<h4>{t}</h4><p>{d}</p></div>' for a, t, d in vals)}</div></div>
   </div>
 </div></section>
-<section class="diff" aria-labelledby="h-diff"><div class="diff__img">{ph("nosotros/tecnico-site.jpg", "Técnico de Wiccom en un site de servidores", "1200x600", dark=True)}</div>
+<section class="diff" aria-labelledby="h-diff"><div class="diff__img">{ph("nosotros/tecnico-site.jpg", "Técnico trabajando en un site de servidores", "1200x600", dark=True)}</div>
   <div class="container diff__inner"><div data-aos="fade-up"><h2 id="h-diff">Lo que nos diferencia</h2><p style="color:#cfdcf2">Más que productos, ofrecemos soluciones y acompañamiento en cada etapa del proyecto.</p></div>
   <ul class="diff__list">{"".join(f'<li data-aos="fade-up" data-aos-delay="{i*90}">{ic(a)}<div><strong>{t}</strong><span>{d}</span></div></li>' for i, (a, t, d) in enumerate(diff))}</ul></div></section>
 <section class="section" aria-labelledby="h-how"><div class="container work">
   <div><h2 id="h-how" data-aos="fade-up">Cómo trabajamos</h2><p class="muted" data-aos="fade-up">Un proceso simple y efectivo para llevar tu proyecto del plan a la realidad.</p>
     {steps([("", "Te escuchamos", "Entendemos tus necesidades."), ("", "Te asesoramos", "Diseñamos la solución adecuada para tu proyecto."), ("", "Implementamos", "Integramos tecnología de forma eficiente."), ("", "Te acompañamos", "Soporte y seguimiento en cada etapa del proyecto.")], numbered=True)}</div>
-  <div class="work__img" data-aos="zoom-in">{ph("nosotros/como-trabajamos.jpg", "Especialistas de Wiccom revisando un proyecto con un cliente", "900x450")}<p>De la idea<br>a la solución</p></div>
+  <div class="work__img" data-aos="zoom-in">{ph("nosotros/como-trabajamos.jpg", "Especialistas revisando un proyecto tecnológico con un cliente", "900x450")}<p>De la idea<br>a la solución</p></div>
 </div></section>
 <section class="section section--alt" id="areas" aria-labelledby="h-areas"><div class="container">
   {sec_head("Áreas que respaldan cada proyecto", "Un equipo especializado para brindar atención y respaldo en cada etapa del proyecto.", hid="h-areas")}
@@ -506,7 +510,7 @@ def quote_form(idp="cz", title="Completa el formulario", sub="Nos pondremos en c
     return f'''<div class="form-card" id="formulario" data-aos="fade-up"><h2>{title}</h2><p>{sub}</p>
   <form action="{u("php/enviar.php")}" method="post" data-validate novalidate>
     <input type="hidden" name="tipo" value="{tipo}"><input type="hidden" name="_ts" value="">
-    <div class="hp" aria-hidden="true"><label>No llenar<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+    <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
     <div class="form-grid">
       {field("nombre", "Nombre", required=True, ph="Ej. Juan Pérez", ac="name", idp=idp)}
       {field("empresa", "Empresa", required=True, ph="Ej. Nombre de tu empresa", ac="organization", idp=idp)}
@@ -559,14 +563,14 @@ def p_contact():
     maps_q = f"{SITE['city']}, {SITE['region']}".replace(" ", "+")
     return f'''
 {hero("Estamos para", "ayudarte", "Cuéntanos qué necesitas y nuestro equipo te ayudará a definir la solución tecnológica adecuada.",
-      "hero/contacto.jpg", "Asesora de atención a clientes de Wiccom con diadema", eyebrow="Contacto", compact=True,
+      "hero/contacto.jpg", "Asesora de atención a clientes con diadema", eyebrow="Contacto", compact=True,
       badges=[("msg", "Respuesta rápida"), ("users", "Atención personalizada"), ("shield", "Acompañamiento en tu proyecto")],
       script=("Tu proyecto comienza", "con una conversación"))}
 <section class="section"><div class="container grid-2" style="align-items:start">
   <div class="form-card" data-aos="fade-up"><h2>Envíanos un mensaje</h2><p>Completa el formulario y uno de nuestros asesores se pondrá en contacto a la brevedad.</p>
     <form action="{u("php/enviar.php")}" method="post" data-validate novalidate>
       <input type="hidden" name="tipo" value="Mensaje de contacto"><input type="hidden" name="_ts" value="">
-      <div class="hp" aria-hidden="true"><label>No llenar<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
       <div class="form-grid">
         {field("nombre", "Nombre completo", required=True, ph="Tu nombre", ac="name", idp="ct")}
         {field("empresa", "Empresa", ph="Nombre de tu empresa", ac="organization", idp="ct", opt=True)}

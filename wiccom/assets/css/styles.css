@@ -1,3 +1,11 @@
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/inter-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/inter-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/inter-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/inter-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/plus-jakarta-sans-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/plus-jakarta-sans-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/plus-jakarta-sans-latin-800-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Caveat';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/caveat-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 
 
 :root{
@@ -365,7 +373,7 @@ a.channel:hover{background:var(--bg-2)}
 .icard .ico{width:38px;height:38px;color:var(--blue);stroke-width:1.5;margin-bottom:6px}
 .icard h3{font-size:.98rem;margin:0}
 .icard p{font-size:.84rem;color:var(--muted);margin:0}
-.grid-6{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
@@ -588,7 +596,6 @@ a.channel:hover{background:var(--bg-2)}
 }
 @media (max-width:1024px){
   .brand-grid{grid-template-columns:repeat(4,1fr)}
-  .grid-6{grid-template-columns:repeat(3,1fr)}
   .grid-4{grid-template-columns:repeat(2,1fr)}
   .feats,.stats__list,.strip__list,.diff__list{grid-template-columns:repeat(2,1fr);row-gap:22px}
   .feat:nth-child(3),.stat:nth-child(3),.strip__item:nth-child(3),.diff__list li:nth-child(3){border-left:0;padding-left:0}
@@ -634,7 +641,6 @@ a.channel:hover{background:var(--bg-2)}
   .hero__actions .btn,.ctabig__actions .btn{flex:1 1 100%}
   .form-grid,.contact-cards,.grid-2,.grid-3,.faq,.mini-sol,.about,.mvv,.opt-grid--2,.opt-grid--3{grid-template-columns:1fr}
   .grid-4,.opt-grid--4{grid-template-columns:1fr 1fr;gap:12px}
-  .grid-6{grid-template-columns:1fr 1fr}
   .brand-grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .feats,.diff__list{grid-template-columns:1fr}
   .stats__list,.strip__list{grid-template-columns:1fr 1fr;gap:18px 14px}
@@ -798,3 +804,4 @@ html,body{overflow-x:clip;max-width:100%}
 .opt__img--product .ph>img{object-fit:contain;padding:8%}
 .note-small{font-size:.8rem;color:var(--muted);margin-top:10px}
 .conclusion__actions{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:900px){.grid-2{grid-template-columns:1fr}}

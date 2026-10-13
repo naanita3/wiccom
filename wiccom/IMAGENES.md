@@ -10,12 +10,12 @@
 |---|---|---|---|
 | ⏳ | `assets/img/banners/monterrey-ciudad.jpg` | Vista panorámica de Monterrey con la Sierra Madre al fondo | 1920x600 |
 | ⏳ | `assets/img/hero/cotizacion.jpg` | Cámara domo de videovigilancia | 1600x900 |
-| ⏳ | `assets/img/nosotros/tecnico-site.jpg` | Técnico de Wiccom en un site de servidores | 1200x600 |
-| ✅ | `assets/img/hero/contacto.jpg` | Asesora de atención a clientes de Wiccom con diadema | 1600x900 |
-| ✅ | `assets/img/hero/inicio.jpg` | Oficina corporativa con especialista de Wiccom junto a un rack de telecomunicaciones | 1600x900 |
-| ✅ | `assets/img/hero/nosotros.jpg` | Equipo de Wiccom revisando un proyecto en sala de juntas | 1600x900 |
+| ⏳ | `assets/img/nosotros/tecnico-site.jpg` | Técnico trabajando en un site de servidores | 1200x600 |
+| ✅ | `assets/img/hero/contacto.jpg` | Asesora de atención a clientes con diadema | 1600x900 |
+| ✅ | `assets/img/hero/inicio.jpg` | Oficina corporativa con especialista junto a un rack de telecomunicaciones | 1600x900 |
+| ✅ | `assets/img/hero/nosotros.jpg` | Equipo profesional revisando un proyecto tecnológico en sala de juntas | 1600x900 |
 | ✅ | `assets/img/hero/recursos.jpg` | Oficina corporativa con pantallas de datos y vista a la ciudad | 2000x667 |
-| ✅ | `assets/img/hero/servicios.jpg` | Técnicos de Wiccom trabajando en un rack de comunicaciones dentro de una oficina corporativa | 1600x900 |
+| ✅ | `assets/img/hero/servicios.jpg` | Técnicos trabajando en un rack de comunicaciones dentro de una oficina corporativa | 1600x900 |
 | ✅ | `assets/img/hero/sol-audio-video-y-colaboracion.jpg` | Audio, Video y Colaboración | 2000x667 |
 | ✅ | `assets/img/hero/sol-cableado-fibra-e-infraestructura.jpg` | Cableado, Fibra e Infraestructura | 2000x667 |
 | ✅ | `assets/img/hero/sol-ciberseguridad.jpg` | Ciberseguridad | 2000x667 |
@@ -39,13 +39,13 @@
 | ✅ | `assets/img/marcas/cat/energia.jpg` | Tecnología Altronix – Energía y Respaldo | 1200x675 |
 | ✅ | `assets/img/marcas/cat/redes.jpg` | Tecnología Cambium Networks – Redes y Telecomunicaciones | 1200x675 |
 | ✅ | `assets/img/marcas/cat/videovigilancia.jpg` | Tecnología Dahua – Videovigilancia y Seguridad Electrónica | 1200x675 |
-| ✅ | `assets/img/marcas/hero-alianzas.jpg` | Asesores de Wiccom con equipos de videovigilancia, redes, energía y cómputo | 1400x730 |
-| ✅ | `assets/img/nosotros/area-atencion.jpg` | Atención al cliente en Wiccom | 800x450 |
-| ✅ | `assets/img/nosotros/area-ingenieria.jpg` | Ingeniería y proyectos en Wiccom | 800x450 |
-| ✅ | `assets/img/nosotros/area-logistica.jpg` | Logística y distribución en Wiccom | 800x450 |
-| ✅ | `assets/img/nosotros/area-soporte.jpg` | Soporte técnico en Wiccom | 800x450 |
-| ✅ | `assets/img/nosotros/como-trabajamos.jpg` | Especialistas de Wiccom revisando un proyecto con un cliente | 900x450 |
-| ✅ | `assets/img/nosotros/quienes-somos.jpg` | Equipo de Wiccom colaborando en una reunión de trabajo | 900x600 |
+| ✅ | `assets/img/marcas/hero-alianzas.jpg` | Asesores con equipos de videovigilancia, redes, energía y cómputo | 1400x730 |
+| ✅ | `assets/img/nosotros/area-atencion.jpg` | Atención al cliente | 800x450 |
+| ✅ | `assets/img/nosotros/area-ingenieria.jpg` | Ingeniería y proyectos | 800x450 |
+| ✅ | `assets/img/nosotros/area-logistica.jpg` | Logística y distribución | 800x450 |
+| ✅ | `assets/img/nosotros/area-soporte.jpg` | Soporte técnico | 800x450 |
+| ✅ | `assets/img/nosotros/como-trabajamos.jpg` | Especialistas revisando un proyecto tecnológico con un cliente | 900x450 |
+| ✅ | `assets/img/nosotros/quienes-somos.jpg` | Equipo profesional colaborando en una reunión de trabajo | 900x600 |
 | ✅ | `assets/img/recursos/banner-interno.jpg` | Sala corporativa con vista panorámica de la ciudad | 2000x667 |
 | ✅ | `assets/img/recursos/camaras/bala-2mp.jpg` | Cámara de 2 MP (Full HD) | 600x600 |
 | ✅ | `assets/img/recursos/camaras/bala-4mp.jpg` | Cámara de 4 MP | 600x600 |
