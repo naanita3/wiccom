@@ -530,7 +530,7 @@ def channels_card():
     return f'''<div class="aside-card" data-aos="fade-left"><h2>Canales directos</h2><p>Elige el medio que te resulte más cómodo. Por cualquiera de ellos te atiende directamente el equipo de Wiccom.</p>
   <div class="channels">
     <a class="channel" href="tel:{SITE["phone_tel"]}"><span class="channel__ico">{ic("phone")}</span><span><strong>Llamada</strong><span>{SITE["phone_display"]}</span></span>{ic("chev-r", "ico go")}</a>
-    <a class="channel" href="mailto:{SITE["email"]}"><span class="channel__ico">{ic("mail")}</span><span><strong>Correo electrónico</strong><span>{SITE["email"]}</span></span>{ic("chev-r", "ico go")}</a>
+    <a class="channel" href="mailto:{SITE["email_sales"]}"><span class="channel__ico">{ic("mail")}</span><span><strong>Correo electrónico</strong><span>{SITE["email_sales"]}</span></span>{ic("chev-r", "ico go")}</a>
     <a class="channel" href="{wa_url()}" target="_blank" rel="noopener"><span class="channel__ico channel__ico--wa">{ic("wa")}</span><span><strong>WhatsApp</strong><span>{SITE["phone_display"]}</span></span>{ic("chev-r", "ico go")}</a>
     <div class="channel"><span class="channel__ico">{ic("clock")}</span><span><strong>Horario de atención</strong><span>{h[0][0]}: {h[0][1]} <br>{h[1][0]}: {h[1][1]}</span></span></div>
   </div>
@@ -585,7 +585,7 @@ def p_contact():
     <div class="contact-cards">
       <div class="ccard" data-aos="fade-up"><span class="ccard__ico ccard__ico--wa">{ic("wa")}</span><h3>WhatsApp</h3><p>Chatea con un asesor durante nuestro horario de atención.</p><a class="btn btn--wa btn--sm" href="{wa_url()}" target="_blank" rel="noopener">Abrir WhatsApp {ic("arrow")}</a></div>
       <div class="ccard" data-aos="fade-up" data-aos-delay="80"><span class="ccard__ico">{ic("phone")}</span><h3>Teléfono</h3><p>Llámanos para atención directa.</p><strong>{SITE["phone_display"]}</strong><a class="btn btn--outline btn--sm" href="tel:{SITE["phone_tel"]}">Llamar ahora {ic("arrow")}</a></div>
-      <div class="ccard" data-aos="fade-up" data-aos-delay="160"><span class="ccard__ico">{ic("mail")}</span><h3>Correo electrónico</h3><p>Para cotizaciones y atención comercial.</p><strong style="font-size:.95rem">{SITE["email_sales"]}</strong><a class="btn btn--outline btn--sm" href="mailto:{SITE["email_sales"]}">Enviar correo {ic("arrow")}</a></div>
+      <div class="ccard" data-aos="fade-up" data-aos-delay="160"><span class="ccard__ico">{ic("mail")}</span><h3>Correo electrónico</h3><p>Cotizaciones y atención comercial:<br><a class="hl-blue" href="mailto:{SITE["email_sales"]}"><strong>{SITE["email_sales"]}</strong></a></p><p>Contacto general:<br><a class="hl-blue" href="mailto:{SITE["email"]}"><strong>{SITE["email"]}</strong></a></p></div>
       <div class="ccard" data-aos="fade-up" data-aos-delay="240"><span class="ccard__ico">{ic("clock")}</span><h3>Horario de atención</h3><p>{h[0][0]}<br><strong>{h[0][1]}</strong></p><p>{h[1][0]}<br><strong>{h[1][1]}</strong></p></div>
     </div></div>
 </div></section>

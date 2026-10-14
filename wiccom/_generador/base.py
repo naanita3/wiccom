@@ -15,16 +15,13 @@ SITE = {
     "whatsapp": "5218112004772",
     "email": "contacto@wiccom.com.mx",
     "email_sales": "ventas@wiccom.com.mx",
-    "street": "Av. Ejemplo 1234, Col. Tecnológico",
     "city": "Monterrey",
     "region": "Nuevo León",
     "region_short": "N.L.",
-    "zip": "64700",
     "hours": [("Lunes a viernes", "8:30 a 18:30 h"), ("Sábado", "9:00 a 14:00 h")],
     "social": {
-        "linkedin": "https://www.linkedin.com/company/wiccom",
         "facebook": "https://www.facebook.com/wiccom",
-        "instagram": "https://www.instagram.com/wiccom",
+        "instagram": "https://www.instagram.com/wiccommx",
         "youtube": "https://www.youtube.com/@wiccom",
     },
     "og_default": "assets/img/og/wiccom-og.jpg",
@@ -301,7 +298,7 @@ def footer(solutions, services):
     servs = "".join(f'<li><a href="{u("servicios/" + s["slug"] + ".html")}">{s["name"]}</a></li>' for s in services)
     soc = SITE["social"]
     social = "".join(f'<a href="{soc[k]}" target="_blank" rel="noopener" aria-label="Wiccom en {n}">{ic(k)}</a>'
-                     for k, n in [("linkedin", "LinkedIn"), ("facebook", "Facebook"), ("instagram", "Instagram"), ("youtube", "YouTube")])
+                     for k, n in [("facebook", "Facebook"), ("instagram", "Instagram"), ("youtube", "YouTube")] if soc.get(k))
     return f'''
 <footer class="site-footer">
   <div class="container footer__grid">

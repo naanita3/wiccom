@@ -67,6 +67,6 @@ ejecuta PHP. El envío real funciona en un hosting con PHP. Si el hosting bloque
 - **Vercel:** *Root Directory* = `wiccom`. `vercel.json` activa URLs limpias.
 
 ## Pendiente de confirmar
-Los datos de contacto y la dirección son de ejemplo (81 1234 5678, Av. Ejemplo 1234…).
+Los datos de contacto (teléfono, correos y redes) se configuran en `SITE` dentro de `_generador/base.py`.
 Solo el artículo "Cómo elegir la cámara de seguridad ideal" tiene contenido completo; los demás traen introducción
 y un comentario `<!-- CONTENIDO -->` para completar.
