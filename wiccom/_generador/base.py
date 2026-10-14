@@ -512,18 +512,18 @@ def steps(items, title=None, sub="", numbered=False):
         return f'<div class="feats-wrap"><div class="feats-wrap__title" data-aos="fade-right"><h2>{title}</h2><p>{sub}</p></div>{ol}</div>'
     return ol
 
-def ctaband(title, text, btn=("Solicitar cotización", "cotizacion.html"), ctx="", extra=None):
+def ctaband(title, text, btn=("Solicitar cotización", "cotizacion.html"), ctx="", extra=None, quick=("Llámanos", "Escríbenos", "WhatsApp")):
     if extra is None:
         extra = f'<button class="btn btn--ghost" type="button" data-modal="asesor" data-context="{ctx}">Hablar con un asesor</button>'
     return f'''
 <section class="ctaband" aria-label="Contacto rápido"><div class="container ctaband__grid">
   <h2 data-aos="fade-right">{title}</h2>
   <p data-aos="fade-up">{text}</p>
-  <div class="ctaband__btns" data-aos="zoom-in"><a class="btn btn--primary" href="{u(btn[1])}">{btn[0]} {ic("arrow")}</a>{extra}</div>
+  {f'<div class="ctaband__btns" data-aos="zoom-in"><a class="btn btn--primary" href="{u(btn[1])}">{btn[0]} {ic("arrow")}</a>{extra}</div>' if btn else ""}
   <div class="ctaband__quick" data-aos="fade-left">
-    <a class="quick" href="tel:{SITE["phone_tel"]}">{ic("phone")}Llámanos</a>
-    <a class="quick" href="mailto:{SITE["email"]}">{ic("mail")}Escríbenos</a>
-    <a class="quick" href="{wa_url(f"¡Hola! Me interesa {ctx} y me gustaría hablar con un asesor." if ctx else "¡Hola! Me gustaría hablar con un asesor de Wiccom.")}" target="_blank" rel="noopener" style="--wa-inner:var(--navy)">{ic("wa")}WhatsApp</a>
+    <a class="quick" href="tel:{SITE["phone_tel"]}">{ic("phone")}{quick[0]}</a>
+    <a class="quick" href="mailto:{SITE["email"]}">{ic("mail")}{quick[1]}</a>
+    <a class="quick" href="{wa_url(f"¡Hola! Me interesa {ctx} y me gustaría hablar con un asesor." if ctx else "¡Hola! Me gustaría hablar con un asesor de Wiccom.")}" target="_blank" rel="noopener" style="--wa-inner:var(--navy)">{ic("wa")}{quick[2]}</a>
   </div>
 </div></section>'''
 

@@ -1,6 +1,6 @@
 # Imágenes que necesita el sitio
 
-**128 de 131 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
+**129 de 131 listas.** Guarda cada archivo en la ruta indicada (relativa a la carpeta del sitio) y vuelve a correr `python build.py`.
 
 - Puedes usar **.webp, .jpg o .png** con el mismo nombre: el generador detecta la extensión sola (si hay varias, usa primero .webp).
 - Mientras falte una foto se muestra un recuadro con la ruta. Si en la carpeta existe `default.webp` (o `1.png`), se usa como imagen temporal.
@@ -9,9 +9,9 @@
 | Estado | Ruta | Qué debe mostrar | Tamaño sugerido |
 |---|---|---|---|
 | ⏳ | `assets/img/banners/monterrey-ciudad.jpg` | Vista panorámica de Monterrey con la Sierra Madre al fondo | 1920x600 |
-| ⏳ | `assets/img/hero/cotizacion.jpg` | Cámara domo de videovigilancia | 1600x900 |
 | ⏳ | `assets/img/nosotros/tecnico-site.jpg` | Técnico trabajando en un site de servidores | 1200x600 |
 | ✅ | `assets/img/hero/contacto.jpg` | Asesora de atención a clientes con diadema | 1600x900 |
+| ✅ | `assets/img/hero/cotizacion.jpg` | Profesionales revisando el plano de un proyecto tecnológico en una pantalla | 1600x900 |
 | ✅ | `assets/img/hero/inicio.jpg` | Oficina corporativa con especialista junto a un rack de telecomunicaciones | 1600x900 |
 | ✅ | `assets/img/hero/nosotros.jpg` | Equipo profesional revisando un proyecto tecnológico en sala de juntas | 1600x900 |
 | ✅ | `assets/img/hero/recursos.jpg` | Oficina corporativa con pantallas de datos y vista a la ciudad | 2000x667 |

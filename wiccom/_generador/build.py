@@ -506,7 +506,7 @@ def p_article(a):
 {ctaband("¿Tienes un proyecto<br>en mente?", "Nuestro equipo te asesora para encontrar la solución tecnológica adecuada.")}'''
 
 # ================================================================== COTIZACIÓN
-def quote_form(idp="cz", title="Completa el formulario", sub="Nos pondremos en contacto contigo para brindarte una propuesta personalizada.", tipo="Solicitud de cotización"):
+def quote_form(idp="cz", title="Completa el formulario", sub="Nos pondremos en contacto contigo para dar seguimiento a tu solicitud y preparar una propuesta de acuerdo con tus requerimientos.", tipo="Solicitud de cotización"):
     return f'''<div class="form-card" id="formulario" data-aos="fade-up"><h2>{title}</h2><p>{sub}</p>
   <form action="{u("php/enviar.php")}" method="post" data-validate novalidate>
     <input type="hidden" name="tipo" value="{tipo}"><input type="hidden" name="_ts" value="">
@@ -522,39 +522,37 @@ def quote_form(idp="cz", title="Completa el formulario", sub="Nos pondremos en c
       <div class="field field--full">{privacy(idp)}</div>
       {captcha(idp)}
     </div>
-    <div class="form-actions" style="margin-top:18px"><button class="btn btn--primary" type="submit">Enviar solicitud {ic("send")}</button><span class="secure">{ic("lock")} Tus datos están protegidos. Solo los usamos para atender tu solicitud.</span></div>
+    <div class="form-actions" style="margin-top:18px"><button class="btn btn--primary" type="submit">Enviar solicitud {ic("send")}</button><span class="secure">{ic("lock")}<span>Tus datos serán tratados de acuerdo con nuestro <a class="hl-blue" href="{u("aviso-de-privacidad.html")}">Aviso de Privacidad</a> y utilizados para atender tu solicitud.</span></span></div>
   </form>{success()}</div>'''
 
 def channels_card():
     h = SITE["hours"]
-    return f'''<div class="aside-card" data-aos="fade-left"><h2>¿Prefieres atención directa?</h2><p>Estamos listos para asesorarte por el canal de tu preferencia.</p>
+    return f'''<div class="aside-card" data-aos="fade-left"><h2>Canales directos</h2><p>Elige el medio que te resulte más cómodo. Por cualquiera de ellos te atiende directamente el equipo de Wiccom.</p>
   <div class="channels">
-    <a class="channel" href="{wa_url()}" target="_blank" rel="noopener"><span class="channel__ico channel__ico--wa">{ic("wa")}</span><span><strong>WhatsApp</strong><span>{SITE["phone_display"]} · Escríbenos ahora</span></span>{ic("chev-r", "ico go")}</a>
-    <a class="channel" href="tel:{SITE["phone_tel"]}"><span class="channel__ico">{ic("phone")}</span><span><strong>Teléfono</strong><span>{SITE["phone_display"]}</span></span>{ic("chev-r", "ico go")}</a>
+    <a class="channel" href="tel:{SITE["phone_tel"]}"><span class="channel__ico">{ic("phone")}</span><span><strong>Llamada</strong><span>{SITE["phone_display"]}</span></span>{ic("chev-r", "ico go")}</a>
     <a class="channel" href="mailto:{SITE["email"]}"><span class="channel__ico">{ic("mail")}</span><span><strong>Correo electrónico</strong><span>{SITE["email"]}</span></span>{ic("chev-r", "ico go")}</a>
-    <div class="channel"><span class="channel__ico">{ic("clock")}</span><span><strong>Horario de atención</strong><span>{h[0][0]}: {h[0][1]}<br>{h[1][0]}: {h[1][1]}</span></span></div>
+    <a class="channel" href="{wa_url()}" target="_blank" rel="noopener"><span class="channel__ico channel__ico--wa">{ic("wa")}</span><span><strong>WhatsApp</strong><span>{SITE["phone_display"]}</span></span>{ic("chev-r", "ico go")}</a>
+    <div class="channel"><span class="channel__ico">{ic("clock")}</span><span><strong>Horario de atención</strong><span>{h[0][0]}: {h[0][1]} <br>{h[1][0]}: {h[1][1]}</span></span></div>
   </div>
-  <div class="note" style="margin-top:12px">{ic("msg")}<span><strong>Seguimiento a tu solicitud.</strong><br>Un especialista se pondrá en contacto contigo durante nuestro horario de atención.</span></div></div>'''
+  <div class="note" style="margin-top:12px">{ic("msg")}<span><strong>Seguimiento a tu solicitud.</strong> <br>Un especialista se pondrá en contacto contigo durante nuestro horario de atención.</span></div></div>'''
 
 def p_quote():
     mini = "".join(f'<a href="{u("soluciones/" + s["slug"] + ".html")}">{ic(s["icon"])}{s["name"]}</a>' for s in SOLUTIONS)
     return f'''
 {hero("Solicita una", "cotización", "Cuéntanos qué necesitas y te ayudaremos a encontrar la solución adecuada para tu empresa o proyecto.",
-      "hero/cotizacion.jpg", "Cámara domo de videovigilancia", eyebrow="Asesoría · Planeación · Tecnología",
-      badges=[("shield", "Asesoría especializada en cada proyecto"), ("clock", "Soluciones según tu proyecto"), ("users", "Respuesta rápida y acompañamiento")],
-      features=[("shield", "Tecnología para un futuro más seguro"), ("users", "Expertos en soluciones integrales"), ("user", "Te acompañamos en todo el proceso"), ("gear", "Tu aliado tecnológico de confianza")],
-      script=("Proyectos más seguros,", "empresas más fuertes"))}
+      "hero/cotizacion.jpg", "Profesionales revisando el plano de un proyecto tecnológico en una pantalla", eyebrow="Asesoría · Planeación · Tecnología",
+      badges=[("shield", "Asesoría especializada"), ("gear", "Soluciones de acuerdo con tu proyecto"), ("users", "Acompañamiento durante el proceso")])}
 <div class="intro"><div class="container" style="padding:14px 0">{breadcrumb([("Inicio", "index.html"), ("Contacto", "contacto.html"), ("Solicita una cotización", "cotizacion.html")])}</div></div>
 <section class="section"><div class="container quote-grid">
   {quote_form()}
   <div class="aside-stack">
     {channels_card()}
-    <div class="aside-card" data-aos="fade-left" data-aos-delay="100"><h2>¿Qué puedes cotizar?</h2><p>Nuestras soluciones se adaptan a las necesidades de tu empresa.</p>
+    <div class="aside-card" data-aos="fade-left" data-aos-delay="100"><h2>¿Qué puedes cotizar?</h2><p>Puedes solicitar cotización de productos, servicios y soluciones para distintas áreas de tecnología.</p>
       <div class="mini-sol">{mini}<a href="{SITE["store"]}" target="_blank" rel="noopener">{ic("plus")}Y más en la tienda</a></div>
-      <div class="note">{ic("msg")}<span><strong>¿No estás seguro de qué solución necesitas?</strong><br>Cuéntanos tu proyecto y te asesoramos sin compromiso.</span></div></div>
+      <div class="note">{ic("msg")}<span><strong>¿Necesitas orientación?</strong> <br>Cuéntanos tu requerimiento y nuestro equipo puede orientarte sobre las opciones disponibles.</span></div></div>
   </div>
 </div></section>
-{ctaband("¿Prefieres hablarlo<br>directamente?", "Un asesor puede ayudarte a definir el alcance de tu proyecto antes de cotizar.", ("Ir a contacto", "contacto.html"))}'''
+{ctaband("Platícanos sobre tu proyecto", "Estamos para orientarte y dar seguimiento por el medio que prefieras.", btn=None, quick=("Llamada", "Correo", "WhatsApp"))}'''
 
 # ================================================================== CONTACTO
 def p_contact():
