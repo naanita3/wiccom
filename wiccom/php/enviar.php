@@ -10,8 +10,7 @@ header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
 // ================= CONFIGURACIÓN =================
-const DESTINO        = 'contacto@wiccom.com.mx';       // contacto general
-const DESTINO_VENTAS = 'ventas@wiccom.com.mx';         // cotizaciones y temas comerciales
+const DESTINO      = 'contacto@wiccom.com.mx';         // todos los formularios llegan aquí
 const DESTINO_CC   = 'tecnologia8@globalbtek.com';      // copia (déjalo '' si no aplica)
 const REMITENTE    = 'no-reply@wiccom.com.mx';    // debe ser del mismo dominio del hosting
 const MIN_SEGUNDOS = 3;                           // tiempo mínimo para llenar (anti-bots)
@@ -92,9 +91,7 @@ if (DESTINO_CC) $headers .= 'Cc: '.DESTINO_CC."\r\n";
 $headers .= "MIME-Version: 1.0\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n";
 $body = chunk_split(base64_encode($html));
 
-// Cotizaciones y asesoría comercial van a ventas@; el resto a contacto@
-$para = preg_match('/cotizaci|asesor/i', $form) ? DESTINO_VENTAS : DESTINO;
-if (@mail($para, $asunto, $body, $headers, '-f'.REMITENTE)) {
+if (@mail(DESTINO, $asunto, $body, $headers, '-f'.REMITENTE)) {
   responder(true, '¡Gracias! Un asesor se pondrá en contacto contigo muy pronto.');
 }
 responder(false, 'No pudimos enviar tu solicitud en este momento.', 500);

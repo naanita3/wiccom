@@ -10,15 +10,19 @@ SITE = {
     "tagline": "Conectando Tecnología",
     "domain": "https://www.wiccom.com.mx",
     "store": "https://www.wiccom.mx",
-    "phone_display": "+52 1 81 1200 4772",
-    "phone_tel": "+5218112004772",
-    "whatsapp": "5218112004772",
+    # Celular / WhatsApp: también es el número de "Hablar con un asesor" (llamadas y WhatsApp)
+    "phone_display": "81 1200 4772",
+    "phone_tel": "+528112004772",
+    "whatsapp": "528112004772",
+    # Teléfono de oficina (solo llamadas)
+    "office_display": "81 1872 5633",
+    "office_tel": "+528118725633",
     "email": "contacto@wiccom.com.mx",
     "email_sales": "ventas@wiccom.com.mx",
     "city": "Monterrey",
     "region": "Nuevo León",
     "region_short": "N.L.",
-    "hours": [("Lunes a viernes", "8:30 a 18:30 h"), ("Sábado", "9:00 a 14:00 h")],
+    "hours": [("Lunes a viernes", "9:00 a 18:00 h"), ("Sábado", "10:00 a 14:00 h")],
     "social": {
         "facebook": "https://www.facebook.com/wiccom",
         "instagram": "https://www.instagram.com/wiccommx",
@@ -280,7 +284,8 @@ def header(active):
       <a class="btn btn--dark" href="{u("cotizacion.html")}">Solicitar cotización {ic("arrow")}</a>
     </div>
     <div class="mnav__contact">
-      <a href="tel:{SITE["phone_tel"]}">{ic("phone")} {SITE["phone_display"]}</a>
+      <a href="tel:{SITE["office_tel"]}">{ic("phone")} Oficina: {SITE["office_display"]}</a>
+      <a href="tel:{SITE["phone_tel"]}">{ic("phone-m")} Celular / WhatsApp: {SITE["phone_display"]}</a>
       <a href="mailto:{SITE["email"]}">{ic("mail")} {SITE["email"]}</a>
       <span>{ic("clock")} {hours}</span>
     </div>
@@ -314,9 +319,10 @@ def footer(solutions, services):
       <li><a href="{SITE["store"]}" target="_blank" rel="noopener">Tienda en línea</a></li></ul></div>
     <div class="footer__col"><h3>Contacto</h3><ul class="footer__contact">
       <li>{ic("pin")}<span>{SITE["city"]}, {SITE["region_short"]}</span></li>
-      <li>{ic("phone")}<a href="tel:{SITE["phone_tel"]}">{SITE["phone_display"]}</a></li>
-      <li>{ic("mail")}<a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li>
-      <li>{ic("clock")}<span>{SITE["hours"][0][0]}<br>{SITE["hours"][0][1]}</span></li></ul></div>
+      <li>{ic("phone")}<span>Oficina: <a href="tel:{SITE["office_tel"]}">{SITE["office_display"]}</a></span></li>
+      <li>{ic("phone-m")}<span>Celular / WhatsApp: <a href="tel:{SITE["phone_tel"]}">{SITE["phone_display"]}</a></span></li>
+      <li>{ic("mail")}<span><a href="mailto:{SITE["email"]}">{SITE["email"]}</a> <br><a href="mailto:{SITE["email_sales"]}">{SITE["email_sales"]}</a></span></li>
+      <li>{ic("clock")}<span>{SITE["hours"][0][0]}: {SITE["hours"][0][1]} <br>{SITE["hours"][1][0]}: {SITE["hours"][1][1]}</span></li></ul></div>
   </div>
   <div class="container footer__bottom">
     <nav class="footer__legal" aria-label="Legal"><a href="{u("terminos.html")}">Términos y condiciones</a><a href="{u("aviso-de-privacidad.html")}">Aviso de privacidad</a><a href="{u("preguntas-frecuentes.html")}">Preguntas frecuentes</a></nav>
@@ -342,7 +348,7 @@ def modals(solutions, services, brands):
     <div class="modal__body call-box">
       {ic("phone", "ico ico-lg")}<h2>¿Deseas llamarnos?</h2>
       <a class="num" href="tel:{SITE["phone_tel"]}">{SITE["phone_display"]}</a>
-      <p class="muted">{SITE["hours"][0][0]} · {SITE["hours"][0][1]}</p>
+      <p class="muted">Celular / WhatsApp de asesores <br>{SITE["hours"][0][0]}: {SITE["hours"][0][1]} · {SITE["hours"][1][0]}: {SITE["hours"][1][1]}</p>
       <div class="btns"><button class="btn btn--outline" type="button" data-view="menu">Cancelar</button><a class="btn btn--primary" href="tel:{SITE["phone_tel"]}">{ic("phone")} Llamar</a></div>
     </div>
   </div>
@@ -518,7 +524,7 @@ def ctaband(title, text, btn=("Solicitar cotización", "cotizacion.html"), ctx="
   <p data-aos="fade-up">{text}</p>
   {f'<div class="ctaband__btns" data-aos="zoom-in"><a class="btn btn--primary" href="{u(btn[1])}">{btn[0]} {ic("arrow")}</a>{extra}</div>' if btn else ""}
   <div class="ctaband__quick" data-aos="fade-left">
-    <a class="quick" href="tel:{SITE["phone_tel"]}">{ic("phone")}{quick[0]}</a>
+    <a class="quick" href="tel:{SITE["office_tel"]}">{ic("phone")}{quick[0]}</a>
     <a class="quick" href="mailto:{SITE["email"]}">{ic("mail")}{quick[1]}</a>
     <a class="quick" href="{wa_url(f"¡Hola! Me interesa {ctx} y me gustaría hablar con un asesor." if ctx else "¡Hola! Me gustaría hablar con un asesor de Wiccom.")}" target="_blank" rel="noopener" style="--wa-inner:var(--navy)">{ic("wa")}{quick[2]}</a>
   </div>
@@ -547,12 +553,12 @@ def org_schema():
         "@context": "https://schema.org", "@type": "LocalBusiness", "@id": SITE["domain"] + "/#org",
         "name": "Wiccom", "slogan": SITE["tagline"], "url": SITE["domain"] + "/",
         "logo": SITE["domain"] + "/assets/img/" + (find_img("logo-wiccom", False) or "logo.png"), "image": SITE["domain"] + "/" + SITE["og_default"],
-        "telephone": SITE["phone_tel"], "email": SITE["email"], "priceRange": "$$",
+        "telephone": SITE["office_tel"], "email": SITE["email"], "priceRange": "$$",
         "address": {"@type": "PostalAddress", "addressLocality": SITE["city"], "addressRegion": SITE["region"], "addressCountry": "MX"},
         "areaServed": {"@type": "Country", "name": "México"},
         "openingHoursSpecification": [
-            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "08:30", "closes": "18:30"},
-            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00"}],
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "18:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "14:00"}],
         "sameAs": list(SITE["social"].values()),
     }
 

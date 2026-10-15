@@ -805,3 +805,4 @@ html,body{overflow-x:clip;max-width:100%}
 .note-small{font-size:.8rem;color:var(--muted);margin-top:10px}
 .conclusion__actions{display:flex;gap:10px;flex-wrap:wrap}
 @media (max-width:900px){.grid-2{grid-template-columns:1fr}}
+.footer__contact a[href^="tel:"]{white-space:nowrap}
