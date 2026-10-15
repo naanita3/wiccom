@@ -535,7 +535,7 @@ def channels_card():
     <a class="channel" href="{wa_url()}" target="_blank" rel="noopener"><span class="channel__ico channel__ico--wa">{ic("wa")}</span><span><strong>WhatsApp</strong><span>{SITE["phone_display"]}</span></span>{ic("chev-r", "ico go")}</a>
     <div class="channel"><span class="channel__ico">{ic("clock")}</span><span><strong>Horario de atención</strong><span>{h[0][0]}: {h[0][1]} <br>{h[1][0]}: {h[1][1]}</span></span></div>
   </div>
-  <div class="note" style="margin-top:12px">{ic("msg")}<span><strong>Seguimiento a tu solicitud.</strong> <br>Un especialista se pondrá en contacto contigo durante nuestro horario de atención.</span></div></div>'''
+  <div class="note" style="margin-top:12px">{ic("msg")}<span><strong>Seguimiento a tu solicitud.</strong> <br>Un asesor se pondrá en contacto contigo durante nuestro horario de atención.</span></div></div>'''
 
 def p_quote():
     mini = "".join(f'<a href="{u("soluciones/" + s["slug"] + ".html")}">{ic(s["icon"])}{s["name"]}</a>' for s in SOLUTIONS)
@@ -553,7 +553,7 @@ def p_quote():
       <div class="note">{ic("msg")}<span><strong>¿Necesitas orientación?</strong> <br>Cuéntanos tu requerimiento y nuestro equipo puede orientarte sobre las opciones disponibles.</span></div></div>
   </div>
 </div></section>
-{ctaband("Platícanos sobre tu proyecto", "Estamos para orientarte y dar seguimiento por el medio que prefieras.", btn=None, quick=("Llamada", "Correo", "WhatsApp"))}'''
+{ctaband("Platícanos sobre tu proyecto", "Estamos para orientarte y atenderte por el medio que prefieras.", btn=None, quick=("Llamada", "Correo", "WhatsApp"))}'''
 
 # ================================================================== CONTACTO
 def p_contact():
