@@ -17,7 +17,7 @@ const MIN_SEGUNDOS = 3;                           // tiempo mínimo para llenar 
 // Cloudflare Turnstile (CAPTCHA): pega aquí la "Secret Key" de tu sitio en dash.cloudflare.com → Turnstile.
 // IMPORTANTE: pégala solo en el archivo del servidor (hosting). No la subas a GitHub.
 // La de abajo es la clave de PRUEBA de Cloudflare (siempre aprueba).
-const TURNSTILE_SECRET = '1x0000000000000000000000000000000AA';
+const TURNSTILE_SECRET = '';  // PEGAR AQUÍ la Secret Key real de Cloudflare Turnstile (solo en el servidor)
 // =================================================
 
 function responder(bool $ok, string $msg, int $code = 200): never {
