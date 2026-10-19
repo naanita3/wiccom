@@ -35,8 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') responder(false, 'Método no permitid
 
 // Honeypot + tiempo mínimo
 if (!empty($_POST['website'])) responder(true, 'Gracias.');
+// _ts = milisegundos que la persona estuvo en la página antes de enviar (lo calcula el navegador)
 $ts = (int)($_POST['_ts'] ?? 0);
-if ($ts > 0 && (time() * 1000 - $ts) < MIN_SEGUNDOS * 1000) responder(false, 'Envío demasiado rápido, intenta de nuevo.', 429);
+if ($ts > 0 && $ts < MIN_SEGUNDOS * 1000) responder(false, 'Envío demasiado rápido, intenta de nuevo.', 429);
 
 // Verificación CAPTCHA (obligatoria en todos los formularios)
 function captcha_ok(string $token): bool {

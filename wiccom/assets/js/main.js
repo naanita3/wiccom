@@ -278,6 +278,7 @@
       const btn = $('[type=submit]', form);
       btn.classList.add('is-loading');
       const data = new FormData(form);
+      data.set('_ts', String(Date.now() - started)); // milisegundos en la página (no depende del reloj de la computadora)
       const wrap = form.parentElement;
       try {
         if (DEMO) await new Promise(r => setTimeout(r, 900)); // modo demo (local o vista previa): no envía
