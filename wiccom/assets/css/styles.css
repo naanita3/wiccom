@@ -528,7 +528,7 @@ a.channel:hover{background:var(--bg-2)}
 .site-footer{background:var(--ink);color:#c1cce0;font-size:.9rem}
 .footer__grid{display:grid;grid-template-columns:1.4fr 1.1fr 1.1fr .9fr 1.3fr;gap:32px;padding:48px 0 34px}
 .footer__brand p{margin:14px 0 18px;color:#9fb0cc;max-width:260px}
-.footer__brand .social__title{margin:0 0 10px;font-size:.8rem;font-weight:700;color:#fff}
+.footer__brand .social__title{margin:0 0 10px;font-size:.92rem;font-weight:700;color:#fff}
 .social{display:flex;gap:8px}
 .social a{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.06);color:#fff;transition:.25s}
 .social a:hover{background:var(--blue);transform:translateY(-3px)}
