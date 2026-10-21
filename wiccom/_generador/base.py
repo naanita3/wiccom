@@ -307,7 +307,7 @@ def footer(solutions, services):
     return f'''
 <footer class="site-footer">
   <div class="container footer__grid">
-    <div class="footer__brand">{logo(True)}<p>Soluciones en TI, telecomunicaciones, seguridad electrónica e infraestructura para empresas en todo México.</p><div class="social">{social}</div></div>
+    <div class="footer__brand">{logo(True)}<p>Soluciones en TI, telecomunicaciones, seguridad electrónica e infraestructura para empresas en todo México.</p><p class="social__title">Síguenos</p><div class="social">{social}</div></div>
     <div class="footer__col"><h3>Soluciones</h3><ul>{sols}</ul></div>
     <div class="footer__col"><h3>Servicios</h3><ul>{servs}</ul></div>
     <div class="footer__col"><h3>Nosotros</h3><ul>

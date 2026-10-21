@@ -96,7 +96,7 @@ def p_home():
         f'<li class="stat" data-aos="fade-up" data-aos-delay="{i*90}">{ic(icn)}<div><strong{a}>{n}</strong><span>{t}</span></div></li>'
         for i, (icn, n, a, t) in enumerate([
             ("users", "Proyectos", "", "en distintas industrias"),
-            ("clock", "+10 años", ' data-count="10" data-prefix="+" data-suffix=" años"', "de experiencia"),
+            ("clock", "+15 años", ' data-count="15" data-prefix="+" data-suffix=" años"', "de experiencia"),
             ("map", "Cobertura", "", "a nivel nacional"),
             ("headset", "Soporte", "", "en cada etapa")])) + "</ul></section>"
     feat = [a for a in ARTICLES if a.get("featured")]
